@@ -1,2 +1,17 @@
-%ul.nav.navbar-nav
-  %li= link_to 'Home', root_path
+%nav.navbar.navbar-default.navbar-fixed-top
+	.navbar-header
+		%button.navbar-toggle{'data-toggle' => "collapse",  'data-target' => ".navbar-collapse"}
+			%span.icon-bar
+			%span.icon-bar
+			%span.icon-bar
+		= link_to "Papers Past", root_path, :class => @type.nil? ? 'navbar-brand' : 'navbar-brand active'
+	.navbar-collapse.collapse
+		%ul.nav.navbar-nav
+			- SUPPORTED_FORMATS.each do |fmt|
+				%li{:class => @type.to_s.tableize.to_sym == fmt ? 'active' : 'inactive' }
+					= link_to fmt.to_s.titleize, "/#{fmt}"
+		%ul.nav.navbar-nav.navbar-right
+			%li
+				=link_to "About Papers Past", '/about/about'
+			%li
+				=link_to "Help", '/about/help'

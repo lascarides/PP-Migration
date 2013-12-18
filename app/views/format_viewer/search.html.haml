@@ -1,0 +1,19 @@
+.results 
+	%h1=raw "Searching newspapers for <span>#{params[:query]}</span>"
+
+	%p.results-info=raw "There are #{number_with_delimiter(@search_results['search']['result_count'])} items matching <span>#{params[:query]}</span>. Here are the first #{@search_results['search']['per_page']}."
+
+	%table.table
+		%thead
+			%tr
+				%th Date
+				%th Article
+				%th Newspaper
+		%tbody
+			- @search_results['search']['results'].each do |result|
+				- parts = result['title'].gsub(/^(.*)\(([^(]+),(.*)\)/, '\1**\2**\3').split("**")
+				%tr
+					%td= parts[2]
+					%td
+						%a{:href => "/newspapers/#{result['id']}"}= parts[0]
+					%td= parts[1]

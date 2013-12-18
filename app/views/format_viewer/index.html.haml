@@ -1,0 +1,81 @@
+.format-home
+	.row
+		.col-md-12
+			%h2= @type.to_s.humanize
+	.row
+		.col-md-3
+			%p <strong>Papers Past</strong> contains more than three million pages of digitised New Zealand newspapers and periodicals. The collection covers the years 1839 to 1945 and includes 83 publications from all regions of New Zealand. 
+		.col-md-9
+			.well
+				%h3= "Search the full text of all #{@type.to_s.humanize}"
+				%form.form-inline{:role => "form", :action => "/#{@type}/search", :method => 'get'}
+					%input#query.form-control.input-lg{:name => 'query', :placeholder => "What are you looking for?"}
+					%button.btn.btn-default.input-lg{:type => "submit"} Search
+					.tools
+						%input#mode1{:type => "radio", :name => "mode", :value => "all", :checked => "checked"}
+						%label <strong>All</strong> of these words
+						%input#mode2{:type => "radio", :name => "mode", :value => "any"}
+						%label <strong>Any</strong> of these words
+						%input#mode3{:type => "radio", :name => "mode", :value => "exact"}
+						%label This exact phrase
+						.pull-right
+							%a{:href => '#'} More search options
+	.row
+		.col-md-3
+			= image_tag("home-#{@type.to_s.dasherize}.jpg", :class => 'home-image')
+		.col-md-3.date-column
+			%h3 Explore by date
+
+			- 12.times do |d|
+				- decade = (d * 10) + 1830
+				%label= "#{decade}s"
+				%p.decade
+					- 10.times do |yr|
+						%a{:href => "/newspapers/year/#{decade + yr}"}
+							= decade + yr
+
+		.col-md-3
+			%h3 By NZ region 
+			= image_tag('map-newspaper.png', :class => 'home-map')
+		.col-md-3
+			%h3 By title 
+			%ul
+				%li
+					%a{:href => '/newspapers/EveningPost'} Evening Post
+				%li
+					%a{:href => '/newspapers/EveningPost'} Wanganui Chronicle
+				%li
+					%a{:href => '#'} Hawera & Normanby Star
+				%li
+					%a{:href => '#'} Marlborough Express
+				%li
+					%a{:href => '#'} Auckland Star
+				%li
+					%a{:href => '#'} Colonist
+				%li
+					%a{:href => '#'} Poverty Bay Herald
+				%li
+					%a{:href => '#'} Grey River Argus
+				%li
+					%a{:href => '#'} Thames Star
+				%li
+					%a{:href => '#'} Ashburton Guardian
+				%li
+					%a{:href => '#'} Star
+				%li
+					%a{:href => '#'} Wanganui Herald
+				%li
+					%a{:href => '#'} Nelson Evening Mail
+				%li
+					%a{:href => '#'} Otago Daily Times
+				%li
+					%a{:href => '#'} Taranaki Herald
+				%li
+					%a{:href => '#'} Feilding Star
+				%li
+					%a{:href => '#'} Otago Witness
+				%li
+					%a{:href => '#'} Wairarapa Daily Times
+				%li
+					%a{:href => '#'} West Coast Times
+				%a.btn{:href => '#'} See more titles...					

@@ -1,0 +1,2 @@
+class ParliamentaryPaper < NLNZObject
+end

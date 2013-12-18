@@ -1,0 +1,2 @@
+class NewspapersController < FormatViewerController
+end

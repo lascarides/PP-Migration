@@ -1,0 +1,2 @@
+class Journal < NLNZObject
+end

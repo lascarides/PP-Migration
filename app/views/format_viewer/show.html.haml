@@ -1,0 +1,28 @@
+.item 
+	%h1= @item[:title]
+	%h2= "#{@item[:newspaper]}, #{@item[:date]}"
+
+	%ul.nav.nav-tabs
+		%li.active= link_to "Images", "#images", 'data-toggle' => "tab"
+		%li= link_to "Full text", "#fulltext", 'data-toggle' => "tab"
+		%li= link_to "Additional information", "#info", 'data-toggle' => "tab"
+
+	.tab-content
+		#images.tab-pane.fade.in.active
+			.row
+				.col-md-12
+					- @item[:images].each do |image|
+						=raw image.to_s.gsub('src="/', 'src="http://paperspast.natlib.govt.nz/')
+		#fulltext.tab-pane.fade
+			.row
+				.col-md-6
+					= @item[:fulltext]
+		#info.tab-pane.fade
+			.row
+				.col-md-12
+					%p
+						%a{:href => @item[:original]} Original
+
+
+
+
