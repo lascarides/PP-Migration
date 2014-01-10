@@ -9,9 +9,9 @@
 		%ul.nav.navbar-nav
 			- SUPPORTED_FORMATS.each do |fmt|
 				%li{:class => @type.to_s.tableize.to_sym == fmt ? 'active' : 'inactive' }
-					= link_to fmt.to_s.titleize, "/#{fmt}"
+					= link_to fmt.to_s.titleize, params["query"].blank? ? "/#{fmt}" : "/#{fmt}/search?query=#{params["query"]}"
 		%ul.nav.navbar-nav.navbar-right
 			%li
-				=link_to "About Papers Past", '/about/about'
+				=link_to "About Papers Past", '/about'
 			%li
-				=link_to "Help", '/about/help'
+				=link_to "Help", '/help'

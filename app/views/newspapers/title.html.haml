@@ -1,0 +1,51 @@
+%ol.breadcrumb
+	%li= link_to 'Newspapers', "/newspapers"
+	%li= link_to @title, "/newspapers/#{@title.parameterize}"
+	- unless params[:year].nil?
+		%li= link_to params[:year], "/newspapers/#{@title.parameterize}/#{params[:year]}"
+
+.newspaper_title 
+	%h1= @title
+
+	.row
+		.col-md-6
+			%p Show all issues of this newspaper (large page)
+
+		.col-md-6
+
+			.well 
+				The first issue of the Hawke's Bay Herald and Ahuriri Advocate was produced in Napier on 24 September 1857. The initial incentive for the paper was the call for provincial separation from Wellington, which occurred in 1858. The paper was first published as a weekly newspaper, became bi-weekly in 1861 and then daily in 1871. The 1931 Napier earthquake signalled the end of the paper as an independent entity. A Hastings paper, the Hawke's Bay Tribune, took over printing the Herald and the two papers merged in 1937 to form the Hawke's Bay Herald-Tribune.
+
+			%h3= "History of #{@title}"
+
+			%p Sir Donald McLean first proposed a Hawke's Bay newspaper to advocate for provincial separation from Wellington. McLean was one of the first settlers of the fledgling district of Ahuriri, as it was called at the time. Another settler, James Wood, took up the challenge and published the first issue of the Hawke's Bay Herald and Ahuriri Advocate in Napier on 24 September 1857.
+
+			%p The campaigning for separation was successful and Hawke's Bay became a separate province in 1858. Wood became the official provincial government printer and the Herald also served as the medium for government notices. The "Ahuriri Advocate" part of the paper's title was dropped.
+
+			%p After first being published weekly, the paper became bi-weekly in 1861. It became a daily in 1871 when Wood sold out to four employees, including William Carlile who had been appointed editor in 1870.
+
+			%p The Hawke's Bay Weekly Courier was a weekly offshoot of the Herald. It was established in 1879 and lasted until 1897. Both papers survived a disastrous fire that destroyed the Herald offices in 1886.
+
+			%p A larger newspaper was produced after new machinery was installed in 1926. The Herald strongly advocated for the region's advancement and promoted projects including the Wellington-Napier railway and the construction of water and sewerage systems.
+
+			%p The February 1931 Napier earthquake spelt the end of the Herald as a separate entity. The quake and subsequent fires completely destroyed the printing plant. The Hastings newspaper, the Hawke's Bay Tribune, took over printing the Herald. In January 1937 the papers merged to form the Hawke's Bay Herald-Tribune, with the last issue of the Herald published on 16 January 1937.
+
+			%p In 1999 the Hawke's Bay Herald-Tribune was merged with the long-established Napier paper, the Daily Telegraph, to become Hawke's Bay Today.
+
+			%h3 More information
+
+			%table.table
+				%tbody
+					%tr
+						%td Region
+						%td Hawke's Bay
+					%tr
+						%td Also published as
+						%td Hawke’s Bay Herald and Ahuriri Advocate, Hawke's Bay Tribune, Hawke's Bay Herald-Tribune
+					%tr
+						%td Available online
+						%td 24 September 1857 - 31 December 1900 (8168 issues)
+			
+			%h3 Copyright statement
+
+			%p See our copyright guide for information on how you may use this title.

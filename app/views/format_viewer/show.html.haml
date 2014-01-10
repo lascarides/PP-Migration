@@ -1,27 +1,37 @@
+%ol.breadcrumb
+	%li= link_to 'Newspapers', "/newspapers"
+	%li= link_to @item[:newspaper], "/newspapers/#{@item[:newspaper]}"
+	%li= link_to @item[:date_year], "/newspapers/#{@item[:newspaper]}/#{@item[:date_year]}"
+	%li= link_to @item[:date_month], "/newspapers/#{@item[:newspaper]}/#{@item[:date_year]}/#{@item[:date_month]}"
+	%li= link_to @item[:date_day].to_i, "/newspapers/#{@item[:newspaper]}/#{@item[:date_year]}/#{@item[:date_month]}/#{@item[:date_day]}"
+	%li= link_to "Page #{@item[:page_number]}", "/newspapers/#{@item[:newspaper]}/#{@item[:date_year]}/#{@item[:date_month]}/#{@item[:date_day]}/#{@item[:page_number]}"
+	%li.active= @item[:title]
+
 .item 
 	%h1= @item[:title]
-	%h2= "#{@item[:newspaper]}, #{@item[:date]}"
+	%p= "#{@item[:newspaper]}, #{@item[:date]}"
 
 	%ul.nav.nav-tabs
-		%li.active= link_to "Images", "#images", 'data-toggle' => "tab"
-		%li= link_to "Full text", "#fulltext", 'data-toggle' => "tab"
+		%li.active= link_to "View article image", "#images", 'data-toggle' => "tab"
+		%li= link_to "Read full text", "#fulltext", 'data-toggle' => "tab"
 		%li= link_to "Additional information", "#info", 'data-toggle' => "tab"
 
 	.tab-content
 		#images.tab-pane.fade.in.active
 			.row
 				.col-md-12
-					- @item[:images].each do |image|
-						=raw image.to_s.gsub('src="/', 'src="http://paperspast.natlib.govt.nz/')
+					.image-pad
+						- @item[:images].each do |image|
+							=raw image
 		#fulltext.tab-pane.fade
 			.row
 				.col-md-6
-					= @item[:fulltext]
+					=raw @item[:fulltext]
 		#info.tab-pane.fade
 			.row
 				.col-md-12
 					%p
-						%a{:href => @item[:original]} Original
+						%a{:href => @item[:original]} See original record
 
 
 

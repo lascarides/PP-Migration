@@ -52,6 +52,10 @@ body, p {
 	font-family: "Avenir";
 }
 
+body {
+	margin: 0 0 3em 0;
+}
+
 a {
 	color: $ppGreen;
 }
@@ -75,6 +79,10 @@ h1, h2, h3, h4, h5, h6, label, th {
 	}
 }
 
+ol.breadcrumb {
+	text-transform: uppercase;
+}
+
 .home {
 	h1 {
 		color: darken($ppGreen, 20%);
@@ -96,6 +104,11 @@ h1, h2, h3, h4, h5, h6, label, th {
 	}
 	.media-body p {
 		color: #555;
+	}
+	.alert {
+		h3, h4 {
+			margin: 0;
+		}
 	}
 }
 
@@ -153,12 +166,19 @@ h1, h2, h3, h4, h5, h6, label, th {
 
 .results {
 	h1 span, .results-info span {
-		color: $ppGreen;
+		color: $ppAccent;
 	}
 }
 
 .item {
 	img {
 		display: block;
+	}
+	.tab-pane {
+		padding-top: 1em;
+	}
+	.image-pad {
+		background: #e3e3d4;
+		padding: 1em;
 	}
 }

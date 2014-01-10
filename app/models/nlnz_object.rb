@@ -5,6 +5,15 @@ class NLNZObject
 	end
 
 	def self.search_results(search_term)
-		DigitalNZ.search_results(search_term)		
+		DigitalNZ.search_results(search_term, self.dnz_search_scope)		
 	end
+
+	def self.collections(search_term)
+		DigitalNZ.collections(self.dnz_search_scope)		
+	end
+
+	def self.dnz_search_scope
+		''
+	end
+
 end

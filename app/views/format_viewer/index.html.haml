@@ -26,13 +26,21 @@
 		.col-md-3.date-column
 			%h3 Explore by date
 
-			- 12.times do |d|
-				- decade = (d * 10) + 1830
-				%label= "#{decade}s"
-				%p.decade
-					- 10.times do |yr|
-						%a{:href => "/newspapers/year/#{decade + yr}"}
-							= decade + yr
+			#accordion.panel-group
+				- 12.times do |d|
+					- decade = (d * 10) + 1830
+					.panel.panel-default
+						.panel-heading
+							%h4.panel-title
+								%a{ 'data-toggle' => "collapse", 'data-parent' => "#accordion", :href => "#collapse#{d}"}
+									%label= "#{decade}s"
+					
+					.panel-collapse.collapse.decade{ :id => "collapse#{d}"}
+						.panel-body
+							- 10.times do |yr|
+								%a{:href => "/newspapers/date/#{decade + yr}"}
+									= decade + yr
+				%p= link_to "Looking for newspapers after 1945?", "#"
 
 		.col-md-3
 			%h3 By NZ region 
@@ -40,42 +48,7 @@
 		.col-md-3
 			%h3 By title 
 			%ul
-				%li
-					%a{:href => '/newspapers/EveningPost'} Evening Post
-				%li
-					%a{:href => '/newspapers/EveningPost'} Wanganui Chronicle
-				%li
-					%a{:href => '#'} Hawera & Normanby Star
-				%li
-					%a{:href => '#'} Marlborough Express
-				%li
-					%a{:href => '#'} Auckland Star
-				%li
-					%a{:href => '#'} Colonist
-				%li
-					%a{:href => '#'} Poverty Bay Herald
-				%li
-					%a{:href => '#'} Grey River Argus
-				%li
-					%a{:href => '#'} Thames Star
-				%li
-					%a{:href => '#'} Ashburton Guardian
-				%li
-					%a{:href => '#'} Star
-				%li
-					%a{:href => '#'} Wanganui Herald
-				%li
-					%a{:href => '#'} Nelson Evening Mail
-				%li
-					%a{:href => '#'} Otago Daily Times
-				%li
-					%a{:href => '#'} Taranaki Herald
-				%li
-					%a{:href => '#'} Feilding Star
-				%li
-					%a{:href => '#'} Otago Witness
-				%li
-					%a{:href => '#'} Wairarapa Daily Times
-				%li
-					%a{:href => '#'} West Coast Times
-				%a.btn{:href => '#'} See more titles...					
+				- Newspaper.collections[0..15].each do |paper, number|
+					%li
+						%a{:href => "/newspapers/title/#{paper.parameterize}"}= paper
+			%a.btn{:href => '#'} See more titles...					
