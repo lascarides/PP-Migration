@@ -1,0 +1,52 @@
+%ol.breadcrumb
+	%li= link_to 'Newspapers', "/newspapers"
+	- if @region.nil?
+		%li By Region
+	- else 
+		%li= link_to "By Region", "/newspapers/region"
+		%li= @region
+
+.newspaper_region 
+
+	%h1= @page_title
+
+	.row
+		.col-md-3
+			%ul
+				- @regions.each do |region|
+					%li{ :class => (region == @region) ? 'active' : '' }= link_to region, "/newspapers/region/#{region.parameterize}"
+
+		.col-md-9
+			- if @titles.nil?
+				= image_tag('map-newspaper.png', :class => 'home-map', :usemap => "#map")
+			- else
+				%table.table
+					%thead
+						%tr
+							%th Title
+							%th 
+							%th Years
+					%tbody
+						- @titles.each do |title| 
+							%tr
+								%td= link_to image_tag(title[:logo], :class => 'newspaper-logo'), "/newspapers/title/#{title[:title].parameterize}"
+								%td= link_to title[:title], "/newspapers/title/#{title[:title].parameterize}"
+								%td= "#{title[:start_year]}-#{title[:end_year]}"
+
+
+
+%map#map{ :name => "Map"}
+	%area{ :shape => "poly", :coords => "100,7,105,5,105,9,110,15,112,13,113,17,117,16,126,22,129,29,129,37,122,42,106,21,108,20", :href => "/newspapers/region/northland", :alt => "Northland", :title => ""}
+	%area{ :shape => "poly", :coords => "122,43,124,47,132,63,141,58,145,61,151,61,150,49,143,38,142,40,143,47,143,55,143,58,138,55,134,44,129,37", :href => "/newspapers/region/auckland", :alt => "Auckland", :title => ""}
+	%area{ :shape => "poly", :coords => "132,64,133,69,134,73,131,84,130,90,132,92,134,100,149,101,159,93,156,91,152,90,145,81,145,63,141,60", :href => "/newspapers/region/waikato", :alt => "Waikato", :title => ""}
+	%area{ :shape => "poly", :coords => "146,63,146,80,148,84,155,90,158,91,160,94,166,89,171,85,176,79,178,74,172,78,165,76,152,68,151,63", :href => "/newspapers/region/bay-of-plenty", :alt => "Bay Of Plenty", :title => ""}
+	%area{ :shape => "poly", :coords => "181,101,178,97,168,90,177,81,178,77,181,72,186,70,189,71,192,73,188,83,188,91,184,93,181,96", :href => "/newspapers/region/gisborne", :alt => "Gisborne", :title => ""}
+	%area{ :shape => "poly", :coords => "131,90,133,101,131,105,127,109,124,108,120,107,117,105,117,101,122,97,127,94", :href => "/newspapers/region/taranaki", :alt => "Taranaki", :title => ""}
+	%area{ :shape => "poly", :coords => "126,110,133,104,134,101,149,101,149,113,148,120,145,126,142,132,136,135,138,130,139,121,138,118,132,114", :href => "/newspapers/region/manawatu", :alt => "Manawatu", :title => ""}
+	%area{ :shape => "poly", :coords => "157,129,164,121,167,111,165,110,164,108,168,102,172,100,179,99,166,90,160,94,150,101,150,116,148,122", :href => "/newspapers/region/hawke-s-Bay", :alt => "Hawke's Bay", :title => ""}
+	%area{ :shape => "poly", :coords => "139,147,147,144,156,130,148,123,146,128,142,133,138,135,134,137,129,142", :href => "/newspapers/region/wellington", :alt => "Wellington", :title => ""}
+	%area{ :shape => "poly", :coords => "123,132,120,138,112,147,110,152,103,160,104,128,109,134,111,142", :href => "/newspapers/region/nelson", :alt => "Nelson", :title => ""}
+	%area{ :shape => "poly", :coords => "121,159,117,159,110,164,104,164,105,159,110,153,114,146,122,138,125,137,126,143,126,151", :href => "/newspapers/region/marlborough", :alt => "Marlborough", :title => ""}
+	%area{ :shape => "poly", :coords => "102,130,96,134,96,144,89,151,83,164,75,175,53,194,46,195,32,214,26,225,24,233,28,237,35,237,39,234,49,212,67,195,87,177,102,162", :href => "/newspapers/region/west-coast", :alt => "West Coast", :title => ""}
+	%area{ :shape => "poly", :coords => "82,215,85,208,85,200,100,190,108,190,110,187,106,184,105,178,110,174,114,170,120,160,117,160,111,165,105,165,103,163,97,167,85,181,78,188,68,194,69,199,70,204,73,210,77,213", :href => "/newspapers/region/canterbury", :alt => "Canterbury", :title => ""}
+	%area{ :shape => "poly", :coords => "39,255,48,252,59,243,67,239,79,227,81,216,75,214,70,208,68,203,67,197,52,210,50,216,49,217,45,222,40,235,42,245", :href => "/newspapers/region/otago", :alt => "Otago", :title => ""}

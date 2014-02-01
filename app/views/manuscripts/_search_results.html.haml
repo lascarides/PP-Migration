@@ -1,0 +1,13 @@
+%table.table
+	%thead
+		%tr
+			%th Date
+			%th Title
+	%tbody
+		- @search_results['search']['results'].each do |result|
+			%tr
+				%td
+					%a{:href => "/#{@type}/#{result['id']}"}
+						= result['date']
+				%td
+					%a{:href => "/#{@type}/#{result['id']}"}= result['title']

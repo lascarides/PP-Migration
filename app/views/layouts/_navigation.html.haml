@@ -7,9 +7,9 @@
 		= link_to "Papers Past", root_path, :class => @type.nil? ? 'navbar-brand' : 'navbar-brand active'
 	.navbar-collapse.collapse
 		%ul.nav.navbar-nav
-			- SUPPORTED_FORMATS.each do |fmt|
+			- FORMAT_LABELS.each do |fmt, label|
 				%li{:class => @type.to_s.tableize.to_sym == fmt ? 'active' : 'inactive' }
-					= link_to fmt.to_s.titleize, params["query"].blank? ? "/#{fmt}" : "/#{fmt}/search?query=#{params["query"]}"
+					= link_to label, params["query"].blank? ? "/#{fmt}" : "/#{fmt}/search?query=#{params["query"]}"
 		%ul.nav.navbar-nav.navbar-right
 			%li
 				=link_to "About Papers Past", '/about'

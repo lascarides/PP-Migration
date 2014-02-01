@@ -6,37 +6,14 @@
 				%small Explore the full text of New Zealand's history.
 	.row
 		.col-md-6
-			.media
-				%a.pull-left{:href => '/newspapers'}
-					%img.media-object{ :src => '/assets/icon-home-newspapers.jpg'}
-				.media-body
-					%h2.media-heading
-						%a{:href => '/newspapers'} Newspapers
-					%p 83 newspaper titles. 490,856 newspaper issues. 3,108,938 pages. 39,066,113 articles.
-			.media
-				%a.pull-left{:href => '/periodicals'}
-					%img.media-object{ :src => '/assets/icon-home-periodicals.jpg'}
-				.media-body
-					%h2.media-heading
-						%a{:href => '/periodicals'} Periodicals
-
-					%p 83 newspaper titles. 490,856 newspaper issues. 3,108,938 pages. 39,066,113 articles.
-			.media
-				%a.pull-left{:href => '/newspaper'}
-					%img.media-object{ :src => '/assets/icon-home-newspapers.jpg'}
-				.media-body
-					%h2.media-heading
-						%a{:href => '/newspaper'} Manuscripts
-
-					%p 83 newspaper titles. 490,856 newspaper issues. 3,108,938 pages. 39,066,113 articles.
-			.media
-				%a.pull-left{:href => '/newspaper'}
-					%img.media-object{ :src => '/assets/icon-home-newspapers.jpg'}
-				.media-body
-					%h2.media-heading
-						%a{:href => '/newspaper'} Parliamentary Papers
-
-					%p 83 newspaper titles. 490,856 newspaper issues. 3,108,938 pages. 39,066,113 articles.
+			- FORMAT_LABELS.each do |format, label|
+				.media
+					%a.pull-left{:href => "/#{format}"}
+						%img.media-object{ :src => "/assets/icon-home-#{format.to_s.dasherize}.jpg"}
+					.media-body
+						%h2.media-heading
+							%a{:href => "/#{format}"}= label
+						%p 83 #{label} titles. 490,856 newspaper issues. 3,108,938 pages. 39,066,113 articles.
 		.col-md-6
 			.alert.alert-success
 				%h3 About our new look

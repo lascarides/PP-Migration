@@ -1,5 +1,8 @@
 class Newspaper < NLNZObject
 
+	require 'nokogiri'
+	require 'open-uri'
+
 	def self.find(id)
 		result = DigitalNZ.find(id)
 		record = {}
@@ -94,5 +97,27 @@ class Newspaper < NLNZObject
 			'Albertland Gazette' => 131
 		}.to_a
 	end
+
+	def self.titles_for_date(today)
+		date_formatted = today.strftime("%Y.%0m.%0d")
+		url = "http://paperspast.natlib.govt.nz/cgi-bin/paperspast?a=d&cl=CL2.#{date_formatted}&sp="
+		page = Nokogiri::HTML( open(url) )
+		page.css("#browse-results .tri-list li a").collect { |item| 
+			item.content
+		}
+	end
+
+	def self.num_pages_for_date(today, code)
+		date_formatted = today.strftime("%Y%0m%0d")
+		url = "http://paperspast.natlib.govt.nz/cgi-bin/paperspast?a=d&d=#{code}#{date_formatted}"
+		page = Nokogiri::HTML( open(url) )
+		page.css("#contents-pageslist li").count
+	end
+
+	def self.page_image_url(today, code, page, scale)
+		date_formatted = today.strftime("%Y%0m%0d")
+		url = "http://paperspast.natlib.govt.nz/cgi-bin/imageserver/imageserver.pl?oid=#{code}#{date_formatted}.1.#{page}&scale=#{scale}&color=32&ext=gif&key="
+	end
+
 
 end

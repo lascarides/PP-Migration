@@ -1,0 +1,19 @@
+.row
+	.col-md-3
+		= image_tag("home-#{@type.to_s.dasherize}.jpg", :class => 'home-image')
+	.col-md-4.date-column
+		%h3= link_to "By Date", "/#{@type.to_s.dasherize}/date"
+
+		%ul
+			- 12.times do |d|
+				- decade = (d * 10) + 1830
+				%li= link_to "#{decade}s", "/#{@type.to_s.dasherize}/date/#{decade}s"
+				
+		%p= link_to "Looking for newspapers after 1945?", "#"
+	.col-md-5
+		%h3= link_to "By collection", "/#{@type.to_s.dasherize}/title"
+		%ul
+			- ['Manuscripts Collection', 'McLean, Donald', 'Sir Donald McLean Papers', 'Holyoake, Keith Jacka', 'Marshall, John Ross', 'Inward letters in Maori', 'Pacific Manuscripts Bureau Records of the Pacific Area', 'Hutt County Council Records', 'A H & A W Reed Ltd Records', 'New Zealand Federation of Labour Records'].each do |section|
+				%li
+					%a{:href => "/#{@type.to_s.dasherize}/collection/#{section.parameterize}"}= section
+		= link_to 'See all collections...', "/#{@type.to_s.dasherize}/collection", :class => 'btn'

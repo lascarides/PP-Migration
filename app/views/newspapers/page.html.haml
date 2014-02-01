@@ -1,0 +1,36 @@
+%ol.breadcrumb
+	%li= link_to 'Newspapers', "/newspapers"
+	- if @title.nil?
+		%li All
+	- else 
+		%li= link_to "All", "/newspapers/title"
+		%li= link_to @title[:title], "/newspapers/title/#{@title[:title].parameterize}"
+	- unless params[:year].nil?
+		%li= link_to params[:year], "/newspapers/title/#{@title[:title].parameterize}/#{params[:year]}"
+
+.newspaper-pages
+	%h1
+		= link_to @title[:title], "/newspapers/title/#{@title[:title].parameterize}"
+		%small
+			for
+			= @today.strftime("%A, %e %B, %Y")
+
+
+	%ul.nav.nav-tabs
+		%li.active= link_to "Page thumbnails", "#thumbnails", 'data-toggle' => "tab"
+		%li= link_to "Page contents outline", "#contents", 'data-toggle' => "tab"
+
+	.tab-content
+
+		#thumbnails.tab-pane.fade.in.active
+			- (1..@num_pages).each do |pn|
+				.newspaper-page
+					= link_to image_tag(Newspaper.page_image_url(@today, @code, pn, 3)), "/newspapers/title/#{@title[:title].parameterize}/#{@year}/#{@month}/#{@day}/#{pn}"
+					%p= "Page #{pn}"
+
+		#contents.tab-pane.fade
+
+
+
+
+

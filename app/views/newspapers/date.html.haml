@@ -1,0 +1,48 @@
+%ol.breadcrumb
+	%li= link_to 'Newspapers', "/newspapers"
+	- if @region.nil?
+		%li By Date
+	- else 
+		%li= link_to "By Date", "/newspapers/date"
+		%li= params[:year]
+
+.newspaper_date
+
+	%h1 Browse titles by date
+
+	.row.date-picker
+		.col-md-2
+			%h3 Decade
+			%ul
+				- (183..194).each do |decade|
+					%li{ :class => ("#{decade}0s" == @decade) ? 'active' : 'inactive'}= link_to "#{decade}0s", "/newspapers/date/#{decade}0s"
+		.col-md-2
+			- unless @decade.blank?
+				%h3 Year
+				%ul
+					- ((@decade.to_i)..(@decade.to_i + 9)).each do |yr|
+						%li{ :class => (@year == yr) ? 'active' : 'inactive'}= link_to yr, "/newspapers/date/#{yr}"
+		.col-md-2
+			- unless @year.blank?
+				%h3 Month
+				%ul
+					- Date::MONTHNAMES.compact.each_with_index do |mn, i|
+						%li{ :class => (@month == i + 1) ? 'active' : 'inactive'}= link_to mn, "/newspapers/date/#{@year}/#{i+1}"
+		.col-md-2
+			- unless @month == 0
+				%h3 Day
+				%ul
+					- (1..31).each do |n|
+						%li{ :class => (@day == n) ? 'active' : 'inactive'}= link_to n, "/newspapers/date/#{@year}/#{@month}/#{n}"
+
+		.col-md-4
+			- unless @titles.nil?
+				%h3 Titles available for this day
+				%ul 
+					- if @titles.empty?
+						%li
+							%em None
+					- else 
+						- @titles.each do |title|
+							%li= link_to title,  "/newspapers/title/#{title.parameterize}/#{@year}/#{@month}/#{@day}"
+

@@ -1,0 +1,20 @@
+.row
+	.col-md-3
+		= image_tag("home-#{@type.to_s.dasherize}.jpg", :class => 'home-image')
+	.col-md-4.date-column
+		%h3= link_to "By Date", "/#{@type.to_s.dasherize}/date"
+
+		%ul
+			- 12.times do |d|
+				- decade = (d * 10) + 1830
+				%li= link_to "#{decade}s", "/#{@type.to_s.dasherize}/date/#{decade}s"
+				
+		%p= link_to "Looking for newspapers after 1945?", "#"
+	.col-md-5
+		%h3= link_to "By title", "/#{@type.to_s.dasherize}/title"
+		%ul
+			%li
+				%a{:href => "/#{@type.to_s.dasherize}/title/te-ao-hou"} Te Ao Hou
+			%li
+				%a{:href => "/#{@type.to_s.dasherize}/title/te-ao-hou"} Transactions and Proceedings of the Royal Society of New Zealand
+		= link_to 'See all titles...', "/#{@type.to_s.dasherize}/title", :class => 'btn'

@@ -1,0 +1,14 @@
+%table.table
+	%thead
+		%tr
+			%th Date
+			%th Article
+			%th Newspaper
+	%tbody
+		- @search_results['search']['results'].each do |result|
+			- parts = result['title'].gsub(/^(.*)\(([^(]+),(.*)\)/, '\1**\2**\3').split("**")
+			%tr
+				%td= parts[2]
+				%td
+					%a{:href => "/#{@type}/#{result['id']}"}= parts[0]
+				%td= parts[1]

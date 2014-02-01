@@ -1,5 +1,6 @@
 $ppGreen: #93b05c;
 $ppAccent: #995078;
+$ppGray: #e3e3d4;
 
 
 @mixin border-radius($a: false, $b: false, $c: false, $d: false, $top-left: 0, $top-right: 0, $bottom-right: 0, $bottom-left: 0, $top: false, $bottom: false, $right: false, $left: false, $radius: false) {
@@ -64,6 +65,13 @@ h1, h2, h3, h4, h5, h6, label, th {
 	font-family: "Clarendon";
 }
 
+h1 {
+	color: darken($ppGreen, 20%);
+	padding: 0.3em 0;
+	border-bottom: 1px solid darken($ppGreen, 20%);
+	margin: 0 0 0.5em;
+}
+
 .navbar {
 	background: $ppGreen;
 	.navbar-brand {
@@ -112,13 +120,36 @@ ol.breadcrumb {
 	}
 }
 
-.format-home {
-	h2 {
-		color: darken($ppGreen, 20%);
-		padding: 0.3em 0;
-		border-bottom: 1px solid darken($ppGreen, 20%);
-		margin: 0 0 0.5em;
+.date-picker {
+	ul, li {
+		margin: 0;
+		padding: 0;
+		list-style-type: none;
 	}
+	ul {
+		border-top: 1px solid $ppGray;
+	}
+	li a {
+		display: block;
+		padding: 0.3em;
+		margin: 0;
+		border-bottom: 1px solid $ppGray;
+	}
+	li a:hover {
+		background: $ppGray;
+	}
+	li.active {
+		background: url(/assets/arrow-right.png) 100% 50% no-repeat $ppGreen;
+		background-size: auto 80%;
+		font-weight: bold;
+		color: white;
+		a, a:hover {
+			color: white;
+		}
+	}
+}
+
+.format-home {
 	h3 {
 		margin: 0 0 0.5em;
 		background: lighten($ppGreen, 40%);
@@ -164,9 +195,42 @@ ol.breadcrumb {
 	}
 }
 
+.newspaper-pages {
+	.newspaper-page {
+		float: left;
+		margin: 10px 10px 10px 0;
+		text-align: center;
+		img {
+			max-width: 100%;
+			display: block;
+		}
+		p {
+			text-transform: uppercase;
+			color: $ppGreen;
+		}
+	}
+}
+
+img.masthead {
+	max-width: 100%;
+}
+
+
+table {
+	img.newspaper-logo {
+		max-width: 300px;
+	}
+}
+
 .results {
 	h1 span, .results-info span {
 		color: $ppAccent;
+	}
+	p.results-info {
+		padding: 1em 0 0;
+	}
+	tr:hover {
+		background: lighten($ppGreen, 40%);
 	}
 }
 
@@ -178,7 +242,7 @@ ol.breadcrumb {
 		padding-top: 1em;
 	}
 	.image-pad {
-		background: #e3e3d4;
+		background: $ppGray;
 		padding: 1em;
 	}
 }

@@ -11,12 +11,15 @@ require "rails/test_unit/railtie"
 # you've limited to :test, :development, or :production.
 Bundler.require(:default, Rails.env)
 
-SUPPORTED_FORMATS = [
-    :newspapers,
-    :periodicals,
-    :manuscripts,
-    :parliamentary_papers
-]
+FORMAT_LABELS = {
+    :newspapers             => 'Newspapers',
+    :periodicals            => 'Magazines and Journals',
+    :parliamentary_papers   => 'Parliamentary Papers',
+    :manuscripts            => 'Letters and Diaries',
+    :books            => 'Books'
+}
+
+SUPPORTED_FORMATS = FORMAT_LABELS.keys
 
 
 module PPMigration

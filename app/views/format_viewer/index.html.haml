@@ -1,13 +1,13 @@
 .format-home
 	.row
 		.col-md-12
-			%h2= @type.to_s.humanize
+			%h1= FORMAT_LABELS[@type.to_sym]
 	.row
 		.col-md-3
 			%p <strong>Papers Past</strong> contains more than three million pages of digitised New Zealand newspapers and periodicals. The collection covers the years 1839 to 1945 and includes 83 publications from all regions of New Zealand. 
 		.col-md-9
 			.well
-				%h3= "Search the full text of all #{@type.to_s.humanize}"
+				%h3= "Search the full text of all #{FORMAT_LABELS[@type.to_sym].downcase}"
 				%form.form-inline{:role => "form", :action => "/#{@type}/search", :method => 'get'}
 					%input#query.form-control.input-lg{:name => 'query', :placeholder => "What are you looking for?"}
 					%button.btn.btn-default.input-lg{:type => "submit"} Search
@@ -20,35 +20,4 @@
 						%label This exact phrase
 						.pull-right
 							%a{:href => '#'} More search options
-	.row
-		.col-md-3
-			= image_tag("home-#{@type.to_s.dasherize}.jpg", :class => 'home-image')
-		.col-md-3.date-column
-			%h3 Explore by date
-
-			#accordion.panel-group
-				- 12.times do |d|
-					- decade = (d * 10) + 1830
-					.panel.panel-default
-						.panel-heading
-							%h4.panel-title
-								%a{ 'data-toggle' => "collapse", 'data-parent' => "#accordion", :href => "#collapse#{d}"}
-									%label= "#{decade}s"
-					
-					.panel-collapse.collapse.decade{ :id => "collapse#{d}"}
-						.panel-body
-							- 10.times do |yr|
-								%a{:href => "/newspapers/date/#{decade + yr}"}
-									= decade + yr
-				%p= link_to "Looking for newspapers after 1945?", "#"
-
-		.col-md-3
-			%h3 By NZ region 
-			= image_tag('map-newspaper.png', :class => 'home-map')
-		.col-md-3
-			%h3 By title 
-			%ul
-				- Newspaper.collections[0..15].each do |paper, number|
-					%li
-						%a{:href => "/newspapers/title/#{paper.parameterize}"}= paper
-			%a.btn{:href => '#'} See more titles...					
+	= render :partial => "#{@type}/home_cols"
