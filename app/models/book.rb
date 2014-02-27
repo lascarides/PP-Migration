@@ -1,0 +1,2 @@
+class Book < NLNZObject
+end

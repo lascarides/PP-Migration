@@ -19,5 +19,12 @@
 						%input#mode3{:type => "radio", :name => "mode", :value => "exact"}
 						%label This exact phrase
 						.pull-right
-							%a{:href => '#'} More search options
+							%a{:href => "javascript:$('.advanced-search-options').show();"} More search options
+					.advanced-search-options
+						.row 
+							.col-md-8
+								%h4 Narrow matches by date
+								%h4 Narrow matches by title/region
+								%h4 Narrow matches by article type
+
 	= render :partial => "#{@type}/home_cols"

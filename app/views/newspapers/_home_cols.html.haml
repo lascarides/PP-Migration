@@ -13,7 +13,7 @@
 
 	.col-md-3
 		%h3= link_to "By NZ Region", "/#{@type.to_s.dasherize}/region"
-		= image_tag("map-newspaper.png", :class => 'home-map')
+		= link_to image_tag("map-newspaper.png", :class => 'home-map'), "/#{@type.to_s.dasherize}/region"
 	.col-md-3
 		%h3= link_to "By title", "/#{@type.to_s.dasherize}/title"
 		%ul

@@ -25,13 +25,15 @@
 						%tr
 							%th Title
 							%th 
-							%th Years
+							%th First Year
+							%th Last Year
 					%tbody
 						- @titles.each do |title| 
 							%tr
 								%td= link_to image_tag(title[:logo], :class => 'newspaper-logo'), "/newspapers/title/#{title[:title].parameterize}"
 								%td= link_to title[:title], "/newspapers/title/#{title[:title].parameterize}"
-								%td= "#{title[:start_year]}-#{title[:end_year]}"
+								%td= title[:start_year]
+								%td= title[:end_year]
 
 
 
