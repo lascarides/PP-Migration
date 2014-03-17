@@ -170,29 +170,6 @@ ol.breadcrumb {
 			margin-left: 23%;
 		}
 	}
-	.well {
-		background: lighten($ppGreen, 40%);
-		h3 {
-			margin: 0 0 0.5em;
-			padding: 0;
-			background: transparent;
-		}
-		#query {
-			width: 80%;
-		}
-		button {
-			width: 19%;
-			background: $ppAccent;
-			color: #fff;
-		}
-		.tools {
-			padding: 1em 0 0;
-			label {
-				padding: 0 1em 0 0;
-				font-weight: normal;
-			}
-		}
-	}
 }
 
 .newspaper-pages {
@@ -223,11 +200,30 @@ table {
 }
 
 .results {
+	h1 {
+		margin-bottom: 0;
+	}
+	.well {
+		border-radius: 0;
+		margin: 0;
+		background: lighten($ppGreen, 40%);
+	}
 	h1 span, .results-info span {
 		color: $ppAccent;
 	}
-	p.results-info {
-		padding: 1em 0 0;
+	.btn-info {
+		background: $ppAccent;
+		border: 1px solid $ppAccent;
+	}
+	.search-controls {
+		padding: 1em 0;
+	}
+	.results-info {
+		margin: 0;
+		padding: 1em 0;
+	}
+	th {
+		background: lighten($ppGreen, 20%);
 	}
 	tr:hover {
 		background: lighten($ppGreen, 40%);
@@ -239,12 +235,140 @@ table {
 		display: block;
 	}
 	.tab-pane {
-		padding-top: 1em;
-	}
-	.image-pad {
-		background: $ppGray;
+		border: 1px solid $ppGray;
+		border-top: 0;
 		padding: 1em;
 	}
+	.image-pad {
+	}
+}
+
+.region-group {
+	padding: 0.5em;
+	margin: 0 0 1em;
+	border-radius: 0.5em;
+	border: 1px solid $ppGray;
+	display: inline-block;
+	width: 100%;
+	.region-title {
+		font-weight: bold;
+	}
+	input {
+		background: white;
+	}
+}
+
+
+.search-box {
+	background: lighten($ppGreen, 40%);
+	position: relative;
+	padding-bottom: 2.5em;
+	h3 {
+		margin: 0 0 0.5em;
+		padding: 0;
+		background: transparent;
+	}
+	#query {
+		width: 80%;
+	}
+	button {
+		width: 19%;
+		background: $ppAccent;
+		color: #fff;
+	}
+	.tools {
+		padding: 1em 0 0;
+		label {
+			font-family: "Avenir";
+			padding: 0 1em 0 0;
+			font-weight: normal;
+		}
+	}
+	#search-options-toggle {
+		display: block;
+		padding: 0.5em 0.5em 0.25em;
+		width: 16em;
+		position: absolute;
+		bottom: 0;
+		right: 0;
+		background: $ppGreen;
+		color: lighten($ppGreen, 50%);
+		border: 1px solid lighten($ppGreen, 10%);
+		border-bottom: 0;
+		border-right: 0;
+		text-align: center;
+		font-weight: bold;
+		text-transform: uppercase;
+		border-radius: 1em 0 0 0;
+	}
+
+	.advanced-search-options {
+		h3.narrow {
+			margin: 0.5em 0 0;
+			font-size: 1.4em;
+		}
+	}
+	.slider-range {
+		margin: 0.5em 1em;
+	}
+	.ui-slider-range {
+		background: $ppGreen;
+	}
+	.ui-slider-handle {
+		background: white;
+		border: 1px solid $ppGreen;
+	}
+	.date-select {
+		text-align: center;
+		h4 {
+			text-align: left;
+		}
+		em {
+			display: block;
+			margin-top: 0.5em;
+		}
+	}
+	.title-note {
+		display: none;
+		color: #a00;
+		margin: 0 0 1em;
+	}
+	.search-cats-col {
+		-moz-column-count:3; /* Firefox */
+		-webkit-column-count:3; /* Safari and Chrome */
+		column-count:3;
+		input {
+			display: inline;
+		}
+	}
+	.search-option-panel {
+		border-radius: 5px;
+		background: white;
+		h4 {
+			padding: 0.5em;
+			color: darken($ppGreen, 20%);
+			overflow: auto;
+		}
+		.search-option-panel-content {
+			padding: 0 1em 1em 1em;
+		}
+		.slider-caption {
+			text-align: center;
+		}
+	}
+	.active {
+		h4 span {
+			opacity: 0;
+  		}
+	}
+	.inactive {
+		display: none;
+	}
+}
+
+
+.dataTables_filter {
+	display: none;
 }
 
 /*

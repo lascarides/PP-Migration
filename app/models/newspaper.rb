@@ -119,5 +119,9 @@ class Newspaper < NLNZObject
 		url = "http://paperspast.natlib.govt.nz/cgi-bin/imageserver/imageserver.pl?oid=#{code}#{date_formatted}.1.#{page}&scale=#{scale}&color=32&ext=gif&key="
 	end
 
+	def self.description
+		"<strong>Papers Past</strong> contains more than three million pages of digitised New Zealand newspapers and periodicals. The collection covers the years 1839 to 1945 and includes 83 publications from all regions of New Zealand."
+	end
+
 
 end

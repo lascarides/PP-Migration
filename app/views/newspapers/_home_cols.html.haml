@@ -1,23 +1,21 @@
 .row
-	.col-md-3
-		= image_tag("home-#{@type.to_s.dasherize}.jpg", :class => 'home-image')
-	.col-md-3.date-column
-		%h3= link_to "By Date", "/#{@type.to_s.dasherize}/date"
+	.col-md-4.date-column
+		%h3= link_to "Explore by Date", "/#{@type.to_s.dasherize}/date"
 
 		%ul
 			- 12.times do |d|
 				- decade = (d * 10) + 1830
 				%li= link_to "#{decade}s", "/#{@type.to_s.dasherize}/date/#{decade}s"
 				
-		%p= link_to "Looking for newspapers after 1945?", "#"
+		= link_to "Looking for newspapers after 1945?", "/about/dates"
 
-	.col-md-3
+	.col-md-4
 		%h3= link_to "By NZ Region", "/#{@type.to_s.dasherize}/region"
 		= link_to image_tag("map-newspaper.png", :class => 'home-map'), "/#{@type.to_s.dasherize}/region"
-	.col-md-3
-		%h3= link_to "By title", "/#{@type.to_s.dasherize}/title"
+	.col-md-4
+		%h3= link_to "By Title", "/#{@type.to_s.dasherize}/title"
 		%ul
-			- Newspaper.collections[0..15].each do |paper, number|
+			- Newspaper.collections[0..12].each do |paper, number|
 				%li
 					%a{:href => "/#{@type.to_s.dasherize}/title/#{paper.parameterize}"}= paper
 		= link_to 'See all titles...', "/#{@type.to_s.dasherize}/title", :class => 'btn'

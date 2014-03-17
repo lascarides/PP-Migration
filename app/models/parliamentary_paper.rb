@@ -20,4 +20,8 @@ class ParliamentaryPaper < NLNZObject
 		'&and[primary_collection][]=AtoJsOnline'
 	end
 
+	def self.description
+		"<strong>Papers Past</strong> lorem sdhfkjdsh sd fkjsf kjshfk skdjf ksdhfkj sdkjfhksdj f."
+	end
+
 end

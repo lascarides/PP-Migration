@@ -3,6 +3,10 @@
 	%h1=raw "Searching #{FORMAT_LABELS[@type.to_sym].downcase} for &quot;<span>#{params[:query]}</span>&quot;"
 
 	.well 
+		.search_format_tabs
+			- FORMAT_LABELS.each do |fmt, label|
+				= link_to label, params["query"].blank? ? "/#{fmt}" : "/#{fmt}/search?query=#{params["query"]}"
+
 		%form.form-inline{:role => "form", :action => "/#{@type}/search", :method => 'get'}
 			.row
 				.col-md-9
@@ -19,6 +23,17 @@
 				.col-md-3
 					%button.btn.btn-info.input-lg.form-control{:type => "submit"} Search
 
-	%p.results-info=raw "There are #{number_with_delimiter(@search_results['search']['result_count'])} items matching <span>#{params[:query]}</span>. Here are the first #{@search_results['search']['per_page']}."
+		.search-controls.pull-right
+			Sort by 
+			.btn-group.btn-group-sm
+				%button.btn.btn-default{ :type => "button" } Date
+				%button.btn.btn-default{ :type => "button" } Title
+				%button.btn.btn-default{ :type => "button" } Relevance
+			Sort order 
+			.btn-group.btn-group-sm
+				%button.btn.btn-default{ :type => "button" } A-Z
+				%button.btn.btn-default{ :type => "button" } Z-A
+
+		%p.results-info=raw "There are #{number_with_delimiter(@search_results['search']['result_count'])} items matching <span>#{params[:query]}</span>. Here are the first #{@search_results['search']['per_page']}."
 
 	= render :partial => "#{@type}/search_results"

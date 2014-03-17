@@ -1,6 +1,4 @@
 .row
-	.col-md-3
-		= image_tag("home-#{@type.to_s.dasherize}.jpg", :class => 'home-image')
 	.col-md-4.date-column
 		%h3= link_to "By Date/Session", "/#{@type.to_s.dasherize}/date"
 

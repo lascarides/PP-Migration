@@ -26,7 +26,7 @@
 			- (1..@num_pages).each do |pn|
 				.newspaper-page
 					= link_to image_tag(Newspaper.page_image_url(@today, @code, pn, 3)), "/newspapers/title/#{@title[:title].parameterize}/#{@year}/#{@month}/#{@day}/#{pn}"
-					%p= "Page #{pn}"
+					%p= link_to "Page #{pn}", "/newspapers/title/#{@title[:title].parameterize}/#{@year}/#{@month}/#{@day}/#{pn}"
 
 		#contents.tab-pane.fade
 

@@ -3,7 +3,7 @@
 	- if @title.nil?
 		%li All
 	- else 
-		%li= link_to "All", "/newspapers/title"
+		%li= link_to @title[:region], "/newspapers/region/#{@title[:region].parameterize}"
 		%li= link_to @title[:title], "/newspapers/title/#{@title[:title].parameterize}"
 	- if @year > 0
 		%li= link_to @year, "/newspapers/title/#{@title[:title].parameterize}/#{@year}"
@@ -17,20 +17,22 @@
 
 		%h1 All newspaper titles
 
-		%table.table
+		%table.table.datatable
 			%thead
 				%tr
 					%th Masthead
 					%th Title
 					%th Region
-					%th Years
+					%th First year
+					%th Last year
 			%tbody
 				- NewspaperTitle.info.each do |code, title| 
 					%tr
 						%td= link_to image_tag(title[:logo], :class => 'newspaper-logo'), "/newspapers/title/#{title[:title].parameterize}"
 						%td= link_to title[:title], "/newspapers/title/#{title[:title].parameterize}"
 						%td= link_to title[:region], "/newspapers/region/#{title[:region].parameterize}"
-						%td= "#{title[:start_year]}-#{title[:end_year]}"
+						%td= title[:start_year]
+						%td= title[:end_year]
 
 
 
@@ -38,15 +40,26 @@
 	- else
 		%h1
 			= @title[:title]
-			%small= "#{@title[:region]}, #{@title[:start_year]}-#{@title[:end_year]}"
+			%small
+				= link_to "#{@title[:region]},", "/newspapers/region/#{@title[:region].parameterize}"
+				= " #{@title[:start_year]}-#{@title[:end_year]}"
 
 		.row
 			.col-md-6
 
-				%h2 Browse issues
+				%h3
+					Search within
+
+
+				%form.form{:role => "form", :action => "/#{@type}/search", :method => 'get'}
+					%input#query.form-control.input-lg{:name => 'query', :placeholder => "What are you looking for?"}
+					.pull-right
+						%a{:href => "javascript:$('.advanced-search-options').slideToggle();"} More search options
+
+				%h3 Browse issues
 
 				- if @year > 0
-					= link_to "Show all years", "/newspapers/title/#{@title[:title].parameterize}"
+					%p= link_to "Show earlier years", "/newspapers/title/#{@title[:title].parameterize}"
 
 				- (@title[:start_year]..@title[:end_year]).each do |yr|
 					- if params[:year] == yr or params[:year].nil?
@@ -72,6 +85,9 @@
 												- daydate = (w*7) + d + 1
 												%td
 													= link_to daydate,  "/newspapers/title/#{@title[:title].parameterize}/#{@year}/#{@month}/#{daydate}" if daydate < 32
+
+				- if @year > 0
+					%p= link_to "Show later years", "/newspapers/title/#{@title[:title].parameterize}"
 
 			.col-md-6
 

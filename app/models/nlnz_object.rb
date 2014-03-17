@@ -16,4 +16,8 @@ class NLNZObject
 		''
 	end
 
+	def self.description
+		"<strong>Papers Past</strong> contains more than three million pages of digitised New Zealand newspapers and periodicals. The collection covers the years 1839 to 1945 and includes 83 publications from all regions of New Zealand."
+	end
+
 end

@@ -1,0 +1,58 @@
+.advanced-search-options
+
+	%h3.narrow Only show matches from...
+
+	.row
+		.col-md-12
+
+			#search-options-dates.search-option-panel
+				%h4 
+					Dates
+				.search-option-panel-content
+					.slider-range
+					.slider-caption
+						From 
+						%input#year-start{ :type => 'text', :value => 1830, :size => 5 }
+						to
+						%input#year-end{ :type => 'text', :value => 1945, :size => 5 }
+						%em.date-precise
+							or,
+							= link_to 'choose a more precise date range', '#'
+
+	.row
+		.col-md-4
+			.search-option-panel
+				%h4 
+					Parliamentary sessions
+				.search-option-panel-content
+					%ul
+						- 5.times do 
+							%li
+								= check_box_tag :article, "articles", true
+								Sample
+
+		.col-md-4
+			.search-option-panel
+				
+				%h4 
+					Volumes
+
+				.search-option-panel-content
+					%ul
+						- 5.times do 
+							%li
+								= check_box_tag :article, "articles", true
+								Sample
+
+		.col-md-4
+			.search-option-panel
+				
+				%h4 
+					Topics
+
+				.search-option-panel-content
+					%ul
+						- 5.times do 
+							%li
+								= check_box_tag :article, "articles", true
+								Sample

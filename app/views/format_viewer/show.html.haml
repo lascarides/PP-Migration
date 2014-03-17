@@ -8,8 +8,9 @@
 	%li.active= @item[:title]
 
 .item 
-	%h1= @item[:title]
-	%p= "#{@item[:newspaper]}, #{@item[:date]}"
+	%h1
+		= @item[:title]
+		%small= "#{@item[:newspaper]}, #{@item[:date]}"
 
 	%ul.nav.nav-tabs
 		%li.active= link_to "View article image", "#images", 'data-toggle' => "tab"

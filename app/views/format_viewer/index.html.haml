@@ -1,30 +1,24 @@
 .format-home
 	.row
-		.col-md-12
-			%h1= FORMAT_LABELS[@type.to_sym]
-	.row
 		.col-md-3
-			%p <strong>Papers Past</strong> contains more than three million pages of digitised New Zealand newspapers and periodicals. The collection covers the years 1839 to 1945 and includes 83 publications from all regions of New Zealand. 
+			%h1= FORMAT_LABELS[@type.to_sym]
+			%p= raw(@format_class.description)
+			= image_tag("home-#{@type.to_s.dasherize}.jpg", :class => 'home-image')
+
 		.col-md-9
-			.well
+			.well.search-box
 				%h3= "Search the full text of all #{FORMAT_LABELS[@type.to_sym].downcase}"
 				%form.form-inline{:role => "form", :action => "/#{@type}/search", :method => 'get'}
 					%input#query.form-control.input-lg{:name => 'query', :placeholder => "What are you looking for?"}
 					%button.btn.btn-default.input-lg{:type => "submit"} Search
 					.tools
+						%input#mode3{:type => "radio", :name => "mode", :value => "exact"}
+						%label This <strong>exact phrase</strong>
 						%input#mode1{:type => "radio", :name => "mode", :value => "all", :checked => "checked"}
 						%label <strong>All</strong> of these words
 						%input#mode2{:type => "radio", :name => "mode", :value => "any"}
 						%label <strong>Any</strong> of these words
-						%input#mode3{:type => "radio", :name => "mode", :value => "exact"}
-						%label This exact phrase
-						.pull-right
-							%a{:href => "javascript:$('.advanced-search-options').show();"} More search options
-					.advanced-search-options
-						.row 
-							.col-md-8
-								%h4 Narrow matches by date
-								%h4 Narrow matches by title/region
-								%h4 Narrow matches by article type
 
-	= render :partial => "#{@type}/home_cols"
+					%a#search-options-toggle{:href => "/#{@type}/search_options"} More search options ⇊
+
+			= render :partial => "#{@type}/home_cols"

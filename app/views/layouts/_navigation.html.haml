@@ -9,7 +9,7 @@
 		%ul.nav.navbar-nav
 			- FORMAT_LABELS.each do |fmt, label|
 				%li{:class => @type.to_s.tableize.to_sym == fmt ? 'active' : 'inactive' }
-					= link_to label, params["query"].blank? ? "/#{fmt}" : "/#{fmt}/search?query=#{params["query"]}"
+					= link_to label, "/#{fmt}"
 		%ul.nav.navbar-nav.navbar-right
 			%li
 				=link_to "About Papers Past", '/about'

@@ -1,0 +1,16 @@
+.well.search-box
+	
+	%h3= "Search the full text of all #{FORMAT_LABELS[@type.to_sym].downcase}"
+
+	%form.form-inline{:role => "form", :action => "/#{@type}/search", :method => 'get'}
+		%input#query.form-control.input-lg{:name => 'query', :placeholder => "What are you looking for?"}
+		%button.btn.btn-default.input-lg{:type => "submit"} Search
+		.tools
+			%input#mode3{:type => "radio", :name => "mode", :value => "exact"}
+			%label This <strong>exact phrase</strong>
+			%input#mode1{:type => "radio", :name => "mode", :value => "all", :checked => "checked"}
+			%label <strong>All</strong> of these words
+			%input#mode2{:type => "radio", :name => "mode", :value => "any"}
+			%label <strong>Any</strong> of these words
+
+		= render :partial => "#{@type}/advanced_search_options"

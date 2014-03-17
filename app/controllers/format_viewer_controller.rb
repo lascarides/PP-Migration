@@ -2,6 +2,7 @@ class FormatViewerController < ApplicationController
 
   # STI : Invoices, Worksheets and Estimates use this controller
   before_filter :set_format_type
+  before_filter :build_regions
 
   def index
     respond_to do |format|
@@ -12,6 +13,13 @@ class FormatViewerController < ApplicationController
 
   def search
     @search_results = @format_class.search_results(params[:query])
+    respond_to do |format|
+      format.html {}
+      format.json {}
+    end
+  end
+
+  def search_options
     respond_to do |format|
       format.html {}
       format.json {}
@@ -35,6 +43,26 @@ class FormatViewerController < ApplicationController
     end
     # Get class for the current type
     @format_class = Kernel.const_get(@type.to_s.singularize.camelize)
+  end
+
+  def build_regions
+    @regions = [
+      'National',
+      'Northland',
+      'Auckland',
+      'Waikato',
+      'Taranaki',
+      'Bay of Plenty',
+      'Gisborne',
+      'Hawke\'s Bay',
+      'Manawatu-Wanganui',
+      'Wellington',
+      'Marlborough',
+      'Nelson',
+      'West Coast',
+      'Canterbury',
+      'Otago'
+    ]
   end
 
 end

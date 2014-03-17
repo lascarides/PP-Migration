@@ -33,7 +33,6 @@ class NewspapersController < FormatViewerController
 	end
 
 	def region
-		@regions = NewspaperTitle.info.collect{ |ntk, ntv| ntv[:region] }.uniq.compact
 		if params[:region]
 			@titles = NewspaperTitle.info.collect{ |ntk, ntv| 
 				if ntv[:region].parameterize == params[:region]

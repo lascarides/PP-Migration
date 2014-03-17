@@ -1,6 +1,7 @@
 PPMigration::Application.routes.draw do
 
 	get '/about', to: 'about#about'
+	get '/about/dates', to: 'about#dates'
 	get '/help', to: 'about#help'
 
 	get '/newspapers/title', to: 'newspapers#title'
@@ -23,6 +24,9 @@ PPMigration::Application.routes.draw do
 		resources format, :controller => 'format_viewer', :type => format do
 			collection do 
 				get 'search'
+			end
+			collection do 
+				get 'search_options'
 			end
 		end
 	end

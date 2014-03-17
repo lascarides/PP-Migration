@@ -1,3 +1,11 @@
+GIT
+  remote: git://github.com/rweng/jquery-datatables-rails.git
+  revision: 788a7b24caf8fe58a5493aa3f6a065879a9f752a
+  specs:
+    jquery-datatables-rails (1.12.2)
+      jquery-rails
+      sass-rails
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -51,6 +59,8 @@ GEM
       coffee-script-source
       execjs
     coffee-script-source (1.6.3)
+    d3-rails (3.3.7)
+      railties (>= 3.1)
     debug_inspector (0.0.2)
     erubis (2.7.0)
     execjs (2.0.2)
@@ -97,6 +107,8 @@ GEM
     jquery-rails (3.0.4)
       railties (>= 3.0, < 5.0)
       thor (>= 0.14, < 2.0)
+    jquery-ui-rails (4.2.0)
+      railties (>= 3.2.16)
     json (1.8.1)
     listen (2.2.0)
       celluloid (>= 0.15.2)
@@ -197,6 +209,7 @@ DEPENDENCIES
   bootstrap-sass (>= 3.0.0.0)
   capybara
   coffee-rails (~> 4.0.0)
+  d3-rails
   factory_girl_rails
   figaro
   guard-bundler
@@ -205,7 +218,9 @@ DEPENDENCIES
   html2haml
   hub
   jbuilder (~> 1.2)
+  jquery-datatables-rails!
   jquery-rails
+  jquery-ui-rails
   minitest-spec-rails
   minitest-wscolor
   puma
