@@ -12,7 +12,7 @@ class FormatViewerController < ApplicationController
   end
 
   def search
-    @search_results = @format_class.search_results(params[:query])
+    @search_results = @format_class.search_results(params)
     respond_to do |format|
       format.html {}
       format.json {}

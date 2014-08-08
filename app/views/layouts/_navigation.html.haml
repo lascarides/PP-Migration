@@ -1,17 +1,31 @@
-%nav.navbar.navbar-default.navbar-fixed-top
-	.navbar-header
-		%button.navbar-toggle{'data-toggle' => "collapse",  'data-target' => ".navbar-collapse"}
-			%span.icon-bar
-			%span.icon-bar
-			%span.icon-bar
-		= link_to "Papers Past", root_path, :class => @type.nil? ? 'navbar-brand' : 'navbar-brand active'
-	.navbar-collapse.collapse
-		%ul.nav.navbar-nav
-			- FORMAT_LABELS.each do |fmt, label|
-				%li{:class => @type.to_s.tableize.to_sym == fmt ? 'active' : 'inactive' }
-					= link_to label, "/#{fmt}"
-		%ul.nav.navbar-nav.navbar-right
-			%li
-				=link_to "About Papers Past", '/about'
-			%li
-				=link_to "Help", '/help'
+- unless current_page?(root_url)
+	%nav.navbar.navbar-default.navbar-fixed-top
+		.navbar-header
+			%button.navbar-toggle{'data-toggle' => "collapse",  'data-target' => ".navbar-collapse"}
+				%span.icon-bar
+				%span.icon-bar
+				%span.icon-bar
+			= link_to "Papers Past", root_path, :class => @type.nil? ? 'navbar-brand' : 'navbar-brand active'
+		.navbar-collapse.collapse
+
+			- if not @type.nil?
+				= link_to FORMAT_LABELS[@type], "/#{@type}", :class => 'navbar-brand active'
+				
+			%ul.nav.navbar-nav
+				%li.dropdown
+					%a.dropdown-toggle{href: '#', 'data-toggle' => 'dropdown'}
+						Explore
+						= ' others' if not @type.nil?
+						%span.caret
+					%ul.dropdown-menu{ role: 'menu' }
+						- FORMAT_LABELS.each do |fmt, label| 
+							- if fmt != @type
+								%li= link_to label, params["query"].blank? ? "/#{fmt}" : "/#{fmt}/search?query=#{params["query"]}"
+
+			%ul.nav.navbar-nav.navbar-right
+				%li
+					=link_to "About Papers Past", '/about'
+				%li
+					=link_to "Getting Started", '/help'
+				%li
+					=link_to "Help", '/help'

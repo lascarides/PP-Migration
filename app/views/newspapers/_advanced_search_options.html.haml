@@ -5,6 +5,9 @@
 	.row
 		.col-md-4
 
+			#search-options-dates.search-option-panel
+				= render :partial => 'shared/date_picker'
+
 			.search-option-panel
 				%h4 
 					Article types
@@ -19,19 +22,6 @@
 						= check_box_tag :article, "captions", true
 						Illustration and captions
 
-			#search-options-dates.search-option-panel
-				%h4 
-					Dates
-				.search-option-panel-content
-					.slider-range
-					.slider-caption
-						From 
-						%input#year-start{ :type => 'text', :value => 1830, :size => 5 }
-						to
-						%input#year-end{ :type => 'text', :value => 1945, :size => 5 }
-						%em.date-precise
-							or,
-							= link_to 'choose a more precise date range', '#'
 
 		.col-md-8
 			.search-option-panel
@@ -41,18 +31,21 @@
 					%small.title-note showing only titles matching your selected date range.
 
 				.search-option-panel-content
+					= hidden_field_tag 'selected_titles', 'ALL'
 					.search-cats-col
 						.region-group
 							.title.region-title
-								= check_box_tag :title, "all", true, :class => 'title-select-all'
-								ALL TITLES
+								%label
+									= check_box_tag :title, "all", true, :class => 'title-select-all'
+									ALL TITLES
 						- @regions.each do |region|
 							.region-group
 								.title.region-title
-									= check_box_tag "region_#{region.parameterize}", region, true, :class => 'region-select'
-									= "#{region} newspapers"
+									%label
+										= check_box_tag "region_#{region.parameterize}", region, true, :class => 'region-select'
+										= "#{region} newspapers"
 								- NewspaperTitle.info.each do |symbol, title|
 									- if title[:region] == region
-										.title
-											= check_box_tag "title_#{symbol}", 1, true, 'data-region' => title[:region], 'data-yearstart' => title[:start_year], 'data-yearend' => title[:end_year], :class => 'title-select'
+										%label.title{'data-region' => title[:region], 'data-yearstart' => title[:start_year], 'data-yearend' => title[:end_year]}
+											= check_box_tag "title_#{symbol}", symbol, true, :class => 'title-select'
 											= title[:title]	

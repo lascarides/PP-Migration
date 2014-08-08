@@ -22,6 +22,27 @@ class Newspaper < NLNZObject
 		record
 	end
 
+	# UNCOMMENT WHEN GETTING ADV SEARCH TO READ FROM PP DIRECTLY
+	# Also, doesn't work yet.
+
+	# def self.search_results(search_params)
+	# 	query = "http://paperspast.natlib.govt.nz/cgi-bin/paperspast?a=q&hs=1&r=1&results=1&t=0&txq=#{search_params[:query]}&sf=&ssnip=on&"
+	# 	search_params[:papers].split(',').each do |paper|
+	# 		query += "pbq=#{paper}&"
+	# 	end
+	# 	result_page = Nokogiri::HTML(open(query))
+	# 	# dafdq=02&
+	# 	# dafmq=02&
+	# 	# dafyq=1846&
+	# 	# datdq=06&
+	# 	# datmq=05&
+	# 	# datyq=1874&
+	# 	# tyq=ARTICLE&
+	# 	# tyq=ADVERTISEMENT&
+	# 	# tyq=ILLUSTRATION&
+	# 	# o=10&
+	# end
+
 	def self.dnz_search_scope
 		'&and[primary_collection][]=Papers+Past'
 	end

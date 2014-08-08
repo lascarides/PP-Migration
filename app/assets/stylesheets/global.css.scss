@@ -1,4 +1,4 @@
-$ppGreen: #93b05c;
+$ppGreen: desaturate(#93b05c, 5%);
 $ppAccent: #995078;
 $ppGray: #e3e3d4;
 
@@ -61,7 +61,7 @@ a {
 	color: $ppGreen;
 }
 
-h1, h2, h3, h4, h5, h6, label, th {
+h1, h2, h3, h4, h5, h6, th {
 	font-family: "Clarendon";
 }
 
@@ -70,6 +70,10 @@ h1 {
 	padding: 0.3em 0;
 	border-bottom: 1px solid darken($ppGreen, 20%);
 	margin: 0 0 0.5em;
+}
+
+label {
+	font-weight: inherit;
 }
 
 .navbar {
@@ -82,8 +86,16 @@ h1 {
 	li a {
 		color: #fff !important;
 	}
-	.active a {
-		background: darken($ppGreen, 20%) !important;
+	li li a {
+		color: $ppGreen !important;
+	}
+	.active a, li.open > a, .navbar-collapse .active {
+		background: darken($ppGreen, 10%) !important;
+	}
+	.navbar-header {
+		.navbar-brand {
+			background: darken($ppGreen, 20%) !important;
+		}
 	}
 }
 
@@ -93,15 +105,15 @@ ol.breadcrumb {
 
 .home {
 	h1 {
-		color: darken($ppGreen, 20%);
+		color: lighten($ppGreen, 60%);
+		background: $ppGreen;
 		font-size: 4em;	
-		margin-bottom: 0;
-		border-bottom: 2px solid $ppAccent;
-		padding: 0 0 0.4em 0;
-		margin: 0.4em 0 0.4em 0;
-		line-height: 50%;
+		padding: 0.3em 0.5em;
+		border-bottom: 0px;
+		@include border-radius(0 0 10px 10px);
+		margin: -60px 0 0.5em;
 		small {
-			color: lighten($ppGreen, 20%);
+			color: lighten($ppGreen, 40%);
 			font-weight: 200;
 			font-size: 0.4em;
 			font-family: "Clarendon";
@@ -109,13 +121,14 @@ ol.breadcrumb {
 	}
 	.media-object {
 		@include border-radius(6px);
+		border: 1px solid darken($ppGray, 10%);
 	}
 	.media-body p {
 		color: #555;
 	}
-	.alert {
+	.alert, .well {
 		h3, h4 {
-			margin: 0;
+			margin: 0 0 0.4em 0;
 		}
 	}
 }
@@ -307,6 +320,9 @@ table {
 			margin: 0.5em 0 0;
 			font-size: 1.4em;
 		}
+		.inactive {
+			display: none;
+		}
 	}
 	.slider-range {
 		margin: 0.5em 1em;
@@ -355,6 +371,17 @@ table {
 		.slider-caption {
 			text-align: center;
 		}
+		.date-precise-button {
+			display: block;
+			text-align: center;
+			margin: 0.5em 0 0 0;
+		}
+		.date-precise {
+			display: none;
+		}
+		label {
+			display: block;
+		}
 	}
 	.active {
 		h4 span {
@@ -371,11 +398,153 @@ table {
 	display: none;
 }
 
-/*
-.date-twisty li a {
-	text-align: left;
-	transform: rotate(90deg);
-	-webkit-transform: rotate(90deg);
-	margin: 0;
+footer {
+	padding: 1em 0;
+	border-top: 1px solid $ppGray;
+	margin: 2em 0 0 0;
+	img {
+		width: 100%;
+	}
 }
-*/
+
+
+
+
+
+
+/** PRESENTATION STYLES **/
+body.pres {
+	background: $ppGray;
+}
+
+#preso {
+
+	#title {
+		h1 {
+			color: $ppGreen;
+			font-size: 5em;
+		}
+		p {
+			margin-top: 7em;
+			margin-bottom: 3em;
+			font-style: italic;
+			font-size: 0.9em;
+			a {
+				color: #666;
+			}
+		}
+		border: 3px solid #555;
+  	}
+
+  	#change {
+  		background: white url(/assets/presentation-undesirable.jpg) 50% 50% no-repeat scroll;
+  		background-size: contain;
+  	}
+
+  	#example {
+  		background: white url(/assets/presentation-article.png) 50% 50% no-repeat scroll;
+  		background-size: contain;
+  	}
+
+  	.slide {
+  		h3 {
+  			font-size: 2em;
+  			font-weight: 700;
+  			color: $ppGreen;
+  		}
+  		li {
+  			font-size: 24px;
+  			line-height: 1.5;
+  			padding: 0 1em 0.5em;
+  		}
+  	}
+
+	.step {
+		width: 900px;
+		min-height: 550px;
+		background-color: white;
+		display: block;
+	    padding: 40px 60px;
+	    border-radius: 10px;
+	    border: 1px solid rgba(0, 0, 0, .3);
+	    letter-spacing: -1px;
+
+		-webkit-box-sizing: border-box;
+		-moz-box-sizing:    border-box;
+		-ms-box-sizing:     border-box;
+		-o-box-sizing:      border-box;
+		box-sizing:         border-box;
+
+		-webkit-transition: opacity 1s;
+		-moz-transition:    opacity 1s;
+		-ms-transition:     opacity 1s;
+		-o-transition:      opacity 1s;
+		transition:         opacity 1s;
+	}
+
+	#overview {
+		display: none;
+	}
+
+	/* fade out inactive slides */
+	.step:not(.active) {
+		opacity: 0.3;
+	}
+
+	/* hint on the first slide */
+	.hint {
+		position: fixed;
+		left: 0;
+		right: 0;
+		bottom: 0px;
+
+		background: #333;
+		color: #fff;
+		text-align: right;
+
+		padding: 10px;
+		z-index: 100;
+
+		opacity: 0;
+
+		-webkit-transform: translateY(400px);
+		-moz-transform:    translateY(400px);
+		-ms-transform:     translateY(400px);
+		-o-transform:      translateY(400px);
+		transform:         translateY(400px);
+
+		-webkit-transition: opacity 1s, -webkit-transform 0.5s 1s;
+		-moz-transition:    opacity 1s,    -moz-transform 0.5s 1s;
+		-ms-transition:     opacity 1s,     -ms-transform 0.5s 1s;
+		-o-transition:      opacity 1s,      -o-transform 0.5s 1s;
+		transition:         opacity 1s,         transform 0.5s 1s;
+	}
+	.step-home + .hint {
+		opacity: 1;
+
+		-webkit-transition: opacity 1s 5s, -webkit-transform 0.5s;
+		-moz-transition:    opacity 1s 5s,    -moz-transform 0.5s;
+		-ms-transition:     opacity 1s 5s,     -ms-transform 0.5s;
+		-o-transition:      opacity 1s 5s,      -o-transform 0.5s;
+		transition:         opacity 1s 5s,         transform 0.5s;
+
+		-webkit-transform: translateY(0px);
+		-moz-transform:    translateY(0px);
+		-ms-transform:     translateY(0px);
+		-o-transform:      translateY(0px);
+		transform:         translateY(0px);
+	}
+
+	/** NOT SUPPORTED STYLES **/
+	.not-supported .step {
+		position: relative;
+		opacity: 1;
+		margin: 20px auto;
+	}
+}
+
+
+.axis line {
+	shape-rendering: crispEdges;
+	stroke: #000;
+}

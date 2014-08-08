@@ -1,15 +1,20 @@
 .results 
 
-	%h1=raw "Searching #{FORMAT_LABELS[@type.to_sym].downcase} for &quot;<span>#{params[:query]}</span>&quot;"
-
 	.well 
-		.search_format_tabs
-			- FORMAT_LABELS.each do |fmt, label|
-				= link_to label, params["query"].blank? ? "/#{fmt}" : "/#{fmt}/search?query=#{params["query"]}"
-
 		%form.form-inline{:role => "form", :action => "/#{@type}/search", :method => 'get'}
 			.row
-				.col-md-9
+				.col-md-3.input-lg
+					Searching in
+					.btn-group
+						%button.btn.btn-default.dropdown-toggle.input-lg{ type: "button", 'data-toggle' => 'dropdown'}
+							= FORMAT_LABELS[@type.to_sym]
+							%span.caret
+						%ul.dropdown-menu{ role: 'menu' }
+							- FORMAT_LABELS.each do |fmt, label| 
+								- if fmt != @type
+									%li= link_to label, params["query"].blank? ? "/#{fmt}" : "/#{fmt}/search?query=#{params["query"]}"
+					for
+				.col-md-7
 					%input#query.form-control.input-lg{:name => 'query', :placeholder => "What are you looking for?", :value => params[:query] }
 					/ .tools
 					/ 	%input#mode1{:type => "radio", :name => "mode", :value => "all", :checked => "checked"}
@@ -20,7 +25,7 @@
 					/ 	%label This exact phrase
 					/ 	.pull-right
 					/ 		%a{:href => '#'} More search options
-				.col-md-3
+				.col-md-2
 					%button.btn.btn-info.input-lg.form-control{:type => "submit"} Search
 
 		.search-controls.pull-right

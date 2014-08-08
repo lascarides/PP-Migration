@@ -1,13 +1,8 @@
 .format-home
 	.row
-		.col-md-3
-			%h1= FORMAT_LABELS[@type.to_sym]
-			%p= raw(@format_class.description)
-			= image_tag("home-#{@type.to_s.dasherize}.jpg", :class => 'home-image')
-
 		.col-md-9
 			.well.search-box
-				%h3= "Search the full text of all #{FORMAT_LABELS[@type.to_sym].downcase}"
+				%h3= "Search the full text of our #{FORMAT_LABELS[@type.to_sym].downcase}"
 				%form.form-inline{:role => "form", :action => "/#{@type}/search", :method => 'get'}
 					%input#query.form-control.input-lg{:name => 'query', :placeholder => "What are you looking for?"}
 					%button.btn.btn-default.input-lg{:type => "submit"} Search
@@ -19,6 +14,12 @@
 						%input#mode2{:type => "radio", :name => "mode", :value => "any"}
 						%label <strong>Any</strong> of these words
 
-					%a#search-options-toggle{:href => "/#{@type}/search_options"} More search options ⇊
+					%a#search-options-toggle{:href => "/#{@type}/search_options"} 
+						More search options
+						%span.caret
 
 			= render :partial => "#{@type}/home_cols"
+
+		.col-md-3
+			%p= raw(@format_class.description)
+			= image_tag("home-#{@type.to_s.dasherize}.jpg", :class => 'home-image')

@@ -1,8 +1,10 @@
 PPMigration::Application.routes.draw do
 
 	get '/about', to: 'about#about'
+	get '/charts', to: 'about#charts'
 	get '/about/dates', to: 'about#dates'
 	get '/help', to: 'about#help'
+	get '/presentation', to: 'about#presentation'
 
 	get '/newspapers/title', to: 'newspapers#title'
 	get '/newspapers/title/:id', to: 'newspapers#title'

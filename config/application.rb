@@ -15,8 +15,8 @@ FORMAT_LABELS = {
     :newspapers             => 'Newspapers',
     :periodicals            => 'Magazines and Journals',
     :parliamentary_papers   => 'Parliamentary Papers',
-    :manuscripts            => 'Letters and Diaries',
-    :books            => 'Digitised Books'
+    :manuscripts            => 'Letters and Diaries' #,
+    # :books            => 'Digitised Books'
 }
 
 SUPPORTED_FORMATS = FORMAT_LABELS.keys

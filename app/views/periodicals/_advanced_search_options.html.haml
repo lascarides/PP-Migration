@@ -6,18 +6,7 @@
 		.col-md-6
 
 			#search-options-dates.search-option-panel
-				%h4 
-					Dates
-				.search-option-panel-content
-					.slider-range
-					.slider-caption
-						From 
-						%input#year-start{ :type => 'text', :value => 1830, :size => 5 }
-						to
-						%input#year-end{ :type => 'text', :value => 1945, :size => 5 }
-						%em.date-precise
-							or,
-							= link_to 'choose a more precise date range', '#'
+				= render :partial => 'shared/date_picker'
 
 		.col-md-6
 			.search-option-panel

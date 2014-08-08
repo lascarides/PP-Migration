@@ -4,8 +4,8 @@ class NLNZObject
 		DigitalNZ.find(dnz_id)		
 	end
 
-	def self.search_results(search_term)
-		DigitalNZ.search_results(search_term, self.dnz_search_scope)		
+	def self.search_results(search_params)
+		DigitalNZ.search_results(search_params[:query], self.dnz_search_scope)		
 	end
 
 	def self.collections(search_term)
