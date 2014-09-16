@@ -22,6 +22,21 @@
 						= check_box_tag :article, "captions", true
 						Illustration and captions
 
+			.search-option-panel
+				%h4 
+					Collections
+				.search-option-panel-content
+					.title
+						= check_box_tag :collex, "c1", true
+						Maori Newspapers
+					.title
+						= check_box_tag :collex, "c2", true
+						Early Newspapers
+					.title
+						= check_box_tag :collex, "c2", true
+						World War I
+
+
 
 		.col-md-8
 			.search-option-panel
@@ -33,7 +48,7 @@
 				.search-option-panel-content
 					= hidden_field_tag 'selected_titles', 'ALL'
 					.search-cats-col
-						.region-group
+						.region-group.region-group-all
 							.title.region-title
 								%label
 									= check_box_tag :title, "all", true, :class => 'title-select-all'
@@ -46,6 +61,6 @@
 										= "#{region} newspapers"
 								- NewspaperTitle.info.each do |symbol, title|
 									- if title[:region] == region
-										%label.title{'data-region' => title[:region], 'data-yearstart' => title[:start_year], 'data-yearend' => title[:end_year]}
+										%label.title.newspaper-title{'data-region' => title[:region], 'data-yearstart' => title[:start_year], 'data-yearend' => title[:end_year]}
 											= check_box_tag "title_#{symbol}", symbol, true, :class => 'title-select'
 											= title[:title]	

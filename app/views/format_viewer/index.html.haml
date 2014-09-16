@@ -1,25 +1,34 @@
 .format-home
 	.row
 		.col-md-9
-			.well.search-box
-				%h3= "Search the full text of our #{FORMAT_LABELS[@type.to_sym].downcase}"
+
+			.search-box
 				%form.form-inline{:role => "form", :action => "/#{@type}/search", :method => 'get'}
 					%input#query.form-control.input-lg{:name => 'query', :placeholder => "What are you looking for?"}
-					%button.btn.btn-default.input-lg{:type => "submit"} Search
+					%button.btn.btn-default.input-lg{:type => "submit"} Search full text
 					.tools
-						%input#mode3{:type => "radio", :name => "mode", :value => "exact"}
-						%label This <strong>exact phrase</strong>
 						%input#mode1{:type => "radio", :name => "mode", :value => "all", :checked => "checked"}
 						%label <strong>All</strong> of these words
 						%input#mode2{:type => "radio", :name => "mode", :value => "any"}
 						%label <strong>Any</strong> of these words
+						%input#mode3{:type => "radio", :name => "mode", :value => "exact"}
+						%label This <strong>exact phrase</strong>
 
-					%a#search-options-toggle{:href => "/#{@type}/search_options"} 
-						More search options
-						%span.caret
+						%a#search-options-toggle.pull-right{:href => "/#{@type}/search_options"} 
+							More search options...
 
 			= render :partial => "#{@type}/home_cols"
 
+			.newspaper-pages
+				- 12.times do |pn|
+					.newspaper-page
+						= link_to image_tag('temp-thumbpage.gif'), "#"
+						%p= link_to "Title", "#"
+
 		.col-md-3
+			%h2= FORMAT_LABELS[@type.to_sym]
 			%p= raw(@format_class.description)
-			= image_tag("home-#{@type.to_s.dasherize}.jpg", :class => 'home-image')
+
+			= link_to "Learn more about each newspaper", '/newspapers/title', class: 'btn btn-primary btn-lg'
+
+

@@ -90,11 +90,14 @@ label {
 		color: $ppGreen !important;
 	}
 	.active a, li.open > a, .navbar-collapse .active {
-		background: darken($ppGreen, 10%) !important;
+		background: url(/assets/bg-nav-arr-r.png) 0 50% no-repeat darken($ppGreen, 10%) !important;
+		background-size: auto 100% !important;
+		padding-left: 1.2em;
 	}
 	.navbar-header {
 		.navbar-brand {
-			background: darken($ppGreen, 20%) !important;
+			background: url(/assets/bg-nav-arr-l.png) 100% 50% no-repeat darken($ppGreen, 20%) !important;
+			background-size: auto 100% !important;
 		}
 	}
 }
@@ -106,7 +109,7 @@ ol.breadcrumb {
 .home {
 	h1 {
 		color: lighten($ppGreen, 60%);
-		background: $ppGreen;
+		background: darken($ppGreen, 20%);
 		font-size: 4em;	
 		padding: 0.3em 0.5em;
 		border-bottom: 0px;
@@ -162,6 +165,12 @@ ol.breadcrumb {
 	}
 }
 
+#date-browser {
+	border: 0;
+	padding: 0;
+	color: $ppGreen;
+}
+
 .format-home {
 	h3 {
 		margin: 0 0 0.5em;
@@ -213,6 +222,16 @@ table {
 }
 
 .results {
+	.nav-pills {
+		margin-bottom: 1em;
+	}
+	.nav-pills > li.active > a {
+		background: $ppAccent;
+		color: #fff;
+	}
+	.nav-pills > li > a {
+		color: #444;
+	}
 	h1 {
 		margin-bottom: 0;
 	}
@@ -273,23 +292,29 @@ table {
 
 
 .search-box {
-	background: lighten($ppGreen, 40%);
 	position: relative;
-	padding-bottom: 2.5em;
+	margin: 0 0 1em;
 	h3 {
-		margin: 0 0 0.5em;
+		margin: 0.5em 0;
 		padding: 0;
 		background: transparent;
 	}
 	#query {
-		width: 80%;
+		width: 79%;
+		border: 4px solid $ppGray;
+		border-radius: 0.6em;
+		margin-right: 1%;
 	}
 	button {
 		width: 19%;
 		background: $ppAccent;
 		color: #fff;
+		border: 4px solid lighten($ppAccent, 10%);
+		border-radius: 0.6em;
 	}
 	.tools {
+		position: relative;
+		display: none;
 		padding: 1em 0 0;
 		label {
 			font-family: "Avenir";
@@ -297,6 +322,7 @@ table {
 			font-weight: normal;
 		}
 	}
+	/*
 	#search-options-toggle {
 		display: block;
 		padding: 0.5em 0.5em 0.25em;
@@ -304,16 +330,15 @@ table {
 		position: absolute;
 		bottom: 0;
 		right: 0;
-		background: $ppGreen;
-		color: lighten($ppGreen, 50%);
+		background: lighten($ppGreen, 10%);
+		color: #fff;
 		border: 1px solid lighten($ppGreen, 10%);
-		border-bottom: 0;
-		border-right: 0;
 		text-align: center;
 		font-weight: bold;
 		text-transform: uppercase;
-		border-radius: 1em 0 0 0;
+		border-radius: 1em;
 	}
+	*/
 
 	.advanced-search-options {
 		h3.narrow {
@@ -371,7 +396,7 @@ table {
 		.slider-caption {
 			text-align: center;
 		}
-		.date-precise-button {
+		.date-precise-button, .date-precise-hider {
 			display: block;
 			text-align: center;
 			margin: 0.5em 0 0 0;

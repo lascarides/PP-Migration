@@ -32,6 +32,9 @@ class NewspapersController < FormatViewerController
 		end
 	end
 
+	def date_alt
+	end
+
 	def region
 		if params[:region]
 			@titles = NewspaperTitle.info.collect{ |ntk, ntv| 

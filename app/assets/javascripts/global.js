@@ -1,7 +1,7 @@
 $(document).ready(function(){
 
 	// init
-	var searchTitles = $('.title');
+	var searchTitles = $('.newspaper-title');
 
 	// Set up sortable tables
 	$('.datatable').dataTable({
@@ -30,14 +30,25 @@ $(document).ready(function(){
 
 	// Show/hide titles based on selected year
 	function showHideTitles(startYear, endYear) {
+		// Hide regions when they are 'empty'
+		$('.region-group').addClass('inactive');
+		$('.region-group-all').removeClass('inactive');
+		// Show/hide each title
 		searchTitles.each(function(){
 			if ($(this).data('yearend') < startYear || $(this).data('yearstart') > endYear) {
 				$(this).addClass('inactive');
 			} else {
 				$(this).removeClass('inactive');
+				$(this).parents('.region-group').removeClass('inactive');
 			}
 		});
 	}
+
+	// Set up regular search
+	$('#query').focus(function(){
+		$('.search-box .tools').slideDown();
+		$('.search-box .search-headline').slideUp();
+	});
 
 
 	// Set up advanced search
@@ -56,30 +67,16 @@ $(document).ready(function(){
 		harvestTitleCheckboxes();
 	});
 
-	function harvestTitleCheckboxes() {
-		var titleField = $('#selected_titles');
-		if ( $('.title-select-all').is(':checked') ) {
-			titleField.attr('value', 'ALL');
-		} else {
-			titleField.attr('value', '');
-			$('.title-select').each(function(){
-				if ( $(this).is(':checked') ) {
-					titleField.attr( 'value', titleField.attr('value') + $(this).attr('value') + ',' );
-				}
-			});
-		}
-	}
-
 	// Date picker form
 	$('.date-precise-button a').click(function(){
-		$('.date-picker-slider').hide();
-		$('.date-precise').show();
+		$('.date-picker-slider').fadeOut();
+		$('.date-precise').fadeIn();
 		return false;
 	});
 
-	$('.date-precise-hider').click(function(){
-		$('.date-precise').hide();
-		$('.date-picker-slider').show();
+	$('.date-precise-hider a').click(function(){
+		$('.date-precise').fadeOut();
+		$('.date-picker-slider').fadeIn();
 		return false;
 	});
 
@@ -100,8 +97,42 @@ $(document).ready(function(){
 		});
 	});
 
+	$(function() {
+		$( "#date-browser" ).datepicker({ 
+			dateFormat: "d M, yy",
+			minDate: '1830-01-01', 
+			maxDate: '1946-01-01',
+			onSelect: function(selectedDate) {
+				var dateParts = selectedDate.split('-');
+				if ($(this).attr('id') == 'year-start-precise') {
+					$('#year-start').val(dateParts[0]);
+				} else {
+					$('#year-end').val(dateParts[0]);
+				}
+				showHideTitles($('#year-start').val(), $('#year-end').val());
+			}
+		});
+	});
+
 	// Kick off presentation.
 	$('#preso').jmpress();
 
 });
 
+
+function harvestTitleCheckboxes() {
+	
+	var titleField = $('#selected_titles');
+	titleField.attr('value', '');
+
+	if ( $('.title-select-all').is(':checked') ) {
+		titleField.attr('value', 'ALL');
+	} else {
+		titleField.attr('value', '');
+		$('.title-select').each(function(){
+			if ( $(this).is(':checked') ) {
+				titleField.attr( 'value', titleField.attr('value') + $(this).attr('value') + ',' );
+			}
+		});
+	}
+}

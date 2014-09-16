@@ -61,33 +61,14 @@
 				- if @year > 0
 					%p= link_to "Show earlier years", "/newspapers/title/#{@title[:title].parameterize}"
 
-				- (@title[:start_year]..@title[:end_year]).each do |yr|
-					- if params[:year] == yr or params[:year].nil?
-						%h3= link_to yr, "/newspapers/title/#{@title[:title].parameterize}/#{yr}"
-						%ul.nav.nav-pills.date-twisty
-							- ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'Septmeber', 'October', 'November', 'December'].each_with_index do |month, i|
-								%li{ :class => (@month == i + 1) ? 'active' : 'inactive'}= link_to month, "/newspapers/title/#{@title[:title].parameterize}/#{yr}/#{i + 1}"
-						- if @month > 0
-							%table.table
-								%thead
-									%tr
-										%th S
-										%th M
-										%th T
-										%th W
-										%th T
-										%th F
-										%th S
-								%tbody
-									- 5.times do |w|
-										%tr 
-											- 7.times do |d|
-												- daydate = (w*7) + d + 1
-												%td
-													= link_to daydate,  "/newspapers/title/#{@title[:title].parameterize}/#{@year}/#{@month}/#{daydate}" if daydate < 32
-
-				- if @year > 0
-					%p= link_to "Show later years", "/newspapers/title/#{@title[:title].parameterize}"
+				%table.table
+					%tbody
+						- (@title[:start_year]..@title[:end_year]).each do |yr|
+							%tr
+								%td
+									%strong= link_to yr, "/newspapers/title/#{@title[:title].parameterize}/#{yr}"
+								- ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'].each_with_index do |month, i|
+									%td= link_to month, "/newspapers/title/#{@title[:title].parameterize}/#{yr}/#{i + 1}"
 
 			.col-md-6
 

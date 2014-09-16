@@ -15,6 +15,7 @@ PPMigration::Application.routes.draw do
 	get '/newspapers/title/:id/:year/:month/:day/:page/:article', to: 'newspapers#title'
 
 	get '/newspapers/date', to: 'newspapers#date'
+	get '/newspapers/date_alt', to: 'newspapers#date_alt'
 	get '/newspapers/date/:year', to: 'newspapers#date'
 	get '/newspapers/date/:year/:month', to: 'newspapers#date'
 	get '/newspapers/date/:year/:month/:day', to: 'newspapers#date'

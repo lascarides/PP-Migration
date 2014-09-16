@@ -1,0 +1,21 @@
+%ol.breadcrumb
+	%li= link_to 'Newspapers', "/newspapers"
+	- if @region.nil?
+		%li By Date
+	- else 
+		%li= link_to "By Date", "/newspapers/date"
+		%li= params[:year]
+
+.newspaper_date
+
+	%h1 
+		%input#date-browser{ :type => 'text', :value => 'Saturday 26 January, 1886', :size => 24 }
+		%small= link_to '« previous day', '#'
+		%small= link_to 'next day »', '#'
+
+
+	.newspaper-pages
+		- (1..rand(24)).each do |pn|
+			.newspaper-page
+				= link_to image_tag('temp-thumbpage.gif'), "#"
+				%p= link_to "Title", "#"

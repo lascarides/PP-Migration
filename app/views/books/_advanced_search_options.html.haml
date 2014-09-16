@@ -1,0 +1,20 @@
+.advanced-search-options
+
+	%h3.narrow Only show matches from...
+
+	.row
+		.col-md-6
+
+			#search-options-dates.search-option-panel
+				= render :partial => 'shared/date_picker'
+
+		.col-md-6
+			.search-option-panel
+				%h4 
+					Subjects
+				.search-option-panel-content
+					%ul
+						- 10.times do 
+							%li
+								= check_box_tag :article, "articles", true
+								Sample

@@ -8,8 +8,16 @@
 			#search-options-dates.search-option-panel
 				= render :partial => 'shared/date_picker'
 
+			.search-option-panel
+				%h4 
+					Collections
+				.search-option-panel-content
+					%ul
+						- 5.times do 
+							%li
+								= check_box_tag :article, "articles", true
+								McLean Papers
 
-		.col-md-4
 			.search-option-panel
 				
 				%h4 
@@ -24,36 +32,10 @@
 					= link_to "More...", '#'
 
 		.col-md-4
-			.search-option-panel
-				
-				%h4 
-					Volumes
-
-				.search-option-panel-content
-					%ul
-						- 5.times do 
-							%li
-								= check_box_tag :article, "articles", true
-								Sample
-
-	.row
-		.col-md-4
 
 			.search-option-panel
 				%h4 
-					Publications
-				.search-option-panel-content
-					%ul
-						%li
-							= check_box_tag :article, "articles", true
-							Appendix to the Journals of the House of Representatives
-						%li
-							= check_box_tag :article, "articles", true
-							Votes and Proceedings of the House of Representatives
-
-			.search-option-panel
-				%h4 
-					Relevant regions
+					Places
 				.search-option-panel-content
 					%ul
 						- @regions.each do |region| 
@@ -65,22 +47,11 @@
 		.col-md-4
 			.search-option-panel
 				%h4 
-					Parliamentary sessions
+					People
 				.search-option-panel-content
 					%ul
-						- 10.times do |n|
+						- 12.times do
 							%li
-								= check_box_tag :article, "articles", true
-								= "#{1880+n}, Session I"
-
-		.col-md-4
-			.search-option-panel
-				%h4 
-					Participants
-				.search-option-panel-content
-					%ul
-						- 12.times do 
-							%li
-								= check_box_tag :article, "people", true
-								Sample Name
+								= check_box_tag :subject, "subjects", true
+								Sample
 					= link_to "More...", '#'

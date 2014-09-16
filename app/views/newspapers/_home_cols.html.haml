@@ -1,21 +1,21 @@
-.row
-	.col-md-4.date-column
-		%h3= link_to "Explore by Date", "/#{@type.to_s.dasherize}/date"
+%ul.nav.nav-pills
+	%li
+		= link_to "1830 to 1945", "#dates-picker", 'data-toggle' => "tab"
+	%li
+		= link_to "All 92 titles, from 14 NZ regions", "#region-picker", 'data-toggle' => "tab"
 
-		%ul
-			- 12.times do |d|
-				- decade = (d * 10) + 1830
-				%li= link_to "#{decade}s", "/#{@type.to_s.dasherize}/date/#{decade}s"
-				
-		= link_to "Looking for newspapers after 1945?", "/about/dates"
+.tab-content
+	#dates-picker.tab-pane.fade
+		#search-options-dates.search-option-panel
+			= render :partial => 'shared/date_picker'
+	#region-picker.tab-pane.fade
+		.row
+			.col-md-4
+				= link_to image_tag("map-newspaper.png", :class => 'home-map'), "/#{@type.to_s.dasherize}/region"
+			.col-md-8
+				%ul
+					- Newspaper.collections[0..24].each do |paper, number|
+						%li
+							%a{:href => "/#{@type.to_s.dasherize}/title/#{paper.parameterize}"}= paper
+				= link_to 'See all titles...', "/#{@type.to_s.dasherize}/title", :class => 'btn'
 
-	.col-md-4
-		%h3= link_to "By NZ Region", "/#{@type.to_s.dasherize}/region"
-		= link_to image_tag("map-newspaper.png", :class => 'home-map'), "/#{@type.to_s.dasherize}/region"
-	.col-md-4
-		%h3= link_to "By Title", "/#{@type.to_s.dasherize}/title"
-		%ul
-			- Newspaper.collections[0..12].each do |paper, number|
-				%li
-					%a{:href => "/#{@type.to_s.dasherize}/title/#{paper.parameterize}"}= paper
-		= link_to 'See all titles...', "/#{@type.to_s.dasherize}/title", :class => 'btn'

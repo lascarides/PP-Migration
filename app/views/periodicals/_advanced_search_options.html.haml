@@ -3,12 +3,11 @@
 	%h3.narrow Only show matches from...
 
 	.row
-		.col-md-6
+		.col-md-4
 
 			#search-options-dates.search-option-panel
 				= render :partial => 'shared/date_picker'
 
-		.col-md-6
 			.search-option-panel
 				%h4 
 					Titles
@@ -23,3 +22,28 @@
 						%li
 							= check_box_tag :article, "articles", true
 							Transactions and Proceedings of the Royal Society of New Zealand
+
+		.col-md-4
+
+			.search-option-panel
+				%h4 
+					Published in...
+				.search-option-panel-content
+					%ul
+						- @regions.each do |region| 
+							%li
+								= check_box_tag :article, "places", true
+								= region
+					= link_to "More...", '#'
+
+		.col-md-4
+			.search-option-panel
+				%h4 
+					Subjects
+				.search-option-panel-content
+					%ul
+						- 12.times do |n|
+							%li
+								= check_box_tag :subject, "subjects", true
+								= "Sample topic #{n}"
+

@@ -1,0 +1,97 @@
+#preso
+	.step.slide.slide-title#title
+		%h1 Papers Past: What's Next
+
+		%h2 Michael Lascarides, National Library NZ
+		%h2 @mlascarides
+		%h2= Time.now.strftime('%-d %B %Y')
+
+
+	.step.slide#disclaimer{ 'data-x' => 0, 'data-y' => 700 }
+
+		%h1 Disclaimers
+		
+		%h2 Early days. Not an official project yet. No promises. Contents may not match picture on box.
+
+
+	.step.slide#pp{ 'data-x' => 0, 'data-y' => 1400 }
+		%h1 What is Papers Past?
+		%ul 
+			%li 83 NZ publications from the years 1839 to 1945
+			%li More than three million pages
+			%li More than 25 million articles
+			%li ~250,000 visitors a month
+			%li ~3 million pageviews a month
+
+	.step.slide#example{ 'data-x' => 0, 'data-y' => 2100 }
+
+
+	.step.slide#problem{ 'data-x' => 1300, 'data-y' => 0 }
+		%h1 The problem
+		%ol
+			%li We've got lots of other non-newspaper full-text materials in other sites
+			%li Those sites are based on <em>collections</em>, not <em>formats</em>
+ 			%li Lots of those sites near end of life
+			%li Bonus problem: PP design is 8 years old. Non-responsive. Looks rubbish on large screens, and tiny ones.
+
+	.step.slide#tricky{ 'data-x' => 1300, 'data-y' => 700 }
+		%h1 The tricky bit
+		
+		%h2 How to pull together lots of full-text materials of different formats without alienating a "fan base" who love us?
+
+	.step.slide#change{ 'data-x' => 2600, 'data-y' => 700 }
+		
+	.step.slide#solution{ 'data-x' => 1300, 'data-y' => 1400 }
+		%h2 The Solution
+		%ul
+			%li 
+				Iteratively develop design 
+				%ul
+					%li Test early test often
+					%li Seek user feedback 
+					%li Currently in our third round of user testing with staff and patrons
+			%li 
+				Maximize the flexibility of the tech
+				%ul 
+					%li Veridian full-text platform as the engine
+					%li Rails front-end for the UI
+
+
+	.step.slide#demo{ 'data-x' => 2600, 'data-y' => 0 }
+		%h1 Demo Time
+
+		%h2 (Please remember: Disclaimers, people.)
+
+		%h2= link_to 'Boom!', '/'
+
+
+
+	.step.slide#sofar{ 'data-x' => 3900, 'data-y' => 0 }
+
+		%h2 What we've learned so far
+		%ul 
+			%li We can unify formats without freaking out the regulars, and it can in fact be a better experience
+			%li There are definitely lines we shouldn't cross
+			%li The design needs to allow for an effortless flow between browsing and searching
+			%li Viewing/sorting by date is important for the continuity of stories
+
+	.step.slide#nextsteps{ 'data-x' => 3900, 'data-y' => 700 }
+		%h2 Next steps
+		%ul 
+			%li Continue exploring ideas in prototype form
+			%li Hopefully a funded project in FY 2014-2015
+			%li Address the most critical problems
+			%li Some very desirable features will get left out, sadly
+			%li ETA unknown ... watch this space
+
+	.step.slide#thx{ 'data-x' => 3900, 'data-y' => 1400 }
+		%h1 
+			Thanks! 
+			%small Questions?
+
+		%h2 Michael Lascarides, National Library NZ
+		%h2 @mlascarides
+		%h2= Time.now.strftime('%-d %B %Y')
+
+
+	#overview.step{ 'data-x' => 3000, 'data-y' => 2000, 'data-scale' => 8}

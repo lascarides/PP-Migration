@@ -14,8 +14,7 @@
 			%ul.nav.navbar-nav
 				%li.dropdown
 					%a.dropdown-toggle{href: '#', 'data-toggle' => 'dropdown'}
-						Explore
-						= ' others' if not @type.nil?
+						= @type.nil? ? 'Explore all' : 'More choices'
 						%span.caret
 					%ul.dropdown-menu{ role: 'menu' }
 						- FORMAT_LABELS.each do |fmt, label| 

@@ -1,44 +1,37 @@
 .results 
 
-	.well 
-		%form.form-inline{:role => "form", :action => "/#{@type}/search", :method => 'get'}
-			.row
-				.col-md-3.input-lg
-					Searching in
-					.btn-group
-						%button.btn.btn-default.dropdown-toggle.input-lg{ type: "button", 'data-toggle' => 'dropdown'}
-							= FORMAT_LABELS[@type.to_sym]
-							%span.caret
-						%ul.dropdown-menu{ role: 'menu' }
-							- FORMAT_LABELS.each do |fmt, label| 
-								- if fmt != @type
-									%li= link_to label, params["query"].blank? ? "/#{fmt}" : "/#{fmt}/search?query=#{params["query"]}"
-					for
-				.col-md-7
-					%input#query.form-control.input-lg{:name => 'query', :placeholder => "What are you looking for?", :value => params[:query] }
-					/ .tools
-					/ 	%input#mode1{:type => "radio", :name => "mode", :value => "all", :checked => "checked"}
-					/ 	%label <strong>All</strong> of these words
-					/ 	%input#mode2{:type => "radio", :name => "mode", :value => "any"}
-					/ 	%label <strong>Any</strong> of these words
-					/ 	%input#mode3{:type => "radio", :name => "mode", :value => "exact"}
-					/ 	%label This exact phrase
-					/ 	.pull-right
-					/ 		%a{:href => '#'} More search options
-				.col-md-2
-					%button.btn.btn-info.input-lg.form-control{:type => "submit"} Search
+	%form.form-inline{:role => "form", :action => "/#{@type}/search", :method => 'get'}
+		.row
+			.col-md-12
+				%ul.nav.nav-pills{ role: "tablist" }
+					- FORMAT_LABELS.each do |fmt, label| 
+						%li{ :class => (fmt == @type) ? 'active' : 'not_active' }= link_to label, params["query"].blank? ? "/#{fmt}" : "/#{fmt}/search?query=#{params["query"]}"
+		.row
+			.col-md-9
+				%input#query.form-control.input-lg{:name => 'query', :placeholder => "What are you looking for?", :value => params[:query] }
+				/ .tools
+				/ 	%input#mode1{:type => "radio", :name => "mode", :value => "all", :checked => "checked"}
+				/ 	%label <strong>All</strong> of these words
+				/ 	%input#mode2{:type => "radio", :name => "mode", :value => "any"}
+				/ 	%label <strong>Any</strong> of these words
+				/ 	%input#mode3{:type => "radio", :name => "mode", :value => "exact"}
+				/ 	%label This exact phrase
+				/ 	.pull-right
+				/ 		%a{:href => '#'} More search options
+			.col-md-3
+				%button.btn.btn-info.input-lg.form-control{:type => "submit"} Search
 
-		.search-controls.pull-right
-			Sort by 
-			.btn-group.btn-group-sm
-				%button.btn.btn-default{ :type => "button" } Date
-				%button.btn.btn-default{ :type => "button" } Title
-				%button.btn.btn-default{ :type => "button" } Relevance
-			Sort order 
-			.btn-group.btn-group-sm
-				%button.btn.btn-default{ :type => "button" } A-Z
-				%button.btn.btn-default{ :type => "button" } Z-A
+	.search-controls.pull-right
+		Sort by 
+		.btn-group.btn-group-sm
+			%button.btn.btn-default{ :type => "button" } Date
+			%button.btn.btn-default{ :type => "button" } Title
+			%button.btn.btn-default{ :type => "button" } Relevance
+		Sort order 
+		.btn-group.btn-group-sm
+			%button.btn.btn-default{ :type => "button" } A-Z
+			%button.btn.btn-default{ :type => "button" } Z-A
 
-		%p.results-info=raw "There are #{number_with_delimiter(@search_results['search']['result_count'])} items matching <span>#{params[:query]}</span>. Here are the first #{@search_results['search']['per_page']}."
+	%p.results-info=raw "There are #{number_with_delimiter(@search_results['search']['result_count'])} items matching <span>#{params[:query]}</span>. Here are the first #{@search_results['search']['per_page']}."
 
 	= render :partial => "#{@type}/search_results"
