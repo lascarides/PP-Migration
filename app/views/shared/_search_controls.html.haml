@@ -1,0 +1,21 @@
+.search-controls
+
+	.pull-right
+		- if not @search_results.nil?
+			.search-control-panel
+				Sort by 
+				.btn-group.btn-group-sm
+					%button.btn.btn-default{ :type => "button" } Date
+					%button.btn.btn-default{ :type => "button" } Relevance
+			.search-control-panel
+				Order by 
+				.btn-group.btn-group-sm
+					%button.btn.btn-default{ :type => "button" } A-Z
+					%button.btn.btn-default{ :type => "button" } Z-A
+		.search-control-panel
+			.btn-group.btn-group-sm
+				%button.btn.btn-default{ :type => "button", :title => 'View results as list' } 
+					%span.glyphicon.glyphicon-th-list
+				%button.btn.btn-default.active{ :type => "button", :title => 'View results as thumbnails' }
+					%span.glyphicon.glyphicon-th-large
+

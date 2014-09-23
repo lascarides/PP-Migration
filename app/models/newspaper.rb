@@ -22,6 +22,15 @@ class Newspaper < NLNZObject
 		record
 	end
 
+	def self.front_pages
+		year = Time.now.strftime("%Y").to_i - 100
+		date_string = Time.now.strftime("%m.%d")
+		article = Nokogiri::HTML(open("http://paperspast.natlib.govt.nz/cgi-bin/paperspast?a=d&cl=CL2.#{year}.#{date_string}&sp=&e=-------10--1----0--"))
+		article.css("ul.tri-list a").collect { |front_page| 
+			front_page.to_s.gsub!(/^.*d=([A-Z]+)\d\d\d\d.*$/, '\1')
+		}
+	end
+
 	# UNCOMMENT WHEN GETTING ADV SEARCH TO READ FROM PP DIRECTLY
 	# Also, doesn't work yet.
 

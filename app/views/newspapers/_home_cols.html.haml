@@ -1,21 +1,10 @@
-%ul.nav.nav-pills
-	%li
-		= link_to "1830 to 1945", "#dates-picker", 'data-toggle' => "tab"
-	%li
-		= link_to "All 92 titles, from 14 NZ regions", "#region-picker", 'data-toggle' => "tab"
+.search-box
 
-.tab-content
-	#dates-picker.tab-pane.fade
-		#search-options-dates.search-option-panel
-			= render :partial => 'shared/date_picker'
-	#region-picker.tab-pane.fade
-		.row
-			.col-md-4
-				= link_to image_tag("map-newspaper.png", :class => 'home-map'), "/#{@type.to_s.dasherize}/region"
-			.col-md-8
-				%ul
-					- Newspaper.collections[0..24].each do |paper, number|
-						%li
-							%a{:href => "/#{@type.to_s.dasherize}/title/#{paper.parameterize}"}= paper
-				= link_to 'See all titles...', "/#{@type.to_s.dasherize}/title", :class => 'btn'
+	#dates-picker.search-tool-panel.closeable
+		= render :partial => 'shared/close_widget'
+		= render :partial => 'shared/date_picker'
+	#region-picker.search-tool-panel.closeable
+		= render :partial => 'shared/close_widget'
+		= render :partial => 'newspapers/region_picker'
 
+= render :partial => "shared/search_controls"

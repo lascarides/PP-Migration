@@ -5,6 +5,11 @@ class FormatViewerController < ApplicationController
   before_filter :build_regions
 
   def index
+    if params[:query]
+      @search_results = @format_class.search_results(params)
+    else
+      @front_pages = @format_class.front_pages
+    end
     respond_to do |format|
       format.html {}
       format.json {}

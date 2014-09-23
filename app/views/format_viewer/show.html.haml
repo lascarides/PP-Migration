@@ -7,33 +7,53 @@
 	%li= link_to "Page #{@item[:page_number]}", "/newspapers/title/#{@item[:newspaper].parameterize}/#{@item[:date_year]}/#{@item[:date_month]}/#{@item[:date_day]}/#{@item[:page_number]}"
 	%li.active= @item[:title]
 
-.item 
-	%h1
-		= @item[:title]
-		%small= "#{@item[:newspaper]}, #{@item[:date]}"
+.item
+	.row
+		.col-md-3
+			%h2= @item[:title]
 
-	%ul.nav.nav-tabs
-		%li.active= link_to "View article image", "#images", 'data-toggle' => "tab"
-		%li= link_to "Read full text", "#fulltext", 'data-toggle' => "tab"
-		%li= link_to "Additional information", "#info", 'data-toggle' => "tab"
+			.well
+				%h4 
+					This 
+					= link_to 'newspaper article', '/newspapers'
+					is in the public domain.
 
-	.tab-content
-		#images.tab-pane.fade.in.active
-			.row
-				.col-md-12
-					.image-pad
-						- @item[:images].each do |image|
-							=raw image
-		#fulltext.tab-pane.fade
-			.row
-				.col-md-6
-					=raw @item[:fulltext]
-		#info.tab-pane.fade
-			.row
-				.col-md-12
-					%p
-						%a{:href => @item[:original]} See original record
+				%p You can copy this item, share it, and post it on a blog or website. It can be modified, remixed and built upon. It can be used commercially.
 
+				%p If reproducing this item, it is helpful to include the following credit:
+
+				.well
+					[Copyright notice, credit and URL here]
+
+			%h4 Would you like a copy?
+
+			= link_to 'Download PDF', '#', class: 'btn btn-default btn-block'
+			= link_to 'Download plain text', '#', class: 'btn btn-default btn-block'
+			= link_to 'Download high quality image', '#', class: 'btn btn-default btn-block'
+
+			%p= link_to '…', @item[:original]
+
+		.col-md-9
+
+			%ul.nav.nav-tabs
+				%li.active= link_to "View article image", "#images", 'data-toggle' => "tab"
+				%li= link_to "Read full text", "#fulltext", 'data-toggle' => "tab"
+
+			.tab-content
+				#images.tab-pane.fade.in.active
+					.row
+						.col-md-12
+							.image-pad
+								- @item[:images].each do |image|
+									=raw image
+
+							.well
+								%small This article has been automatically clipped from the Hawera & Normanby Star, organised into a single column, then optimised for display on your computer screen. As a result, it may not look exactly as it did on the original page. The article can be seen in its original form in the page view.
+
+				#fulltext.tab-pane.fade
+					.row
+						.col-md-6
+							=raw @item[:fulltext]
 
 
 

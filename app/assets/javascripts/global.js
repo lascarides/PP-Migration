@@ -30,6 +30,9 @@ $(document).ready(function(){
 
 	// Show/hide titles based on selected year
 	function showHideTitles(startYear, endYear) {
+		var titleCount = 0;
+		var regionCount = 0;
+		var regionList = new Array;
 		// Hide regions when they are 'empty'
 		$('.region-group').addClass('inactive');
 		$('.region-group-all').removeClass('inactive');
@@ -38,10 +41,16 @@ $(document).ready(function(){
 			if ($(this).data('yearend') < startYear || $(this).data('yearstart') > endYear) {
 				$(this).addClass('inactive');
 			} else {
+				titleCount++;
+				regionCount = parseInt(titleCount / 5);
 				$(this).removeClass('inactive');
 				$(this).parents('.region-group').removeClass('inactive');
 			}
 		});
+		// Update date/title messages
+		$('.search-date-message a').html(startYear + ' to ' + endYear);
+		$('.search-title-region-message a').html(titleCount + ' titles from ' + regionCount + ' NZ regions');
+
 	}
 
 	// Set up regular search
@@ -50,6 +59,10 @@ $(document).ready(function(){
 		$('.search-box .search-headline').slideUp();
 	});
 
+	// Set up closeable panels
+	$('.closeable .close-widget').click(function(){
+		$(this).parent('.closeable').slideUp();
+	});
 
 	// Set up advanced search
 	$('.title-select-all').click(function(){
@@ -113,6 +126,19 @@ $(document).ready(function(){
 			}
 		});
 	});
+
+	$('.search-date-message').click(function(){
+		$('#region-picker').slideUp();
+		$('#dates-picker').slideToggle();
+		return false;
+	});
+
+	$('.search-title-region-message').click(function(){
+		$('#dates-picker').slideUp();
+		$('#region-picker').slideToggle();
+		return false;
+	});
+
 
 	// Kick off presentation.
 	$('#preso').jmpress();

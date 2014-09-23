@@ -1,10 +1,39 @@
 .format-home
 	.row
+		.col-md-3
+
+			- if params[:query]
+				%h2
+					%small showing articles matching
+					= link_to params[:query], "#"
+
+
+
+			%h2
+				%small
+					- if params[:query]
+						in
+					- else
+						showing
+				.search-title-region-message= link_to "All titles from all NZ regions", "#region-picker"
+
+			%h2
+				%small published in
+				.search-date-message= link_to "1830 to 1945", "#dates-picker"
+
+			.well
+				%h4 
+					About our
+					= FORMAT_LABELS[@type.to_sym].downcase
+				%p= raw(@format_class.description)
+
+				%h4= link_to "Learn more about the newspaper titles", '/newspapers/title'
+
 		.col-md-9
 
 			.search-box
-				%form.form-inline{:role => "form", :action => "/#{@type}/search", :method => 'get'}
-					%input#query.form-control.input-lg{:name => 'query', :placeholder => "What are you looking for?"}
+				%form.form-inline{:role => "form", :method => 'get'}
+					%input#query.form-control.input-lg{:name => 'query', :placeholder => "What are you looking for?", :value => params[:query]}
 					%button.btn.btn-default.input-lg{:type => "submit"} Search full text
 					.tools
 						%input#mode1{:type => "radio", :name => "mode", :value => "all", :checked => "checked"}
@@ -19,16 +48,24 @@
 
 			= render :partial => "#{@type}/home_cols"
 
-			.newspaper-pages
-				- 12.times do |pn|
-					.newspaper-page
-						= link_to image_tag('temp-thumbpage.gif'), "#"
-						%p= link_to "Title", "#"
+			- if not @search_results.nil?
 
-		.col-md-3
-			%h2= FORMAT_LABELS[@type.to_sym]
-			%p= raw(@format_class.description)
+				= render :partial => "#{@type}/search_results"
 
-			= link_to "Learn more about each newspaper", '/newspapers/title', class: 'btn btn-primary btn-lg'
+			- else
+
+				%h4 Here are the front pages from 100 years ago today to get you started.
+
+				.newspaper-pages
+					- NewspaperTitle.info.each do |symbol, title|
+						- if @front_pages.include? symbol
+							- paper_link = "/newspapers/title/#{title[:title].parameterize}/#{(Time.now-100.years).strftime('%Y')}/#{Time.now.strftime('%-m')}/#{Time.now.strftime('%-d')}"
+							.newspaper-page
+								.newspaper-page-image
+									= link_to image_tag("http://paperspast.natlib.govt.nz/cgi-bin/imageserver/imageserver.pl?oid=#{symbol}#{(Time.now - 100.years).strftime('%Y%m%d')}.1.1&scale=8&color=32&ext=gif&key="), paper_link
+								%p= link_to title[:title], paper_link
+								%p= (Time.now - 100.years).strftime("%-d %B, %Y")
+
+
 
 

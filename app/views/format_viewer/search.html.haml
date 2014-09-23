@@ -21,17 +21,6 @@
 			.col-md-3
 				%button.btn.btn-info.input-lg.form-control{:type => "submit"} Search
 
-	.search-controls.pull-right
-		Sort by 
-		.btn-group.btn-group-sm
-			%button.btn.btn-default{ :type => "button" } Date
-			%button.btn.btn-default{ :type => "button" } Title
-			%button.btn.btn-default{ :type => "button" } Relevance
-		Sort order 
-		.btn-group.btn-group-sm
-			%button.btn.btn-default{ :type => "button" } A-Z
-			%button.btn.btn-default{ :type => "button" } Z-A
-
-	%p.results-info=raw "There are #{number_with_delimiter(@search_results['search']['result_count'])} items matching <span>#{params[:query]}</span>. Here are the first #{@search_results['search']['per_page']}."
+	= render :partial => "shared/search_controls"
 
 	= render :partial => "#{@type}/search_results"
