@@ -238,7 +238,7 @@ ol.breadcrumb {
 		margin: 10px 10px 10px 0;
 		text-align: center;
 		max-width: 23%;
-		height: 260px;
+		height: 300px;
 		overflow: hidden;
 		p {
 			color: $ppGreen;
@@ -248,12 +248,30 @@ ol.breadcrumb {
 			border-radius: 10px;
 			border: 1px solid $ppGray;
 			max-width: 100%;
-			max-height: 210px;
+			max-height: 250px;
 			overflow:hidden;
 			margin: 0 0 0.5em;
 			img {
 				display: block;
 			}
+		}
+	}
+}
+
+.page-info {
+	h1, h2 {
+		font-size: 2em;
+		margin: 0 0 0.5em;
+		border: 0px;
+		padding: 0;
+	}
+
+	h2 {
+		font-size: 1.8em;
+		small {
+			padding: 1em 0 0;
+			display: block;
+			font-size: 0.9em;
 		}
 	}
 }

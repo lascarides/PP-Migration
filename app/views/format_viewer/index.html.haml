@@ -22,9 +22,6 @@
 				.search-date-message= link_to "1830 to 1945", "#dates-picker"
 
 			.well
-				%h4 
-					About our
-					= FORMAT_LABELS[@type.to_sym].downcase
 				%p= raw(@format_class.description)
 
 				%h4= link_to "Learn more about the newspaper titles", '/newspapers/title'
@@ -59,7 +56,7 @@
 				.newspaper-pages
 					- NewspaperTitle.info.each do |symbol, title|
 						- if @front_pages.include? symbol
-							- paper_link = "/newspapers/title/#{title[:title].parameterize}/#{(Time.now-100.years).strftime('%Y')}/#{Time.now.strftime('%-m')}/#{Time.now.strftime('%-d')}"
+							- paper_link = "/newspapers/title/#{title[:title].parameterize}/#{(Time.now-100.years).year}/#{Time.now.month}/#{Time.now.day}"
 							.newspaper-page
 								.newspaper-page-image
 									= link_to image_tag("http://paperspast.natlib.govt.nz/cgi-bin/imageserver/imageserver.pl?oid=#{symbol}#{(Time.now - 100.years).strftime('%Y%m%d')}.1.1&scale=8&color=32&ext=gif&key="), paper_link

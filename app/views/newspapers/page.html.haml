@@ -7,28 +7,82 @@
 		%li= link_to @title[:title], "/newspapers/title/#{@title[:title].parameterize}"
 	- unless params[:year].nil?
 		%li= link_to params[:year], "/newspapers/title/#{@title[:title].parameterize}/#{params[:year]}"
+	- unless params[:month].nil?
+		%li= link_to @month, "/newspapers/title/#{@title[:title].parameterize}/#{params[:year]}/#{params[:month]}"
+	- unless params[:day].nil?
+		%li= link_to params[:day], "/newspapers/title/#{@title[:title].parameterize}/#{params[:year]}/#{params[:month]}/#{params[:day]}"
+	- unless params[:page].nil?
+		%li= link_to "Page #{params[:page]}", "/newspapers/title/#{@title[:title].parameterize}/#{params[:year]}/#{params[:month]}/#{params[:day]}/#{params[:page]}"
 
-.newspaper-pages
-	%h1
-		= link_to @title[:title], "/newspapers/title/#{@title[:title].parameterize}"
-		%small
-			for
-			= @today.strftime("%A, %e %B, %Y")
+
+.row
+	.col-md-3.page-info
+		%h1
+			= @title[:title]
+
+		- if @page.nil?
+
+			%h2
+				= @today.strftime("%A, %e %B, %Y")
+			%ul.pager
+				- tomorrow = @today + 1.day
+				- yesterday = @today - 1.day
+				%li.previous= link_to '← Previous issue', "/newspapers/title/#{@title[:title].parameterize}/#{yesterday.year}/#{yesterday.month}/#{yesterday.day}"
+				%li.next= link_to 'Next issue →', "/newspapers/title/#{@title[:title].parameterize}/#{tomorrow.year}/#{tomorrow.month}/#{tomorrow.day}"
+
+		- else 
+
+			%h2
+				= link_to @today.strftime("%A, %e %B, %Y"), "/newspapers/title/#{@title[:title].parameterize}/#{params[:year]}/#{params[:month]}/#{params[:day]}"
+				%small= "Page #{@page}"
+
+			%ul.pager
+				- if @page > 1
+					%li.previous= link_to '← Previous page', "/newspapers/title/#{@title[:title].parameterize}/#{@today.year}/#{@today.month}/#{@today.day}/#{@page - 1}"
+				- if @page < @num_pages
+					%li.next= link_to 'Next page →', "/newspapers/title/#{@title[:title].parameterize}/#{@today.year}/#{@today.month}/#{@today.day}/#{@page + 1}"
+
+		%h4 Would you like a copy?
+
+		= link_to 'Download PDF', '#', class: 'btn btn-default btn-block'
+
+		%h4 About this newspaper
+
+		%p= @title[:short_desc]
+
+		%p= link_to "Read more", "/newspapers/title/#{@title[:title].parameterize}"
 
 
-	%ul.nav.nav-tabs
-		%li.active= link_to "Page thumbnails", "#thumbnails", 'data-toggle' => "tab"
-		%li= link_to "Page contents outline", "#contents", 'data-toggle' => "tab"
+	.col-md-9
 
-	.tab-content
+		.newspaper-pages
 
-		#thumbnails.tab-pane.fade.in.active
-			- (1..@num_pages).each do |pn|
-				.newspaper-page
-					= link_to image_tag(Newspaper.page_image_url(@today, @code, pn, 3)), "/newspapers/title/#{@title[:title].parameterize}/#{@year}/#{@month}/#{@day}/#{pn}"
-					%p= link_to "Page #{pn}", "/newspapers/title/#{@title[:title].parameterize}/#{@year}/#{@month}/#{@day}/#{pn}"
+			%ul.nav.nav-tabs
+				%li.active= link_to "Page thumbnails", "#thumbnails", 'data-toggle' => "tab"
+				%li= link_to "Page contents outline", "#contents", 'data-toggle' => "tab"
 
-		#contents.tab-pane.fade
+			.tab-content
+
+				#thumbnails.tab-pane.fade.in.active
+					- if @page.nil?
+						- if @num_pages > 0
+							- (1..@num_pages).each do |pn|
+								.newspaper-page
+									.newspaper-page-image
+										= link_to image_tag(Newspaper.page_image_url(@today, @code, pn, 3)), "/newspapers/title/#{@title[:title].parameterize}/#{@year}/#{@month}/#{@day}/#{pn}"
+									%p= link_to "Page #{pn}", "/newspapers/title/#{@title[:title].parameterize}/#{@year}/#{@month}/#{@day}/#{pn}"
+						- else
+
+							%h2 No newspaper on this date.
+
+							%p Either there was no newspaper published on this date, or we haven't scanned it yet. 
+
+							%p Learn more...
+					- else 
+
+						= image_tag("http://paperspast.natlib.govt.nz/cgi-bin/imageserver/imageserver.pl?oid=#{NewspaperTitle.code(@title[:title].parameterize)}#{@today.strftime('%Y%m%d')}.1.#{@page}&scale=18&color=32&ext=gif&key=")
+
+				#contents.tab-pane.fade
 
 
 

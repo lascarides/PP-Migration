@@ -221,6 +221,7 @@ DEPENDENCIES
   jquery-ui-rails
   minitest-spec-rails
   minitest-wscolor
+  nokogiri
   puma
   quiet_assets
   rails (= 4.0.1)

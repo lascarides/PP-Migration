@@ -9,6 +9,9 @@ class NewspapersController < FormatViewerController
 		if @day > 0
 			@today = Date.new(@year, @month, @day)
 			@num_pages = Newspaper.num_pages_for_date(@today, @code)
+			if not params[:page].nil?
+				@page = params[:page].to_i
+			end
 			render :action => 'page'
 		end
 	end
