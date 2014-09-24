@@ -4,6 +4,12 @@ class Newspaper < NLNZObject
 	require 'open-uri'
 
 	def self.find(id)
+
+		if id =~ /[A-Z]+\d{8}\-\d/
+			result = DigitalNZ.search_results(id.gsub('-', '.'))
+			id = result['search']['results'].first['id'].to_s
+		end
+
 		result = DigitalNZ.find(id)
 		record = {}
 		title = result['title'].gsub(/^(.*)\(([^(]+),(.*)\)/, '\1**\2**\3').split("**")
@@ -29,6 +35,36 @@ class Newspaper < NLNZObject
 		article.css("ul.tri-list a").collect { |front_page| 
 			front_page.to_s.gsub!(/^.*d=([A-Z]+)\d\d\d\d.*$/, '\1')
 		}
+	end
+
+	def self.outline(issue, page = :all)
+		contents = Nokogiri::HTML(open("http://paperspast.natlib.govt.nz/cgi-bin/paperspast?a=d&d=#{issue}"))
+		# FIXME does not work yet
+		contents = contents.css("#contentslist-wrap b", "#contentslist-wrap a")
+		current_page = "Page 1"
+		output = {}
+		contents.each do |content|
+			if content.to_s =~ /<b>/ 
+				current_page = content.content().to_s.strip
+			else
+				output[current_page] ||= []
+				output[current_page] << {
+					:href => '/newspapers/' + content.attribute('href').to_s.gsub(/^.*d=(.*)\&e=.*$/, '\1').gsub('.', '-'),
+					:label => content.content()
+				}
+			end
+		end
+		output
+	end
+
+	def self.areas(issue_page)
+		contents = Nokogiri::HTML(open("http://paperspast.natlib.govt.nz/cgi-bin/paperspast?a=d&d=#{issue_page}"))
+		contents.css(".veridianlogicalsectionarea").collect do |content|
+			{
+				:style => content.attribute('style').to_s,
+				:href => '/newspapers/' + content.attribute('href').to_s.gsub(/^.*d=(.*)\&e=.*$/, '\1').gsub('.', '-')
+			}
+		end
 	end
 
 	# UNCOMMENT WHEN GETTING ADV SEARCH TO READ FROM PP DIRECTLY

@@ -1,19 +1,21 @@
-%ol.breadcrumb
-	%li= link_to 'Newspapers', "/newspapers"
-	%li= link_to @item[:newspaper], "/newspapers/title/#{@item[:newspaper].parameterize}"
-	%li= link_to @item[:date_year], "/newspapers/title/#{@item[:newspaper].parameterize}/#{@item[:date_year]}"
-	%li= link_to @item[:date_month], "/newspapers/title/#{@item[:newspaper].parameterize}/#{@item[:date_year]}/#{@item[:date_month]}"
-	%li= link_to @item[:date_day].to_i, "/newspapers/title/#{@item[:newspaper].parameterize}/#{@item[:date_year]}/#{@item[:date_month]}/#{@item[:date_day]}"
-	%li= link_to "Page #{@item[:page_number]}", "/newspapers/title/#{@item[:newspaper].parameterize}/#{@item[:date_year]}/#{@item[:date_month]}/#{@item[:date_day]}/#{@item[:page_number]}"
-	%li.active= @item[:title]
+%h4
+	= link_to @item[:newspaper], "/newspapers/title/#{@item[:newspaper].parameterize}"
+	»
+	= link_to @item[:date_year], "/newspapers/title/#{@item[:newspaper].parameterize}/#{@item[:date_year]}"
+	»
+	= link_to @item[:date_month], "/newspapers/title/#{@item[:newspaper].parameterize}/#{@item[:date_year]}/#{@item[:date_month]}"
+	= link_to @item[:date_day].to_i, "/newspapers/title/#{@item[:newspaper].parameterize}/#{@item[:date_year]}/#{@item[:date_month]}/#{@item[:date_day]}"
+	»
+	= link_to "Page #{@item[:page_number]}", "/newspapers/title/#{@item[:newspaper].parameterize}/#{@item[:date_year]}/#{@item[:date_month]}/#{@item[:date_day]}/#{@item[:page_number]}"
+
+%h1= @item[:title]
+
 
 .item
 	.row
 		.col-md-3
-			%h2= @item[:title]
-
 			= render :partial => 'shared/copyright_template'
-			
+
 			%h4 Would you like a copy?
 
 			= link_to 'Download PDF', '#', class: 'btn btn-default btn-block'
@@ -37,7 +39,8 @@
 									=raw image
 
 							.well
-								%small This article has been automatically clipped from the Hawera & Normanby Star, organised into a single column, then optimised for display on your computer screen. As a result, it may not look exactly as it did on the original page. The article can be seen in its original form in the page view.
+								%small 
+									= "This article has been automatically clipped from the #{@item[:newspaper]}, organised into a single column, then optimised for display on your computer screen. As a result, it may not look exactly as it did on the original page. The article can be seen in its original form in the page view."
 
 				#fulltext.tab-pane.fade
 					.row

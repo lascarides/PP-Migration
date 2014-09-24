@@ -276,6 +276,17 @@ ol.breadcrumb {
 	}
 }
 
+.page-image-detail {
+	position: relative;
+	a {
+		display: block;
+		position: absolute;
+	}
+	a:hover {
+		background: rgba(255, 255, 0, 0.5);
+	}
+}
+
 img.masthead {
 	max-width: 100%;
 }

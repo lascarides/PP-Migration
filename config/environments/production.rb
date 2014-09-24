@@ -10,8 +10,8 @@ PPMigration::Application.configure do
   # Rake tasks automatically ignore this option for performance.
   config.eager_load = true
 
-  config.consider_all_requests_local       = true
-  config.action_controller.perform_caching = false
+  config.consider_all_requests_local       = false
+  config.action_controller.perform_caching = true
 
   # Enable Rack::Cache to put a simple HTTP cache in front of your application
   # Add `rack-cache` to your Gemfile before enabling this.
@@ -26,14 +26,14 @@ PPMigration::Application.configure do
   # config.assets.css_compressor = :sass
 
   # Do not fallback to assets pipeline if a precompiled asset is missed.
-  config.assets.compile = false
+  config.assets.compile = true
 
   # Generate digests for assets URLs.
-  config.assets.digest = false
-  config.assets.initialize_on_precompile = false
+  config.assets.digest = true
+  config.assets.initialize_on_precompile = true
 
   # Version of your assets, change this if you want to expire all your assets.
-  config.assets.version = '1.2'
+  config.assets.version = '1.3'
 
   # Specifies the header that your server uses for sending files.
   # config.action_dispatch.x_sendfile_header = "X-Sendfile" # for apache

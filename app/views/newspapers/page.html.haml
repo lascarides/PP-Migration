@@ -1,29 +1,23 @@
-%ol.breadcrumb
-	%li= link_to 'Newspapers', "/newspapers"
-	- if @title.nil?
-		%li All
-	- else 
-		%li= link_to "All", "/newspapers/title"
-		%li= link_to @title[:title], "/newspapers/title/#{@title[:title].parameterize}"
-	- unless params[:year].nil?
-		%li= link_to params[:year], "/newspapers/title/#{@title[:title].parameterize}/#{params[:year]}"
-	- unless params[:month].nil?
-		%li= link_to @month, "/newspapers/title/#{@title[:title].parameterize}/#{params[:year]}/#{params[:month]}"
-	- unless params[:day].nil?
-		%li= link_to params[:day], "/newspapers/title/#{@title[:title].parameterize}/#{params[:year]}/#{params[:month]}/#{params[:day]}"
-	- unless params[:page].nil?
-		%li= link_to "Page #{params[:page]}", "/newspapers/title/#{@title[:title].parameterize}/#{params[:year]}/#{params[:month]}/#{params[:day]}/#{params[:page]}"
+%h1
+	- unless @title.nil?
+		%span= link_to @title[:title], "/newspapers/title/#{@title[:title].parameterize}"
+	%small
+		- unless params[:year].nil?
+			»
+			%span= link_to params[:year], "/newspapers/title/#{@title[:title].parameterize}/#{params[:year]}"
+		- unless params[:month].nil?
+			»
+			%span= link_to @today.strftime('%B'), "/newspapers/title/#{@title[:title].parameterize}/#{params[:year]}/#{params[:month]}"
+		- unless params[:day].nil?
+			%span= link_to params[:day], "/newspapers/title/#{@title[:title].parameterize}/#{params[:year]}/#{params[:month]}/#{params[:day]}"
+		- unless params[:page].nil?
 
+			%span= " » Page #{params[:page]}"
 
 .row
 	.col-md-3.page-info
-		%h1
-			= @title[:title]
-
 		- if @page.nil?
 
-			%h2
-				= @today.strftime("%A, %e %B, %Y")
 			%ul.pager
 				- tomorrow = @today + 1.day
 				- yesterday = @today - 1.day
@@ -31,10 +25,6 @@
 				%li.next= link_to 'Next issue →', "/newspapers/title/#{@title[:title].parameterize}/#{tomorrow.year}/#{tomorrow.month}/#{tomorrow.day}"
 
 		- else 
-
-			%h2
-				= link_to @today.strftime("%A, %e %B, %Y"), "/newspapers/title/#{@title[:title].parameterize}/#{params[:year]}/#{params[:month]}/#{params[:day]}"
-				%small= "Page #{@page}"
 
 			%ul.pager
 				- if @page > 1
@@ -79,12 +69,19 @@
 
 							%p Learn more...
 					- else 
+						.page-image-detail
+							= image_tag("http://paperspast.natlib.govt.nz/cgi-bin/imageserver/imageserver.pl?oid=#{NewspaperTitle.code(@title[:title].parameterize)}#{@today.strftime('%Y%m%d')}.1.#{@page}&scale=30&color=32&ext=gif&key=")
+							- Newspaper.areas(NewspaperTitle.code(@title[:title].parameterize) + @today.strftime('%Y%m%d') + ".1.#{@page}").each do |area|
+								= link_to ' ', area[:href], :style => area[:style]
 
-						= image_tag("http://paperspast.natlib.govt.nz/cgi-bin/imageserver/imageserver.pl?oid=#{NewspaperTitle.code(@title[:title].parameterize)}#{@today.strftime('%Y%m%d')}.1.#{@page}&scale=18&color=32&ext=gif&key=")
 
 				#contents.tab-pane.fade
 
-
+					- Newspaper.outline(NewspaperTitle.code(@title[:title].parameterize) + @today.strftime('%Y%m%d'), @page).each do |page, items|
+						%h4= page
+						%ul
+							- items.each do |item|
+								%li= link_to item[:label], item[:href]
 
 
 
