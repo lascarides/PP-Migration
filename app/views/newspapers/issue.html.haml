@@ -10,11 +10,18 @@
 			%span= link_to @today.strftime('%B'), "/newspapers/title/#{@title[:title].parameterize}/#{params[:year]}/#{params[:month]}"
 		- unless params[:day].nil?
 			%span= link_to params[:day], "/newspapers/title/#{@title[:title].parameterize}/#{params[:year]}/#{params[:month]}/#{params[:day]}"
-		- unless params[:page].nil?
 
-			%span= " » Page #{params[:page]}"
 .row
-	.col-md-12
+	.col-md-3.page-info
+
+		%h4 About this newspaper
+
+		%p= @title[:short_desc]
+
+		%p= link_to "Read more", "/newspapers/title/#{@title[:title].parameterize}"
+
+
+	.col-md-9
 
 		%nav.navbar.navbar-default
 			%ul.nav.navbar-nav
@@ -27,10 +34,6 @@
 					%a{href: "#contents", 'data-toggle' => "tab"}
 						%span.glyphicon.glyphicon-list-alt
 						Outline of issue contents
-				%li
-					%a{href: "#about", 'data-toggle' => "tab"}
-						%span.glyphicon.glyphicon-question-sign
-						About this newspaper
 				%li.dropdown
 					%a.dropdown-toggle{href: "#", 'data-toggle' => "dropdown"}
 						%span.glyphicon.glyphicon-file
@@ -39,27 +42,35 @@
 					%ul.dropdown-menu{role: "menu"}
 						%li= link_to 'Download PDF', '#'
 			%ul.nav.navbar-nav.navbar-right
-				- if @page > 1
-					%li
-						%a{href: "/newspapers/title/#{@title[:title].parameterize}/#{@today.year}/#{@today.month}/#{@today.day}/#{@page - 1}"}
-							%span.glyphicon.glyphicon-arrow-left
-							Previous page
-				- if @page < @num_pages
-					%li
-						%a{href: "/newspapers/title/#{@title[:title].parameterize}/#{@today.year}/#{@today.month}/#{@today.day}/#{@page + 1}"}
-							Next page
-							%span.glyphicon.glyphicon-arrow-right
+				- tomorrow = @today + 1.day
+				- yesterday = @today - 1.day
+				%li
+					%a{href: "/newspapers/title/#{@title[:title].parameterize}/#{yesterday.year}/#{yesterday.month}/#{yesterday.day}"}
+						%span.glyphicon.glyphicon-arrow-left
+						Previous issue
+				%li
+					%a{href: "/newspapers/title/#{@title[:title].parameterize}/#{tomorrow.year}/#{tomorrow.month}/#{tomorrow.day}"}
+						Next issue
+						%span.glyphicon.glyphicon-arrow-right
 
 		.newspaper-pages
 
 			.tab-content
 
 				#thumbnails.tab-pane.fade.in.active
-					.page-image-detail
-						= image_tag("http://paperspast.natlib.govt.nz/cgi-bin/imageserver/imageserver.pl?oid=#{NewspaperTitle.code(@title[:title].parameterize)}#{@today.strftime('%Y%m%d')}.1.#{@page}&scale=30&color=32&ext=gif&key=")
-						- Newspaper.areas(NewspaperTitle.code(@title[:title].parameterize) + @today.strftime('%Y%m%d') + ".1.#{@page}").each do |area|
-							= link_to ' ', area[:href], :style => area[:style]
+					- if @num_pages > 0
+						- (1..@num_pages).each do |pn|
+							.newspaper-page
+								.newspaper-page-image
+									= link_to image_tag(Newspaper.page_image_url(@today, @code, pn, 3)), "/newspapers/title/#{@title[:title].parameterize}/#{@year}/#{@month}/#{@day}/#{pn}"
+								%p= link_to "Page #{pn}", "/newspapers/title/#{@title[:title].parameterize}/#{@year}/#{@month}/#{@day}/#{pn}"
+					- else
 
+						%h2 No newspaper on this date.
+
+						%p Either there was no newspaper published on this date, or we haven't scanned it yet. 
+
+						%p Learn more...
 
 				#contents.tab-pane.fade
 
@@ -69,14 +80,5 @@
 							- items.each do |item|
 								%li= link_to item[:label], item[:href]
 
-				#about.tab-pane.fade
-
-					.row
-						.col-md-6
-							%h2 About this newspaper
-
-							%p= @title[:short_desc]
-
-							%p= link_to "Read more", "/newspapers/title/#{@title[:title].parameterize}"
 
 

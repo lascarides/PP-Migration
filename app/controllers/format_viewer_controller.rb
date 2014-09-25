@@ -33,6 +33,7 @@ class FormatViewerController < ApplicationController
 
   def show
     @item = @format_class.find(params[:id])
+    @item[:month_number] = %w{January February March April May June July August September October November December}.index(@item[:date_month]) + 1
     respond_to do |format|
       format.html # show.html.erb
       format.json { render json: @item }

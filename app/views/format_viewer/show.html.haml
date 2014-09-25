@@ -3,32 +3,47 @@
 	»
 	= link_to @item[:date_year], "/newspapers/title/#{@item[:newspaper].parameterize}/#{@item[:date_year]}"
 	»
-	= link_to @item[:date_month], "/newspapers/title/#{@item[:newspaper].parameterize}/#{@item[:date_year]}/#{@item[:date_month]}"
-	= link_to @item[:date_day].to_i, "/newspapers/title/#{@item[:newspaper].parameterize}/#{@item[:date_year]}/#{@item[:date_month]}/#{@item[:date_day]}"
+	= link_to @item[:date_month], "/newspapers/title/#{@item[:newspaper].parameterize}/#{@item[:date_year]}/#{@item[:month_number]}"
+	= link_to @item[:date_day].to_i, "/newspapers/title/#{@item[:newspaper].parameterize}/#{@item[:date_year]}/#{@item[:month_number]}/#{@item[:date_day]}"
 	»
-	= link_to "Page #{@item[:page_number]}", "/newspapers/title/#{@item[:newspaper].parameterize}/#{@item[:date_year]}/#{@item[:date_month]}/#{@item[:date_day]}/#{@item[:page_number]}"
-
-%h1= @item[:title]
-
+	= link_to "Page #{@item[:page_number] || 1}", "/newspapers/title/#{@item[:newspaper].parameterize}/#{@item[:date_year]}/#{@item[:month_number]}/#{@item[:date_day]}/#{@item[:page_number] || 1}"
 
 .item
 	.row
 		.col-md-3
+			
+			%h1= @item[:title]
+
 			= render :partial => 'shared/copyright_template'
-
-			%h4 Would you like a copy?
-
-			= link_to 'Download PDF', '#', class: 'btn btn-default btn-block'
-			= link_to 'Download plain text', '#', class: 'btn btn-default btn-block'
-			= link_to 'Download high quality image', '#', class: 'btn btn-default btn-block'
 
 			%p= link_to '…', @item[:original]
 
 		.col-md-9
 
-			%ul.nav.nav-tabs
-				%li.active= link_to "View article image", "#images", 'data-toggle' => "tab"
-				%li= link_to "Read full text", "#fulltext", 'data-toggle' => "tab"
+			%nav.navbar.navbar-default
+				%ul.nav.navbar-nav
+					%li.active
+						%a{href: "#images", 'data-toggle' => "tab"}
+							%span.glyphicon.glyphicon-th
+							Scanned page image
+
+					%li
+						%a{href: "#fulltext", 'data-toggle' => "tab"}
+							%span.glyphicon.glyphicon-list-alt
+							Computer-generated text
+					%li
+						%a{href: "#about", 'data-toggle' => "tab"}
+							%span.glyphicon.glyphicon-question-sign
+							About this newspaper
+					%li.dropdown
+						%a.dropdown-toggle{href: "#", 'data-toggle' => "dropdown"}
+							%span.glyphicon.glyphicon-file
+							Save a copy 
+							%span.caret
+						%ul.dropdown-menu{role: "menu"}
+							%li= link_to 'Download PDF', '#'
+							%li= link_to 'Download plain text'
+							%li= link_to 'Download high quality image'
 
 			.tab-content
 				#images.tab-pane.fade.in.active
@@ -47,5 +62,15 @@
 						.col-md-6
 							=raw @item[:fulltext]
 
+
+				#about.tab-pane.fade
+
+					.row
+						.col-md-6
+							%h2 About this newspaper
+
+							%p [Newspaper description goes here...]
+
+							%p= link_to "Read more", "/newspapers/title/#{@item[:newspaper].parameterize}"
 
 

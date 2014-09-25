@@ -1,17 +1,3 @@
-%ol.breadcrumb
-	%li= link_to 'Newspapers', "/newspapers"
-	- if @title.nil?
-		%li All
-	- else 
-		%li= link_to @title[:region], "/newspapers/region/#{@title[:region].parameterize}"
-		%li= link_to @title[:title], "/newspapers/title/#{@title[:title].parameterize}"
-	- if @year > 0
-		%li= link_to @year, "/newspapers/title/#{@title[:title].parameterize}/#{@year}"
-	- if @month > 0
-		%li= link_to @month, "/newspapers/title/#{@title[:title].parameterize}/#{@year}/#{@month}"
-	- if @day > 0
-		%li= link_to @day, "/newspapers/title/#{@title[:title].parameterize}/#{@year}/#{@month}/#{@day}"
-
 .newspaper_title 
 	- if @title.nil?
 
