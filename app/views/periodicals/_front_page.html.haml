@@ -1,0 +1,8 @@
+.newspaper-pages
+	- 12.times do |n|
+		.newspaper-page
+			.newspaper-page-image
+				= link_to image_tag("home-periodicals.jpg"), "/periodicals/title/te-ao-hou"
+			%p
+				= link_to "Te Ao Hou", "/periodicals/title/te-ao-hou"
+				= (Time.now - 50.years + n.months).strftime("%B %Y")

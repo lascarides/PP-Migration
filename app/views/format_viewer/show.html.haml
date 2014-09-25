@@ -1,12 +1,4 @@
-%h4
-	= link_to @item[:newspaper], "/newspapers/title/#{@item[:newspaper].parameterize}"
-	»
-	= link_to @item[:date_year], "/newspapers/title/#{@item[:newspaper].parameterize}/#{@item[:date_year]}"
-	»
-	= link_to @item[:date_month], "/newspapers/title/#{@item[:newspaper].parameterize}/#{@item[:date_year]}/#{@item[:month_number]}"
-	= link_to @item[:date_day].to_i, "/newspapers/title/#{@item[:newspaper].parameterize}/#{@item[:date_year]}/#{@item[:month_number]}/#{@item[:date_day]}"
-	»
-	= link_to "Page #{@item[:page_number] || 1}", "/newspapers/title/#{@item[:newspaper].parameterize}/#{@item[:date_year]}/#{@item[:month_number]}/#{@item[:date_day]}/#{@item[:page_number] || 1}"
+%h4= render :partial => 'shared/breadcrumbs'
 
 .item
 	.row
@@ -34,7 +26,7 @@
 					%li
 						%a{href: "#about", 'data-toggle' => "tab"}
 							%span.glyphicon.glyphicon-question-sign
-							About this newspaper
+							= "About this #{@type.to_s.singularize}"
 					%li.dropdown
 						%a.dropdown-toggle{href: "#", 'data-toggle' => "dropdown"}
 							%span.glyphicon.glyphicon-file
@@ -51,15 +43,15 @@
 						.col-md-12
 							.image-pad
 								- @item[:images].each do |image|
-									=raw image
+									= image_tag image
 
 							.well
 								%small 
-									= "This article has been automatically clipped from the #{@item[:newspaper]}, organised into a single column, then optimised for display on your computer screen. As a result, it may not look exactly as it did on the original page. The article can be seen in its original form in the page view."
+									= "This article has been automatically clipped from the #{@item[:collection]}, organised into a single column, then optimised for display on your computer screen. As a result, it may not look exactly as it did on the original page. The article can be seen in its original form in the page view."
 
 				#fulltext.tab-pane.fade
 					.row
-						.col-md-6
+						.col-md-6.col-md-offset-3
 							=raw @item[:fulltext]
 
 
@@ -67,10 +59,10 @@
 
 					.row
 						.col-md-6
-							%h2 About this newspaper
+							%h2= "About this #{@type.to_s.singularize}" 
 
-							%p [Newspaper description goes here...]
+							%p [Description goes here...]
 
-							%p= link_to "Read more", "/newspapers/title/#{@item[:newspaper].parameterize}"
+							%p= link_to "Read more", "/#{@type}/title/#{@item[:collection].parameterize}"
 
 

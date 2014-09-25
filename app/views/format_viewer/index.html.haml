@@ -2,24 +2,19 @@
 	.row
 		.col-md-3
 
-			- if params[:query]
-				%h2
-					%small showing articles matching
-					= link_to params[:query], "#"
+			%h2.facet
+				%small Looking in 
+				.search-title-region-message{'data-intro' => "Click here to choose specific newspaper titles", 'data-position' => "right"}
+					%a{href: "#region-picker"}
+						%span All titles from all NZ regions
+					%a.btn.btn-xs{href: "#region-picker"} Change
 
-
-
-			%h2
-				%small
-					- if params[:query]
-						in
-					- else
-						showing
-				.search-title-region-message= link_to "All titles from all NZ regions", "#region-picker"
-
-			%h2
-				%small published in
-				.search-date-message= link_to "1830 to 1945", "#dates-picker"
+			%h2.facet
+				%small published between
+				.search-date-message{'data-intro' => "Click here to choose a specific range of dates", 'data-position' => "right"}
+					%a{href: "#dates-picker"}
+						%span 1830 and 1945
+					%a.btn.btn-xs{href: "#dates-picker"} Change
 
 			.well
 				%p= raw(@format_class.description)
@@ -30,7 +25,7 @@
 
 			.search-box
 				%form.form-inline{:role => "form", :method => 'get'}
-					%input#query.form-control.input-lg{:name => 'query', :placeholder => "What are you looking for?", :value => params[:query]}
+					%input#query.form-control.input-lg{:name => 'query', :placeholder => "What are you looking for?", :value => params[:query], 'data-intro' => "Enter words here to find articles containing those words", 'data-position' => "right"}
 					%button.btn.btn-default.input-lg{:type => "submit"} Search full text
 					.tools
 						%input#mode1{:type => "radio", :name => "mode", :value => "all", :checked => "checked"}
@@ -39,29 +34,35 @@
 						%label <strong>Any</strong> of these words
 						%input#mode3{:type => "radio", :name => "mode", :value => "exact"}
 						%label This <strong>exact phrase</strong>
+					.tools
+						%label
+							= check_box_tag :article, "articles", true
+							Articles
+						%label
+							= check_box_tag :article, "adverts", true
+							Advertisements 
+							%em often includes births, deaths, and marriages
+						%label
+							= check_box_tag :article, "captions", true
+							Illustration and captions
 
-						%a#search-options-toggle.pull-right{:href => "/#{@type}/search_options"} 
-							More search options...
 
-			= render :partial => "#{@type}/home_cols"
+				= render :partial => "#{@type}/home_cols"
+				
+			= render :partial => "shared/search_controls"
 
 			- if not @search_results.nil?
 
 				= render :partial => "#{@type}/search_results"
 
+			- elsif not @title_results.nil?
+
+				= render :partial => "#{@type}/title_results"
+
 			- else
 
-				%h4 Here are the front pages from 100 years ago today to get you started.
+				= render :partial => "#{@type}/front_page"
 
-				.newspaper-pages
-					- NewspaperTitle.info.each do |symbol, title|
-						- if @front_pages.include? symbol
-							- paper_link = "/newspapers/title/#{title[:title].parameterize}/#{(Time.now-100.years).year}/#{Time.now.month}/#{Time.now.day}"
-							.newspaper-page
-								.newspaper-page-image
-									= link_to image_tag("http://paperspast.natlib.govt.nz/cgi-bin/imageserver/imageserver.pl?oid=#{symbol}#{(Time.now - 100.years).strftime('%Y%m%d')}.1.1&scale=8&color=32&ext=gif&key="), paper_link
-								%p= link_to title[:title], paper_link
-								%p= (Time.now - 100.years).strftime("%-d %B, %Y")
 
 
 

@@ -1,0 +1,8 @@
+.newspaper-pages
+	- 12.times do |n|
+		.newspaper-page
+			.newspaper-page-image
+				= link_to image_tag("home-parliamentary-papers.jpg"), "/parliamentary-papers/title/a-to-js"
+			%p
+				= link_to "A to Js", "/parliamentary-papers/title/a-to-js"
+				= (Time.now - 100.years + n.months).strftime("%B %Y")

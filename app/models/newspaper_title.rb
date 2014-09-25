@@ -1,15 +1,18 @@
 class NewspaperTitle
 
 	def self.find(id)
+		@title_info = nil
 		if self.info[id]
-			return self[id]
-		end
-		self.info.each do |code, title|
-			if id == ActiveSupport::Inflector.parameterize(title[:title])
-				return title
+			@title_info = self[id]
+		else
+			self.info.each do |code, title|
+				if id == ActiveSupport::Inflector.parameterize(title[:title])
+					@title_info = title
+				end
 			end
 		end
-		nil
+		@title_info[:collection] = @title_info[:title]
+		@title_info
 	end
 
 	def self.code(title_short)

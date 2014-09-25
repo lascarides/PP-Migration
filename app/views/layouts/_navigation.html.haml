@@ -9,9 +9,9 @@
 		.navbar-collapse.collapse
 
 			- if not @type.nil?
-				= link_to FORMAT_LABELS[@type], "/#{@type}", :class => 'navbar-brand active'
+				= link_to FORMAT_LABELS[@type], "/#{@type}", :class => 'navbar-brand active navbar-format'
 				
-			%ul.nav.navbar-nav
+			%ul.nav.navbar-nav{'data-intro' => "Choose the type of materials to explore", 'data-position' => "right"}
 				%li.dropdown
 					%a.dropdown-toggle{href: '#', 'data-toggle' => 'dropdown'}
 						= @type.nil? ? 'Explore all' : 'More choices'
@@ -19,12 +19,12 @@
 					%ul.dropdown-menu{ role: 'menu' }
 						- FORMAT_LABELS.each do |fmt, label| 
 							- if fmt != @type
-								%li= link_to label, params["query"].blank? ? "/#{fmt}" : "/#{fmt}/search?query=#{params["query"]}"
+								%li= link_to label, params["query"].blank? ? "/#{fmt}" : "/#{fmt}?query=#{params["query"]}"
 
 			%ul.nav.navbar-nav.navbar-right
 				%li
 					=link_to "About Papers Past", '/about'
 				%li
-					=link_to "Getting Started", '/help'
+					=link_to "Getting Started Guide", '/help'
 				%li
-					=link_to "Help", '/help'
+					=link_to "Quick Help", '#', :class => 'quick-help-toggle'

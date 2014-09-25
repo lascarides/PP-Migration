@@ -13,17 +13,17 @@ class Newspaper < NLNZObject
 		result = DigitalNZ.find(id)
 		record = {}
 		title = result['title'].gsub(/^(.*)\(([^(]+),(.*)\)/, '\1**\2**\3').split("**")
-		record[:title] = title[0]
-		record[:newspaper] = title[1]
-		record[:date] = title[2]
-		record[:date_year] = title[2].split(' ')[2]
-		record[:date_day] = title[2].split(' ')[0]
-		record[:date_month] = title[2].split(' ')[1]
-		record[:fulltext] = result['fulltext']
-		record[:original] = result['landing_url']
+		record[:title] 			= title[0]
+		record[:collection] 	= title[1]
+		record[:date] 			= Date.parse(result['date'].first)
+		record[:date_year] 		= record[:date].year
+		record[:date_day] 		= record[:date].day
+		record[:date_month] 	= record[:date].month
+		record[:fulltext] 		= result['fulltext']
+		record[:original] 		= result['landing_url']
 		article = Nokogiri::HTML(open(result['landing_url']))
 		record[:images] = article.css(".veridianimagecontainerdiv img").collect { |image| 
-			image.to_s.gsub!('src="/', 'src="http://paperspast.natlib.govt.nz/')
+			"http://paperspast.natlib.govt.nz" + image.attribute('src').to_s
 		}
 		record
 	end

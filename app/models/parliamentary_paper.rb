@@ -3,16 +3,18 @@ class ParliamentaryPaper < NLNZObject
 	def self.find(id)
 		result = DigitalNZ.find(id)
 		record = {}
-		record[:title] = result['title']
-		record[:newspaper] = 'A to Js'
-		record[:date] = result['display_date']
-		record[:original] = result['landing_url']
+		record[:title] 			= result['title']
+		record[:collection] 	= 'A to Js'
+		record[:parliamentary_session] 	= result['collection'].collect{|c| c.gsub(/^.*(Session .*)$/, '\1') if c =~ /Session/}.compact.first
+		record[:date] 			= result['display_date']
+		record[:date_year] 		= result['display_date']
+		record[:original] 		= result['landing_url']
 		article = Nokogiri::HTML(open(result['landing_url']))
 		record[:images] = article.css(".veridianimagecontainerdiv img").collect { |image| 
-			image.to_s.gsub!('src="/', 'src="http://atojs.natlib.govt.nz/')
+			"http://atojs.natlib.govt.nz" + image.attribute('src')
 		}
 		article = Nokogiri::HTML(open(result['landing_url'] + '&st=1'))
-		record[:fulltext] = article.css("#ocr-nav .inner-contentwrap")
+		record[:fulltext] = article.css("#ocr-nav .inner-contentwrap").to_s
 		record
 	end
 

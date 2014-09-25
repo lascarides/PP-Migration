@@ -7,7 +7,7 @@ class FormatViewerController < ApplicationController
   def index
     if params[:query]
       @search_results = @format_class.search_results(params)
-    else
+    elsif @format_class.respond_to? :front_pages
       @front_pages = @format_class.front_pages
     end
     respond_to do |format|
@@ -33,7 +33,6 @@ class FormatViewerController < ApplicationController
 
   def show
     @item = @format_class.find(params[:id])
-    @item[:month_number] = %w{January February March April May June July August September October November December}.index(@item[:date_month]) + 1
     respond_to do |format|
       format.html # show.html.erb
       format.json { render json: @item }

@@ -48,8 +48,8 @@ $(document).ready(function(){
 			}
 		});
 		// Update date/title messages
-		$('.search-date-message a').html(startYear + ' to ' + endYear);
-		$('.search-title-region-message a').html(titleCount + ' titles from ' + regionCount + ' NZ regions');
+		$('.search-date-message a span').html(startYear + ' and ' + endYear);
+		$('.search-title-region-message a span').html(titleCount + ' titles from ' + regionCount + ' NZ regions');
 
 	}
 
@@ -59,9 +59,21 @@ $(document).ready(function(){
 		$('.search-box .search-headline').slideUp();
 	});
 
+	// Set up quick help
+	$('.quick-help-toggle').click(function(){
+		$('body').chardinJs('start');
+		return false;
+	});
+
 	// Set up closeable panels
 	$('.closeable .close-widget').click(function(){
 		$(this).parent('.closeable').slideUp();
+	});
+
+	// Set up fullscreen button
+	$('.page-expander a').click(function(){
+		$('.page-image-detail').toggleClass('page-image-detail-compressed');
+		return false;
 	});
 
 	// Set up advanced search

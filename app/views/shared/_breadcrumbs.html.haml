@@ -1,0 +1,23 @@
+- unless @item[:collection].nil?
+	%h4
+		- url = "/#{@type}/title/#{@item[:collection].parameterize}"
+		= link_to @item[:collection], url
+		- if not @item[:date_year].nil?
+			»
+			- url += "/#{@item[:date_year]}"
+			= link_to @item[:date_year], url
+		- if not @item[:parliamentary_session].nil?
+			»
+			- url += "/#{@item[:parliamentary_session].parameterize}"
+			= link_to @item[:parliamentary_session], url
+		- if not @item[:date_month].nil?
+			»
+			- url += "/#{@item[:date_month]}"
+			= link_to @item[:date].strftime("%B"), url
+		- if not @item[:date_day].nil?
+			- url += "/#{@item[:date_day]}"
+			= link_to @item[:date_day].to_i, url
+		- if not @item[:page_number].nil?
+			»
+			- url += "/#{@item[:page_number]}"
+			= link_to "Page #{@item[:page_number]}", url

@@ -1,24 +1,13 @@
-%h1
-	- unless @title.nil?
-		%span= link_to @title[:title], "/newspapers/title/#{@title[:title].parameterize}"
-	%small
-		- unless params[:year].nil?
-			»
-			%span= link_to params[:year], "/newspapers/title/#{@title[:title].parameterize}/#{params[:year]}"
-		- unless params[:month].nil?
-			»
-			%span= link_to @today.strftime('%B'), "/newspapers/title/#{@title[:title].parameterize}/#{params[:year]}/#{params[:month]}"
-		- unless params[:day].nil?
-			%span= link_to params[:day], "/newspapers/title/#{@title[:title].parameterize}/#{params[:year]}/#{params[:month]}/#{params[:day]}"
+%h1= render :partial => 'shared/breadcrumbs'
 
 .row
 	.col-md-3.page-info
 
 		%h4 About this newspaper
 
-		%p= @title[:short_desc]
+		%p= @item[:short_desc]
 
-		%p= link_to "Read more", "/newspapers/title/#{@title[:title].parameterize}"
+		%p= link_to "Read more", "/newspapers/title/#{@item[:title].parameterize}"
 
 
 	.col-md-9
@@ -45,11 +34,11 @@
 				- tomorrow = @today + 1.day
 				- yesterday = @today - 1.day
 				%li
-					%a{href: "/newspapers/title/#{@title[:title].parameterize}/#{yesterday.year}/#{yesterday.month}/#{yesterday.day}"}
+					%a{href: "/newspapers/title/#{@item[:title].parameterize}/#{yesterday.year}/#{yesterday.month}/#{yesterday.day}"}
 						%span.glyphicon.glyphicon-arrow-left
 						Previous issue
 				%li
-					%a{href: "/newspapers/title/#{@title[:title].parameterize}/#{tomorrow.year}/#{tomorrow.month}/#{tomorrow.day}"}
+					%a{href: "/newspapers/title/#{@item[:title].parameterize}/#{tomorrow.year}/#{tomorrow.month}/#{tomorrow.day}"}
 						Next issue
 						%span.glyphicon.glyphicon-arrow-right
 
@@ -62,8 +51,8 @@
 						- (1..@num_pages).each do |pn|
 							.newspaper-page
 								.newspaper-page-image
-									= link_to image_tag(Newspaper.page_image_url(@today, @code, pn, 3)), "/newspapers/title/#{@title[:title].parameterize}/#{@year}/#{@month}/#{@day}/#{pn}"
-								%p= link_to "Page #{pn}", "/newspapers/title/#{@title[:title].parameterize}/#{@year}/#{@month}/#{@day}/#{pn}"
+									= link_to image_tag(Newspaper.page_image_url(@today, @code, pn, 3)), "/newspapers/title/#{@item[:title].parameterize}/#{@year}/#{@month}/#{@day}/#{pn}"
+								%p= link_to "Page #{pn}", "/newspapers/title/#{@item[:title].parameterize}/#{@year}/#{@month}/#{@day}/#{pn}"
 					- else
 
 						%h2 No newspaper on this date.
@@ -74,7 +63,7 @@
 
 				#contents.tab-pane.fade
 
-					- Newspaper.outline(NewspaperTitle.code(@title[:title].parameterize) + @today.strftime('%Y%m%d'), @page).each do |page, items|
+					- Newspaper.outline(NewspaperTitle.code(@item[:title].parameterize) + @today.strftime('%Y%m%d'), @page).each do |page, items|
 						%h4= page
 						%ul
 							- items.each do |item|

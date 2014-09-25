@@ -1,5 +1,6 @@
 $ppGreen: desaturate(#93b05c, 5%);
-$ppAccent: #995078;
+/* $ppAccent: #995078; */
+$ppAccent: #e3b62d;
 $ppGray: #e3e3d4;
 $ppSuperHighlight: #fc3;
 
@@ -95,15 +96,16 @@ label {
 		color: $ppGreen !important;
 	}
 	.active a, li.open > a, .navbar-collapse .active {
-		background: url(/assets/bg-nav-arr-r.png) 0 50% no-repeat darken($ppGreen, 10%) !important;
-		background-size: auto 100% !important;
-		padding-left: 1.2em;
 	}
 	.navbar-header {
 		.navbar-brand {
-			background: url(/assets/bg-nav-arr-l.png) 100% 50% no-repeat darken($ppGreen, 20%) !important;
-			background-size: auto 100% !important;
+			background: darken($ppGreen, 20%) !important;
 		}
+	}
+	.navbar-format {
+		background: url(/assets/bg-nav-arr-r.png) 0 50% no-repeat $ppAccent !important;
+		background-size: auto 100% !important;
+		padding-left: 2em;
 	}
 }
 
@@ -183,12 +185,19 @@ ol.breadcrumb {
 	h2:first-child {
 		margin-top: 0;
 	}
-	h2 {
-		small {
-			display: block;
-		}
+	h2.facet {
 		a {
-			border-bottom: 2px dotted $ppGray;
+			display: block;
+			span {
+				border-bottom: 2px dotted $ppGray;
+			}
+		}
+		.btn {
+			display: inline-block;
+			border-bottom: 0px;
+			text-align: left;
+			background: $ppAccent;
+			color: #fff;
 		}
 	}
 
@@ -240,18 +249,32 @@ ol.breadcrumb {
 	.newspaper-page {
 		float: left;
 		margin: 10px 10px 10px 0;
-		text-align: center;
 		width: 23%;
 		height: 300px;
 		overflow: hidden;
+		position: relative;
+		border: 1px solid $ppGray;
 		p {
+			position: absolute;
+			bottom: 0;
+			left: 0;
 			color: $ppGreen;
 			margin: 0;
+			padding: 0.5em;
+			height: 5em;
+			background: rgba(0,0,0,0.6);
+			color: #fff;
+			line-height: 1.2;
+			width: 100%;
+			a {
+				display: block;
+				color: #fff;
+				line-height: 1.2;
+			}
 		}
 		.newspaper-page-image {
-			border: 1px solid $ppGray;
 			max-width: 100%;
-			max-height: 250px;
+			max-height: 300px;
 			overflow:hidden;
 			margin: 0 0 0.5em;
 			img {
@@ -289,6 +312,16 @@ ol.breadcrumb {
 		background: rgba(255, 255, 0, 0.5);
 	}
 }
+ 
+.page-image-detail-compressed {
+	a {
+		display: none;
+	}
+	img {
+		max-width: 100%;
+	}
+}
+
 
 img.masthead {
 	max-width: 100%;
@@ -303,7 +336,6 @@ table {
 
 .search-controls {
 	overflow: hidden;
-	text-align: center;
 	.search-control-panel {
 		display: inline-block;
 		padding: 0 0 0 1em;
