@@ -1,18 +1,10 @@
 %h1= render :partial => 'shared/breadcrumbs'
 
 .row
-	.col-md-3.page-info
-
-		%h4 About this newspaper
-
-		%p= @item[:short_desc]
-
-		%p= link_to "Read more", "/newspapers/title/#{@item[:title].parameterize}"
-
 
 	.col-md-9
 
-		%nav.navbar.navbar-default
+		%nav.navbar.navbar-default.navbar-subnav
 			%ul.nav.navbar-nav
 				%li.active
 					%a{href: "#thumbnails", 'data-toggle' => "tab"}
@@ -68,6 +60,14 @@
 						%ul
 							- items.each do |item|
 								%li= link_to item[:label], item[:href]
+
+	.col-md-3.page-info
+
+		%h4 About this newspaper
+
+		%p= @item[:short_desc]
+
+		%p= link_to "Read more", "/newspapers/title/#{@item[:title].parameterize}"
 
 
 

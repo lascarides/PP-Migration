@@ -1,32 +1,44 @@
 .format-home
 	.row
-		.col-md-3
+		.col-md-3.sidebar
 
 			%h2.facet
-				%small Looking in 
+				%small Choose your dates
+				.search-date-message{'data-intro' => "Click here to choose a specific range of dates", 'data-position' => "right"}
+					%a{href: "#dates-picker"}
+						%span 1830 - 1945
+					%a.facet-arrow{href: "#dates-picker"}
+						%span Change
+
+			%h2.facet
+				%small Choose your titles
 				.search-title-region-message{'data-intro' => "Click here to choose specific newspaper titles", 'data-position' => "right"}
 					%a{href: "#region-picker"}
 						%span All titles from all NZ regions
-					%a.btn.btn-xs{href: "#region-picker"} Change
+					%a.facet-arrow{href: "#region-picker"}
+						%span Change
 
 			%h2.facet
-				%small published between
-				.search-date-message{'data-intro' => "Click here to choose a specific range of dates", 'data-position' => "right"}
-					%a{href: "#dates-picker"}
-						%span 1830 and 1945
-					%a.btn.btn-xs{href: "#dates-picker"} Change
+				%small Choose your article types
+				.search-article-message{'data-intro' => "Click here to choose the types of newspaper articles you'd like to search", 'data-position' => "right"}
+					%a{href: "#article-picker"}
+						%span All article types
+					%a.facet-arrow{href: "#article-picker"}
+						%span Change
 
 			.well
 				%p= raw(@format_class.description)
 
-				%h4= link_to "Learn more about the newspaper titles", '/newspapers/title'
+				%h4= link_to "Learn more about the #{@type} »", "/#{@type}/title"
 
 		.col-md-9
 
 			.search-box
 				%form.form-inline{:role => "form", :method => 'get'}
-					%input#query.form-control.input-lg{:name => 'query', :placeholder => "What are you looking for?", :value => params[:query], 'data-intro' => "Enter words here to find articles containing those words", 'data-position' => "right"}
-					%button.btn.btn-default.input-lg{:type => "submit"} Search full text
+					.input-group
+						%input#query.form-control.input-lg{:name => 'query', :placeholder => "What are you looking for?", :value => params[:query], 'data-intro' => "Enter words here to find articles containing those words", 'data-position' => "right"}
+						%span.input-group-btn
+							%button.btn.btn-default.input-lg{:type => "submit"} Search full text
 					.tools
 						%input#mode1{:type => "radio", :name => "mode", :value => "all", :checked => "checked"}
 						%label <strong>All</strong> of these words
@@ -34,18 +46,6 @@
 						%label <strong>Any</strong> of these words
 						%input#mode3{:type => "radio", :name => "mode", :value => "exact"}
 						%label This <strong>exact phrase</strong>
-					.tools
-						%label
-							= check_box_tag :article, "articles", true
-							Articles
-						%label
-							= check_box_tag :article, "adverts", true
-							Advertisements 
-							%em often includes births, deaths, and marriages
-						%label
-							= check_box_tag :article, "captions", true
-							Illustration and captions
-
 
 				= render :partial => "#{@type}/home_cols"
 				
@@ -60,6 +60,8 @@
 				= render :partial => "#{@type}/title_results"
 
 			- else
+
+				%h4 To get you started, here's the headlines from 100 years ago today…
 
 				= render :partial => "#{@type}/front_page"
 

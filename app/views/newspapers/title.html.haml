@@ -1,5 +1,5 @@
 .newspaper_title 
-	- if @title.nil?
+	- if @item.nil?
 
 		%h1 All newspaper titles
 
@@ -25,12 +25,38 @@
 
 	- else
 		%h1
-			= @title[:title]
+			= @item[:title]
 			%small
-				= link_to "#{@title[:region]},", "/newspapers/region/#{@title[:region].parameterize}"
-				= " #{@title[:start_year]}-#{@title[:end_year]}"
+				= link_to "#{@item[:region]},", "/newspapers/region/#{@item[:region].parameterize}"
+				= " #{@item[:start_year]}-#{@item[:end_year]}"
 
 		.row
+			.col-md-6
+
+				.well= link_to image_tag(@item[:logo], :class => 'masthead')
+
+				%h3= "History"
+
+				=raw @item[:essay]
+
+				%h3 More information
+
+				%table.table
+					%tbody
+						%tr
+							%td Region
+							%td= @item[:region]
+						/ %tr
+						/ 	%td Also published as
+						/ 	%td Hawke’s Bay Herald and Ahuriri Advocate, Hawke's Bay Tribune, Hawke's Bay Herald-Tribune
+						%tr
+							%td Available online
+							%td= "#{@item[:start_year]}-#{@item[:end_year]}"
+				
+				%h3 Copyright statement
+
+				= render :partial => 'shared/copyright_template'
+
 			.col-md-6
 
 				%h3
@@ -45,39 +71,14 @@
 				%h3 Browse issues
 
 				- if @year > 0
-					%p= link_to "Show earlier years", "/newspapers/title/#{@title[:title].parameterize}"
+					%p= link_to "Show earlier years", "/newspapers/title/#{@item[:title].parameterize}"
 
 				%table.table
 					%tbody
-						- (@title[:start_year]..@title[:end_year]).each do |yr|
+						- (@item[:start_year]..@item[:end_year]).each do |yr|
 							%tr
 								%td
-									%strong= link_to yr, "/newspapers/title/#{@title[:title].parameterize}/#{yr}"
+									%strong= link_to yr, "/newspapers/title/#{@item[:title].parameterize}/#{yr}"
 								- ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'].each_with_index do |month, i|
-									%td= link_to month, "/newspapers/title/#{@title[:title].parameterize}/#{yr}/#{i + 1}"
+									%td= link_to month, "/newspapers/title/#{@item[:title].parameterize}/#{yr}/#{i + 1}"
 
-			.col-md-6
-
-				= link_to image_tag(@title[:logo], :class => 'masthead')
-
-				%h3= "History"
-
-				=raw @title[:essay]
-
-				%h3 More information
-
-				%table.table
-					%tbody
-						%tr
-							%td Region
-							%td= @title[:region]
-						/ %tr
-						/ 	%td Also published as
-						/ 	%td Hawke’s Bay Herald and Ahuriri Advocate, Hawke's Bay Tribune, Hawke's Bay Herald-Tribune
-						%tr
-							%td Available online
-							%td= "#{@title[:start_year]}-#{@title[:end_year]}"
-				
-				%h3 Copyright statement
-
-				%p See our copyright guide for information on how you may use this title.

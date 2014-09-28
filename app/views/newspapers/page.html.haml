@@ -1,7 +1,7 @@
 %h1= render :partial => 'shared/breadcrumbs'
 
 
-%nav.navbar.navbar-default
+%nav.navbar.navbar-default.navbar-subnav
 	%ul.nav.navbar-nav
 		%li.page-expander
 			%a{href: '#'}
@@ -15,10 +15,6 @@
 			%a{href: "#contents", 'data-toggle' => "tab"}
 				%span.glyphicon.glyphicon-list-alt
 				Outline of page contents
-		%li
-			%a{href: "#about", 'data-toggle' => "tab"}
-				%span.glyphicon.glyphicon-question-sign
-				About this newspaper
 		%li.dropdown
 			%a.dropdown-toggle{href: "#", 'data-toggle' => "dropdown"}
 				%span.glyphicon.glyphicon-file
@@ -56,15 +52,4 @@
 				%ul
 					- items.each do |item|
 						%li= link_to item[:label], item[:href]
-
-		#about.tab-pane.fade
-
-			.row
-				.col-md-6
-					%h2 About this newspaper
-
-					%p= @item[:short_desc]
-
-					%p= link_to "Read more", "/newspapers/title/#{@item[:title].parameterize}"
-
 

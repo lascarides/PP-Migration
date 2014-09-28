@@ -12,9 +12,9 @@
 				= link_to FORMAT_LABELS[@type], "/#{@type}", :class => 'navbar-brand active navbar-format'
 				
 			%ul.nav.navbar-nav{'data-intro' => "Choose the type of materials to explore", 'data-position' => "right"}
-				%li.dropdown
+				%li.dropdown.format-picker
 					%a.dropdown-toggle{href: '#', 'data-toggle' => 'dropdown'}
-						= @type.nil? ? 'Explore all' : 'More choices'
+						= @type.nil? ? 'Explore the collections' : 'More choices'
 						%span.caret
 					%ul.dropdown-menu{ role: 'menu' }
 						- FORMAT_LABELS.each do |fmt, label| 

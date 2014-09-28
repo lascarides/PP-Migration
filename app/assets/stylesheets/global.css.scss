@@ -1,6 +1,13 @@
-$ppGreen: desaturate(#93b05c, 5%);
-/* $ppAccent: #995078; */
-$ppAccent: #e3b62d;
+@import url(http://fonts.googleapis.com/css?family=Rokkitt:400,700);
+@import url(http://fonts.googleapis.com/css?family=Raleway:300,700,400);
+
+$bodyFont: "Raleway", "Avenir";
+$headingFont: "Rokkitt", "Clarendon";
+
+$ppGreen: #91aa62;
+/* $ppAccent: #9843B2; */
+$ppAccent: #fc3;
+$ppAccentText: darken($ppAccent, 40%);
 $ppGray: #e3e3d4;
 $ppSuperHighlight: #fc3;
 
@@ -52,7 +59,7 @@ $ppSuperHighlight: #fc3;
 }
 
 body, p {
-	font-family: "Avenir";
+	font-family: $bodyFont;
 }
 
 body {
@@ -64,11 +71,11 @@ a {
 }
 
 h1, h2, h3, h4, h5, h6, th {
-	font-family: "Clarendon";
+	font-family: $headingFont;
 }
 
 h1 {
-	font-size: 2em;
+	font-size: 2.4em;
 	color: darken($ppGreen, 20%);
 	padding: 0;
 	margin: 0.5em 0;
@@ -82,12 +89,19 @@ label {
 	font-weight: inherit;
 }
 
+.well {
+	border: 3px solid $ppGray;
+	background: #fff;
+	border-radius: 10px;
+	margin: 0 0 1em 0;
+}
+
 .navbar-primary {
 	background: $ppGreen;
 	.navbar-brand {
 		color: #fff !important;
-		font-weight: 500 !important;
-		font-family: "Clarendon";
+		font-weight: 700 !important;
+		font-family: $headingFont;
 	}
 	li a {
 		color: #fff !important;
@@ -104,8 +118,27 @@ label {
 	}
 	.navbar-format {
 		background: url(/assets/bg-nav-arr-r.png) 0 50% no-repeat $ppAccent !important;
-		background-size: auto 100% !important;
-		padding-left: 2em;
+		background-size: auto 50% !important;
+		padding-left: 1.3em;
+		text-transform: uppercase;
+		font-weight: 700;
+		color: $ppAccentText !important;
+		a {
+			color: $ppAccentText !important;
+		}
+	}
+	.format-picker {
+		background: url(/assets/arrow-facet.png) 0 50% no-repeat $ppGreen !important;
+		background-size: auto 50% !important;
+		padding-left: 1.3em;
+	}
+}
+
+.navbar-subnav {
+	background: white;
+	border: 3px solid $ppAccent;
+	.active a {
+		background: $ppAccent !important;
 	}
 }
 
@@ -126,7 +159,7 @@ ol.breadcrumb {
 			color: lighten($ppGreen, 40%);
 			font-weight: 200;
 			font-size: 0.4em;
-			font-family: "Clarendon";
+			font-family: $headingFont;
 		}
 	}
 	.media-object {
@@ -186,18 +219,46 @@ ol.breadcrumb {
 		margin-top: 0;
 	}
 	h2.facet {
-		a {
-			display: block;
-			span {
-				border-bottom: 2px dotted $ppGray;
-			}
-		}
-		.btn {
-			display: inline-block;
-			border-bottom: 0px;
-			text-align: left;
+		position: relative;
+		font-weight: 700;
+		margin: 0 0 10px 0;
+		border: 3px solid $ppAccent;
+		border-radius: 10px;
+		padding: 10px;
+		line-height: auto;
+		background: lighten($ppAccent, 35%);
+		&:hover {
 			background: $ppAccent;
-			color: #fff;
+		}
+		small {
+			margin: 0;
+			padding: 0;
+			display: block;
+			line-height: auto;
+			color: darken($ppAccent, 30%);
+			text-transform: uppercase;
+			font-family: $bodyFont;
+			font-size: 0.5em;
+			padding: 0 0 0.5em 0;
+		}
+		a {
+			span {
+				/* border-bottom: 2px dotted $ppGray; */
+			}
+			color: $ppAccentText;
+		}
+		.facet-arrow {
+			position: absolute;
+			right: -20px;
+			width: 20px;
+			height: 40px;
+			top: 50%;
+			margin-top: -20px;
+			background: transparent url(/assets/arrow-facet.png) 0 50% no-repeat;
+			background-size: contain;
+			span {
+				display: none;
+			}
 		}
 	}
 
@@ -225,6 +286,8 @@ ol.breadcrumb {
 		padding: 1em;
 		border-radius: 0 0 1em 1em;
 		border: 1px solid $ppGray;
+		margin: 0 1.5em 1em;
+		border-top: 0;
 		display: none;
 		position: relative;
 	}
@@ -247,6 +310,9 @@ ol.breadcrumb {
 
 .newspaper-pages {
 	.newspaper-page {
+		&:hover {
+			border: 1px solid $ppAccent;
+		}
 		float: left;
 		margin: 10px 10px 10px 0;
 		width: 23%;
@@ -373,13 +439,19 @@ table {
 		margin: 0;
 		padding: 1em 0;
 	}
-	th {
-		background: lighten($ppGreen, 20%);
-	}
-	tr:hover {
-		background: lighten($ppGreen, 40%);
-	}
 }
+
+.table {
+	margin: 1em 0;
+}
+
+th {
+	background: $ppGray;
+}
+tr:hover {
+	background: lighten($ppGreen, 40%);
+}
+
 
 .item {
 	img {
@@ -426,24 +498,28 @@ table {
 		background: transparent;
 	}
 	#query {
-		width: 79%;
-		border: 4px solid $ppGray;
-		border-radius: 0.6em;
-		margin-right: 1%;
+		border: 3px solid $ppAccent; /* lighten($ppAccent, 20%); */
+		border-right: 0;
 	}
 	button {
-		width: 19%;
 		background: $ppAccent;
-		color: #fff;
-		border: 4px solid lighten($ppAccent, 10%);
+		color: $ppAccentText;
+		border: 4px solid $ppAccent;
 		border-radius: 0.6em;
+		text-transform: uppercase;
+		font-weight: 700;
 	}
 	.tools {
 		position: relative;
 		display: none;
-		padding: 1em 0 0;
+		padding: 1em 1em 0.6em;
+		margin: 0 1.5em 1em;
+		background: lighten($ppAccent, 35%);
+		border: 2px solid lighten($ppAccent, 20%);
+		border-top: 0;
+		border-radius: 0 0 1em 1em;
 		label {
-			font-family: "Avenir";
+			font-family: $bodyFont;
 			padding: 0 1em 0 0;
 			font-weight: normal;
 		}

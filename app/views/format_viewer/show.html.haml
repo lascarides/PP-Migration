@@ -1,18 +1,12 @@
 %h4= render :partial => 'shared/breadcrumbs'
 
+%h1= @item[:title]
+
 .item
 	.row
-		.col-md-3
-			
-			%h1= @item[:title]
-
-			= render :partial => 'shared/copyright_template'
-
-			%p= link_to '…', @item[:original]
-
 		.col-md-9
 
-			%nav.navbar.navbar-default
+			%nav.navbar.navbar-default.navbar-subnav
 				%ul.nav.navbar-nav
 					%li.active
 						%a{href: "#images", 'data-toggle' => "tab"}
@@ -23,10 +17,6 @@
 						%a{href: "#fulltext", 'data-toggle' => "tab"}
 							%span.glyphicon.glyphicon-list-alt
 							Computer-generated text
-					%li
-						%a{href: "#about", 'data-toggle' => "tab"}
-							%span.glyphicon.glyphicon-question-sign
-							= "About this #{@type.to_s.singularize}"
 					%li.dropdown
 						%a.dropdown-toggle{href: "#", 'data-toggle' => "dropdown"}
 							%span.glyphicon.glyphicon-file
@@ -55,14 +45,16 @@
 							=raw @item[:fulltext]
 
 
-				#about.tab-pane.fade
 
-					.row
-						.col-md-6
-							%h2= "About this #{@type.to_s.singularize}" 
+		.col-md-3
+			
+			= render :partial => 'shared/copyright_template'
 
-							%p [Description goes here...]
-
-							%p= link_to "Read more", "/#{@type}/title/#{@item[:collection].parameterize}"
+			%p= link_to '…', @item[:original]
 
 
+			%h4= "About this #{@type.to_s.singularize}" 
+
+			%p [Description goes here...]
+
+			%p= link_to "Read more", "/#{@type}/title/#{@item[:collection].parameterize}"
