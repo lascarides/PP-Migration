@@ -1,10 +1,13 @@
 .search-box
 
-	#dates-picker.search-tool-panel.closeable
+	#date-range-picker.tools.facet-tools.closeable
 		= render :partial => 'shared/close_widget'
 		= render :partial => 'shared/date_picker'
-	#region-picker.search-tool-panel.closeable
+	#title-region-picker.tools.facet-tools.closeable
 		= render :partial => 'shared/close_widget'
 		= render :partial => 'newspapers/region_picker'
+	#article-types-picker.tools.facet-tools.closeable
+		= render :partial => 'shared/close_widget'
+		%h2 Article types t/k
 
 

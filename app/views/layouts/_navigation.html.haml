@@ -28,3 +28,10 @@
 					=link_to "Getting Started Guide", '/help'
 				%li
 					=link_to "Quick Help", '#', :class => 'quick-help-toggle'
+				%li.dropdown
+					%a.dropdown-toggle{href: '#', 'data-toggle' => 'dropdown'}
+						English
+						%span.caret
+					%ul.dropdown-menu{ role: 'menu' }
+						%li.active= link_to "English", '#'
+						%li= link_to "Te Reo Māori", '#'

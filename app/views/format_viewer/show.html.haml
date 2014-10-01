@@ -17,15 +17,19 @@
 						%a{href: "#fulltext", 'data-toggle' => "tab"}
 							%span.glyphicon.glyphicon-list-alt
 							Computer-generated text
+					%li
+						%a{href: "#researchtools", 'data-toggle' => "tab"}
+							%span.glyphicon.glyphicon-cog
+							Researcher tools
 					%li.dropdown
 						%a.dropdown-toggle{href: "#", 'data-toggle' => "dropdown"}
 							%span.glyphicon.glyphicon-file
 							Save a copy 
 							%span.caret
 						%ul.dropdown-menu{role: "menu"}
-							%li= link_to 'Download PDF', '#'
-							%li= link_to 'Download plain text'
-							%li= link_to 'Download high quality image'
+							%li= link_to 'Save as PDF', '#'
+							%li= link_to 'Save as plain text'
+							%li= link_to 'Save as high quality image (PNG)'
 
 			.tab-content
 				#images.tab-pane.fade.in.active
@@ -44,17 +48,71 @@
 						.col-md-6.col-md-offset-3
 							=raw @item[:fulltext]
 
+				#researchtools.tab-pane.fade
+					.row
+						.col-md-6
+
+							%h3 Permanent link to this item:
+
+							= link_to "http://paperspast.natlib.govt.nz/item/#{params[:id]}", "http://paperspast.natlib.govt.nz/item/#{params[:id]}"
+
+							%h3 Identifiers
+
+							%table.table
+								%thead
+									%tr
+										%th Authority
+										%th Identifier
+								%tbody
+									%tr
+										%td UUID
+										%td 123e4567-e89b-12d3-a456-426655440000
+									%tr
+										%td DigitalNZ
+										%td= link_to params[:id], "http://digitalnz.org/records/#{params[:id]}"
+
+							%h3 Download fulltext metadata
+
+							%ul
+								%li= link_to 'JSON-LD', '#'
+								%li= link_to 'XML', '#'
+								%li= link_to 'METS/ALTO', '#'
+
+						.col-md-6
+
+							%h3 Cite this item
+
+							%ul.nav.nav-tabs
+								%li.active
+									%a{href: "#citation-apa", 'data-toggle' => "tab"} APA
+								%li 
+									%a{href: "#citation-apa", 'data-toggle' => "tab"} CSE
+								%li 
+									%a{href: "#citation-apa", 'data-toggle' => "tab"} Chicago
+								%li 
+									%a{href: "#citation-apa", 'data-toggle' => "tab"} MLA
+								%li 
+									%a{href: "#citation-apa", 'data-toggle' => "tab"} Turabian
+
+							#citation-apa.tab-pane.fade.in.active
+								= "#{@item[:title]} (#{@item[:date]}). #{@item[:collection]}. Retrieved from http://paperspast.natlib.govt.nz on #{Time.now.strftime('%B %-d, %Y')}."
 
 
-		.col-md-3
+
+		.col-md-3.sidebar
 			
 			= render :partial => 'shared/copyright_template'
 
-			%p= link_to '…', @item[:original]
+			%h4 Share this item
 
+			.addthis_sharing_toolbox
 
 			%h4= "About this #{@type.to_s.singularize}" 
 
-			%p [Description goes here...]
+			%p Newspaper was estab. Newspaper was estab. Newspaper was estab. Newspaper was estab. Newspaper was estab. Newspaper was estab. Newspaper was estab. Newspaper was estab. Newspaper was estab. 
 
 			%p= link_to "Read more", "/#{@type}/title/#{@item[:collection].parameterize}"
+
+
+			%p= link_to '…', @item[:original]
+

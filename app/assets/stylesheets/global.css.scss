@@ -1,11 +1,12 @@
 @import url(http://fonts.googleapis.com/css?family=Rokkitt:400,700);
-@import url(http://fonts.googleapis.com/css?family=Raleway:300,700,400);
+@import url(http://fonts.googleapis.com/css?family=Raleway:300,400,700);
 
 $bodyFont: "Raleway", "Avenir";
 $headingFont: "Rokkitt", "Clarendon";
 
 $ppGreen: #91aa62;
 /* $ppAccent: #9843B2; */
+/* $ppAccent: #739fde; */
 $ppAccent: #fc3;
 $ppAccentText: darken($ppAccent, 40%);
 $ppGray: #e3e3d4;
@@ -41,23 +42,6 @@ $ppSuperHighlight: #fc3;
 
 }
 
-@mixin linear-gradient($from, $to, $ie: 0) {
-
-  @if $ie != 1 { background-color: $to; }
-  
-  background-image: -webkit-gradient(linear,left top,left bottom,color-stop(0, $from),color-stop(1, $to));
-  background-image: -webkit-linear-gradient(top, $from, $to);
-  background-image: -moz-linear-gradient(top, $from, $to);
-  background-image: -ms-linear-gradient(top, $from, $to);
-  background-image: -o-linear-gradient(top, $from, $to);
-  background-image: linear-gradient(top, bottom, $from, $to);
-
-  @if $ie == 1 { 
-    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#{$from}', endColorstr='#{$to}');
-    -ms-filter: quote(progid:DXImageTransform.Microsoft.gradient(startColorstr='#{$from}', endColorstr='#{$to}'));
-  }
-}
-
 body, p {
 	font-family: $bodyFont;
 }
@@ -85,6 +69,15 @@ h4 + h1 {
 	margin-top: 0;
 }
 
+h5 {
+	margin: 0 0 1em;
+	text-transform: uppercase;
+	font-family: $bodyFont;
+	background: $ppGray;
+	padding: 0.5em;
+	border-radius: 5px;
+}
+
 label {
 	font-weight: inherit;
 }
@@ -94,6 +87,18 @@ label {
 	background: #fff;
 	border-radius: 10px;
 	margin: 0 0 1em 0;
+}
+
+.well-masthead {
+	text-align: center;
+	img {
+		display: inline;
+	}
+}
+
+.navbar .open a.dropdown-toggle {
+	background: $ppAccent !important;
+	color: $ppAccentText !important;
 }
 
 .navbar-primary {
@@ -117,9 +122,10 @@ label {
 		}
 	}
 	.navbar-format {
-		background: url(/assets/bg-nav-arr-r.png) 0 50% no-repeat $ppAccent !important;
-		background-size: auto 50% !important;
-		padding-left: 1.3em;
+		background: url(/assets/bg-nav-arr-r.png) 0 50% no-repeat, url(/assets/arrow-format.png) 100% 50% no-repeat $ppAccent !important;
+		background-size: auto 50%, auto 100% !important;
+		padding-left: 1.5em;
+		padding-right: 2em;
 		text-transform: uppercase;
 		font-weight: 700;
 		color: $ppAccentText !important;
@@ -128,9 +134,8 @@ label {
 		}
 	}
 	.format-picker {
-		background: url(/assets/arrow-facet.png) 0 50% no-repeat $ppGreen !important;
-		background-size: auto 50% !important;
-		padding-left: 1.3em;
+		background: $ppGreen !important;
+		background-size: auto 100% !important;
 	}
 }
 
@@ -139,6 +144,14 @@ label {
 	border: 3px solid $ppAccent;
 	.active a {
 		background: $ppAccent !important;
+	}
+	.navbar-nav li a {
+	    line-height: 50px;
+	    height: 50px;
+	    padding-top: 0;
+	}
+	.fit {
+		display: none;
 	}
 }
 
@@ -176,35 +189,6 @@ ol.breadcrumb {
 	}
 }
 
-.date-picker {
-	ul, li {
-		margin: 0;
-		padding: 0;
-		list-style-type: none;
-	}
-	ul {
-		border-top: 1px solid $ppGray;
-	}
-	li a {
-		display: block;
-		padding: 0.3em;
-		margin: 0;
-		border-bottom: 1px solid $ppGray;
-	}
-	li a:hover {
-		background: $ppGray;
-	}
-	li.active {
-		background: url(/assets/arrow-right.png) 100% 50% no-repeat $ppGreen;
-		background-size: auto 80%;
-		font-weight: bold;
-		color: white;
-		a, a:hover {
-			color: white;
-		}
-	}
-}
-
 #date-browser {
 	border: 0;
 	padding: 0;
@@ -215,50 +199,55 @@ ol.breadcrumb {
 	
 	padding-top: 1em;
 
-	h2:first-child {
-		margin-top: 0;
-	}
-	h2.facet {
+	a.facet {
 		position: relative;
+		display: block;
+		font-family: $headingFont;
 		font-weight: 700;
+		font-size: 1.8em;
 		margin: 0 0 10px 0;
 		border: 3px solid $ppAccent;
 		border-radius: 10px;
 		padding: 10px;
-		line-height: auto;
+		line-height: 1.2;
 		background: lighten($ppAccent, 35%);
+		color: darken($ppAccent, 40%);
+
 		&:hover {
-			background: $ppAccent;
+			background: lighten($ppAccent, 20%);
+			text-decoration: none;
 		}
 		small {
 			margin: 0;
 			padding: 0;
 			display: block;
 			line-height: auto;
-			color: darken($ppAccent, 30%);
 			text-transform: uppercase;
 			font-family: $bodyFont;
 			font-size: 0.5em;
 			padding: 0 0 0.5em 0;
-		}
-		a {
-			span {
-				/* border-bottom: 2px dotted $ppGray; */
-			}
-			color: $ppAccentText;
+			color: darken($ppAccent, 30%);
 		}
 		.facet-arrow {
 			position: absolute;
-			right: -20px;
-			width: 20px;
+			right: -12px;
+			width: 9px;
 			height: 40px;
 			top: 50%;
 			margin-top: -20px;
-			background: transparent url(/assets/arrow-facet.png) 0 50% no-repeat;
-			background-size: contain;
+			background: $ppAccent url(/assets/arrow-facet.png) 0 50% repeat-y;
+			background-size: 100% auto;
+			transition: width 0.4s, right 0.4s;
 			span {
 				display: none;
 			}
+		}
+	}
+	.facets a.active {
+		background: $ppAccent !important;
+		.facet-arrow {
+			right: -23px;
+			width: 20px;
 		}
 	}
 
@@ -271,7 +260,6 @@ ol.breadcrumb {
 	}
 	img {
 		width:100%;
-		@include border-radius(6px);
 	}
 	.date-column {
 		label {
@@ -290,28 +278,40 @@ ol.breadcrumb {
 		border-top: 0;
 		display: none;
 		position: relative;
+		text-align: center;
 	}
 
 }
 
+.sidebar {
+	h4:first-child {
+		margin-top: 0;
+	}
+}
+
+
 .close-widget {
-	opacity: 0.5;
+	border: 3px solid $ppAccent;
+	background: lighten($ppAccent, 20%);
+	color: $ppAccentText;
+	font-weight: 700;
+	border-radius: 10px;
 	position: absolute;
-	top: 0;
-	right: 0;
+	top: 0.9em;
+	right: 1em;
 	padding: 0.5em 1em;
 	font-size: small;
 	text-transform: uppercase;
 }
 .close-widget:hover {
-	opacity: 1.0;
+	background: $ppAccent;
 }
 
 
 .newspaper-pages {
 	.newspaper-page {
 		&:hover {
-			border: 1px solid $ppAccent;
+			border: 2px solid $ppAccent;
 		}
 		float: left;
 		margin: 10px 10px 10px 0;
@@ -319,7 +319,8 @@ ol.breadcrumb {
 		height: 300px;
 		overflow: hidden;
 		position: relative;
-		border: 1px solid $ppGray;
+		border: 2px solid $ppGray;
+		border-radius: 0 0 1em 1em;
 		p {
 			position: absolute;
 			bottom: 0;
@@ -350,24 +351,6 @@ ol.breadcrumb {
 	}
 }
 
-.page-info {
-	h1, h2 {
-		font-size: 2em;
-		margin: 0 0 0.5em;
-		border: 0px;
-		padding: 0;
-	}
-
-	h2 {
-		font-size: 1.8em;
-		small {
-			padding: 1em 0 0;
-			display: block;
-			font-size: 0.9em;
-		}
-	}
-}
-
 .page-image-detail {
 	position: relative;
 	a {
@@ -375,7 +358,7 @@ ol.breadcrumb {
 		position: absolute;
 	}
 	a:hover {
-		background: rgba(255, 255, 0, 0.5);
+		background: rgba(255, 204, 51, 0.4);
 	}
 }
  
@@ -447,6 +430,8 @@ table {
 
 th {
 	background: $ppGray;
+	border: 3px solid white !important;
+	border-right: 0 !important;
 }
 tr:hover {
 	background: lighten($ppGreen, 40%);
@@ -465,29 +450,227 @@ tr:hover {
 	.image-pad {
 		padding: 0 0 1em 0;
 	}
+	.tab-content #images {
+		img {
+			display: block;
+			margin: 0 auto;
+		}
+		.well {
+			margin: 2em 0 0 0;
+		}
+	}
 }
 
 .region-group {
-	padding: 0.5em;
-	margin: 0 0 1em;
-	border-radius: 0.5em;
-	border: 1px solid $ppGray;
+	padding: 0 0 1.5em 0;
 	display: inline-block;
 	width: 100%;
 	.title {
 		display: block;
 	}
 	.newspaper-title {
-		padding-left: 1em;
-	}
-	.region-title {
-		font-weight: bold;
+		padding-left: 1em !important;
 	}
 	input {
 		background: white;
 	}
 }
 
+.title-search-tools {
+	h3:first-child {
+		margin-top: 0;
+	}
+
+}
+
+.calendar {
+	h4 {
+		width: 92%;
+		font-family: $bodyFont;
+		margin: 0;
+		padding: 1em 0 0.5em;
+		text-transform: uppercase;
+		font-size: 1em;
+		.glyphicon {
+			font-size: 0.5em;
+		}
+	}
+	table {
+		tr:hover {
+			background: inherit;
+		}
+		width: 100%;
+		border-top: 1px solid $ppGray;
+		border-left: 1px solid $ppGray;
+		th {
+			font-family: $bodyFont;
+			font-weight: 700;
+			text-align: center;
+			border: 0 !important;
+			background: $ppGray;
+			color: lighten($ppGray, 20%);
+		}
+		th:last-child {
+			border-right: 1px solid $ppGray !important;
+		}
+		td {
+			border-right: 1px solid $ppGray;
+			border-bottom: 1px solid $ppGray;
+			text-align: center;
+			padding: 0.5em 0;
+			color: $ppGray;
+			background: white;
+			a {
+				font-weight: 700;
+				color: $ppAccentText;
+			}
+			&:hover {
+				background: $ppAccent;
+			}
+		}
+		td.published {
+			background: lighten($ppAccent, 20%);
+			border-right: 1px solid $ppAccent;
+			border-bottom: 1px solid $ppAccent;
+			color: $ppAccentText;
+		}
+		td.selected {
+			background: $ppAccent;
+			border-right: 1px solid $ppAccent;
+			border-bottom: 1px solid $ppAccent;
+			color: $ppAccentText;
+			font-weight: 700;
+		}
+		td.printed {
+			font-weight: 700;
+			color: $ppAccentText;
+		}
+		td.unavailable {
+			color: #c00;
+			font-weight: 700;
+		}
+	}
+}
+
+.title-browser {
+	.calendar {
+		width: 50%;
+		float: left;
+		margin: 0 0 1em 0;
+		table {
+			width: 92%;
+		}
+	}
+}
+
+.search-option-panel-content {
+	.calendar {
+		td {
+			color: $ppAccentText !important;
+		}
+	}
+}
+
+/* This is the latest one! FIXME: clean out old date pickers */
+.date-range-picker {
+	h2, h4 {
+		text-align: center;
+		margin: 0 !important;
+		padding: 0;
+		width: 100%;
+		line-height: auto;
+		height: auto;
+	}
+	h2 {
+		font-size: 2.4em;
+	}
+	h4 {
+		font-size: 1.6em;
+	}
+	.glyphicon {
+		color: $ppAccent;
+		font-size: 1.2em;
+	}
+	.right-align {
+		text-align: right;
+	}
+	.calendar {
+		h4 {
+			display: none;
+		}
+		margin: 1em 0;
+	}
+	.form-option-widget {
+		font-style: italic;
+		text-align: center;
+		margin-bottom: 1em;
+	}
+	.timeline {
+		h5 {
+			margin: 1em 0;
+		}
+		.timeline-content {
+			position: relative;
+			height: 120px;
+			margin: 1em 0;
+			border: 1px solid $ppGray;
+			background: white;
+			.timeline-bar {
+				position: absolute;
+				bottom: 0;
+				left: 0;
+				width: 6px;
+				height: 120px;
+				background: url(/assets/timeline-bar.png) repeat-x 0 0 transparent;
+				.bar-label {
+					position: absolute;
+					top: 1.2em;
+					left: 1em;
+					padding: 0.5em;
+					font-weight: 700;
+					display: none;
+					width: 8em;
+					background: rgba(255,255,255,0.6);
+					z-index: 9999;
+					span {
+						display: block;
+					}
+				}
+				&:hover {
+					background-color: rgba(0,0,0,0.1);
+					.bar-label {
+						display: block;
+						span {
+							font-weight: 300;
+							font-size: 0.92em
+						}
+					}
+				}
+			}
+			.timeline-timescale {
+				height: 120px;
+				position: absolute;
+				top: 0;
+				left: 0;
+				padding: 4px;
+				font-size: 0.8em;
+				box-sizing: border-box;
+				color: $ppAccentText;
+				border-left: 1px solid $ppGray;
+			}
+		}
+	}
+}
+
+
+.pagination {
+	li.active, li.active a {
+		background: $ppAccent !important;
+		border-color: $ppAccent !important;
+		color: darken($ppAccent, 40%) !important;
+		font-weight: 700;
+	}
+}
 
 .search-box {
 	position: relative;
@@ -514,7 +697,7 @@ tr:hover {
 		display: none;
 		padding: 1em 1em 0.6em;
 		margin: 0 1.5em 1em;
-		background: lighten($ppAccent, 35%);
+		background: lighten($ppAccent, 37%);
 		border: 2px solid lighten($ppAccent, 20%);
 		border-top: 0;
 		border-radius: 0 0 1em 1em;
@@ -522,6 +705,14 @@ tr:hover {
 			font-family: $bodyFont;
 			padding: 0 1em 0 0;
 			font-weight: normal;
+		}
+		h4 {
+			margin-top: 1em;
+		}
+	}
+	.facet-tools {
+		label {
+			display: block;
 		}
 	}
 	/*
@@ -555,7 +746,7 @@ tr:hover {
 		margin: 0.5em 1em;
 	}
 	.ui-slider-range {
-		background: $ppGreen;
+		background: $ppAccent;
 	}
 	.ui-slider-handle {
 		background: white;

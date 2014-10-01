@@ -189,5 +189,16 @@ class Newspaper < NLNZObject
 		"<strong>Papers Past</strong> contains more than three million pages of digitised New Zealand newspapers and periodicals. The collection covers the years 1839 to 1945 and includes 83 publications from all regions of New Zealand."
 	end
 
+	def self.year_data_for_bar_chart
+		year_data = {}
+		JSON.load(open("app/views/about/charts.json")).collect do |paper|
+			paper['articles'].collect do |year, counter|
+				year_data[year] ||= 0
+				year_data[year] += counter
+			end
+		end
+		year_data
+	end
+
 
 end

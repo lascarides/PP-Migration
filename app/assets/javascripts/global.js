@@ -12,9 +12,9 @@ $(document).ready(function(){
 	// Set up year sliders for advanced search
 	$( ".slider-range" ).slider({
 		range: true,
-		min: 1830,
+		min: 1839,
 		max: 1945,
-		values: [ 1830, 1945 ],
+		values: [ 1839, 1945 ],
 		slide: function( event, ui ) {
 			var startYear = ui.values[0];
 			var endYear = ui.values[1];
@@ -48,16 +48,10 @@ $(document).ready(function(){
 			}
 		});
 		// Update date/title messages
-		$('.search-date-message a span').html(startYear + ' and ' + endYear);
-		$('.search-title-region-message a span').html(titleCount + ' titles from ' + regionCount + ' NZ regions');
+		$('#facet-date-range .facet-label').html(startYear + ' - ' + endYear);
+		$('#facet-title-region .facet-label').html(titleCount + ' titles from ' + regionCount + ' NZ regions');
 
 	}
-
-	// Set up regular search
-	$('#query').focus(function(){
-		$('.search-box .tools').slideDown();
-		$('.search-box .search-headline').slideUp();
-	});
 
 	// Set up quick help
 	$('.quick-help-toggle').click(function(){
@@ -65,13 +59,10 @@ $(document).ready(function(){
 		return false;
 	});
 
-	// Set up closeable panels
-	$('.closeable .close-widget').click(function(){
-		$(this).parent('.closeable').slideUp();
-	});
-
 	// Set up fullscreen button
 	$('.page-expander a').click(function(){
+		$('.page-expander a.actual').toggle();
+		$('.page-expander a.fit').toggle();
 		$('.page-image-detail').toggleClass('page-image-detail-compressed');
 		return false;
 	});
@@ -139,16 +130,26 @@ $(document).ready(function(){
 		});
 	});
 
-	$('.search-date-message').click(function(){
-		$('#region-picker').slideUp();
-		$('#dates-picker').slideToggle();
+	// Search facets
+	$('.facet').click(function(){
+		$('.facet').removeClass('active');
+		$(this).toggleClass('active');
+		$('.tools').slideUp();
+		$($(this).attr('href')).slideToggle();
 		return false;
 	});
 
-	$('.search-title-region-message').click(function(){
-		$('#dates-picker').slideUp();
-		$('#region-picker').slideToggle();
-		return false;
+	// Set up regular search
+	$('#query').focus(function(){
+		$('.facet').removeClass('active');
+		$('.facet-tools').slideUp();
+		$('.query-tools').slideDown();
+	});
+
+	// Set up closeable panels
+	$('.closeable .close-widget').click(function(){
+		$('.facet').removeClass('active');
+		$(this).parent('.closeable').slideUp();
 	});
 
 

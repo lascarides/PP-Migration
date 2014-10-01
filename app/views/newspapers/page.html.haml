@@ -4,8 +4,12 @@
 %nav.navbar.navbar-default.navbar-subnav
 	%ul.nav.navbar-nav
 		%li.page-expander
-			%a{href: '#'}
+			%a.actual{href: '#'}
 				%span.glyphicon.glyphicon-fullscreen
+				Actual size
+			%a.fit{href: '#'}
+				%span.glyphicon.glyphicon-resize-small
+				Fit in window
 		%li.active
 			%a{href: "#thumbnails", 'data-toggle' => "tab"}
 				%span.glyphicon.glyphicon-th

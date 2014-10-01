@@ -23,7 +23,7 @@ class ParliamentaryPaper < NLNZObject
 	end
 
 	def self.description
-		"<strong>Papers Past</strong> lorem sdhfkjdsh sd fkjsf kjshfk skdjf ksdhfkj sdkjfhksdj f."
+		"<strong>Papers Past</strong> contains a collection of digitised volumes of the Appendices to the Journals of the House of Representatives and the Votes and Proceedings of the House of Representatives. The collection currently covers the years 1854 to 1950."
 	end
 
 end

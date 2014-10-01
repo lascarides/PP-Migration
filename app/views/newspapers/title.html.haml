@@ -1,4 +1,4 @@
-.newspaper_title 
+.title-browser 
 	- if @item.nil?
 
 		%h1 All newspaper titles
@@ -24,6 +24,11 @@
 
 
 	- else
+
+		%h4
+			«
+			= link_to "All newspaper titles", '/newspapers/title'
+
 		%h1
 			= @item[:title]
 			%small
@@ -33,7 +38,7 @@
 		.row
 			.col-md-6
 
-				.well= link_to image_tag(@item[:logo], :class => 'masthead')
+				.well.well-masthead= link_to image_tag(@item[:logo], :class => 'masthead')
 
 				%h3= "History"
 
@@ -57,28 +62,23 @@
 
 				= render :partial => 'shared/copyright_template'
 
-			.col-md-6
+			.col-md-6.title-search-tools
 
 				%h3
 					Search within
+					= @item[:title]
+
+				= render :partial => 'shared/search_box'
+
+				%h3 Available dates
+
+				%h2
+					%span.glyphicon.glyphicon-backward
+					= @item[:start_year]
+					%span.glyphicon.glyphicon-forward
+
+				- ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'].each_with_index do |month, m|
+					= render :partial => 'shared/calendar', :locals => { :month => month, :m => m }
 
 
-				%form.form{:role => "form", :action => "/#{@type}/search", :method => 'get'}
-					%input#query.form-control.input-lg{:name => 'query', :placeholder => "What are you looking for?"}
-					.pull-right
-						%a{:href => "javascript:$('.advanced-search-options').slideToggle();"} More search options
-
-				%h3 Browse issues
-
-				- if @year > 0
-					%p= link_to "Show earlier years", "/newspapers/title/#{@item[:title].parameterize}"
-
-				%table.table
-					%tbody
-						- (@item[:start_year]..@item[:end_year]).each do |yr|
-							%tr
-								%td
-									%strong= link_to yr, "/newspapers/title/#{@item[:title].parameterize}/#{yr}"
-								- ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'].each_with_index do |month, i|
-									%td= link_to month, "/newspapers/title/#{@item[:title].parameterize}/#{yr}/#{i + 1}"
 

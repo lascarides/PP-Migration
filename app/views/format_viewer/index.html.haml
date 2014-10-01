@@ -1,67 +1,49 @@
 .format-home
 	.row
-		.col-md-3.sidebar
+		.col-md-3.sidebar.facets
 
-			%h2.facet
-				%small Choose your dates
-				.search-date-message{'data-intro' => "Click here to choose a specific range of dates", 'data-position' => "right"}
-					%a{href: "#dates-picker"}
-						%span 1830 - 1945
-					%a.facet-arrow{href: "#dates-picker"}
-						%span Change
+			- @facets.each do |facet|
 
-			%h2.facet
-				%small Choose your titles
-				.search-title-region-message{'data-intro' => "Click here to choose specific newspaper titles", 'data-position' => "right"}
-					%a{href: "#region-picker"}
-						%span All titles from all NZ regions
-					%a.facet-arrow{href: "#region-picker"}
-						%span Change
-
-			%h2.facet
-				%small Choose your article types
-				.search-article-message{'data-intro' => "Click here to choose the types of newspaper articles you'd like to search", 'data-position' => "right"}
-					%a{href: "#article-picker"}
-						%span All article types
-					%a.facet-arrow{href: "#article-picker"}
+				%a.facet{ href: "##{facet[:name]}-picker", id: "facet-#{facet[:name]}", 'data-intro' => facet[:help_text], 'data-position' => 'right'}
+					%small= facet[:choose_text]
+					%span.facet-label= facet[:default_value]
+					%span.facet-arrow 
 						%span Change
 
 			.well
 				%p= raw(@format_class.description)
 
-				%h4= link_to "Learn more about the #{@type} »", "/#{@type}/title"
+				%h4= link_to "About the #{@type} »", "/#{@type}/title"
+
+				%h4= link_to "About Papers Past »", "/about"
 
 		.col-md-9
 
-			.search-box
-				%form.form-inline{:role => "form", :method => 'get'}
-					.input-group
-						%input#query.form-control.input-lg{:name => 'query', :placeholder => "What are you looking for?", :value => params[:query], 'data-intro' => "Enter words here to find articles containing those words", 'data-position' => "right"}
-						%span.input-group-btn
-							%button.btn.btn-default.input-lg{:type => "submit"} Search full text
-					.tools
-						%input#mode1{:type => "radio", :name => "mode", :value => "all", :checked => "checked"}
-						%label <strong>All</strong> of these words
-						%input#mode2{:type => "radio", :name => "mode", :value => "any"}
-						%label <strong>Any</strong> of these words
-						%input#mode3{:type => "radio", :name => "mode", :value => "exact"}
-						%label This <strong>exact phrase</strong>
-
-				= render :partial => "#{@type}/home_cols"
-				
+			= render :partial => "shared/search_box"				
 			= render :partial => "shared/search_controls"
 
 			- if not @search_results.nil?
 
 				= render :partial => "#{@type}/search_results"
 
+				%ul.pagination
+					%li
+						%a{href: "#"}
+							%span.glyphicon.glyphicon-backward
+					%li.active
+						%a{href: "#"} 1
+					- 8.times do |n|
+						%li
+							%a{href: "#"}= n + 2
+					%li
+						%a{href: "#"}
+							%span.glyphicon.glyphicon-forward
+
 			- elsif not @title_results.nil?
 
 				= render :partial => "#{@type}/title_results"
 
 			- else
-
-				%h4 To get you started, here's the headlines from 100 years ago today…
 
 				= render :partial => "#{@type}/front_page"
 

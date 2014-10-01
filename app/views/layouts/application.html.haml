@@ -5,6 +5,8 @@
     %meta{:content => content_for?(:description) ? yield(:description) : "Papers Past", :name => "description"}
     = stylesheet_link_tag "application", :media => "all"
     = javascript_include_tag "application"
+    %script{type: "text/javascript", src: "//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-5059901865102622", async: ''}
+
     = csrf_meta_tags
     = yield(:head)
 
@@ -20,9 +22,9 @@
         .container
           .row
             .col-md-9
-              =link_to "About Papers Past", '#'
+              =link_to "Acknowledgements and thanks", '#'
               •
-              =link_to "Getting Started", '#'
+              =link_to "Collaborative digitisation", '#'
               •
               =link_to "Legal notices", '#'
             .col-md-3

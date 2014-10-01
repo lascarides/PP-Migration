@@ -1,13 +1,17 @@
 %table.table
 	%thead
 		%tr
-			%th Date
-			%th Title
+			%th.col-md-6 Item
+			%th.col-md-3 Collection
+			%th.col-md-3 Date
 	%tbody
 		- @search_results['search']['results'].each do |result|
 			%tr
 				%td
 					%a{:href => "/#{@type}/#{result['id']}"}
-						= result['date']
-				%td
-					%a{:href => "/#{@type}/#{result['id']}"}= result['title']
+						= result['title']
+				%td= result['collection'][0]
+				%td= Date.parse(result['date'].to_a[0]).strftime("%e %B, %Y")
+
+
+
