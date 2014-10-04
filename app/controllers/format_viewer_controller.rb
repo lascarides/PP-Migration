@@ -6,10 +6,12 @@ class FormatViewerController < ApplicationController
   before_filter :build_facets
 
   def index
+    @start_date   = params[:start_date]
+    @end_date     = params[:end_date]
     if params[:query]
       @search_results = @format_class.search_results(params)
     elsif @format_class.respond_to? :front_pages
-      @front_pages = [] #@format_class.front_pages
+      @front_pages = @format_class.front_pages
     end
     respond_to do |format|
       format.html {}
@@ -72,11 +74,15 @@ class FormatViewerController < ApplicationController
   end
 
   def build_facets
+
+    @date_year_min = 1839
+    @date_year_max = 1945
+
     @facets = [
       {
         name: 'date-range',
         help_text: 'Click here to choose a specific range of dates',
-        default_value: '1839 - 1945',
+        default_value: "#{@date_year_min} - #{@date_year_max}",
         choose_text: 'Dates',
         formats_to_show_on: [:all]
       },
@@ -84,7 +90,7 @@ class FormatViewerController < ApplicationController
         name: 'title-region',
         help_text: 'Click here to choose specific newspaper titles by NZ region',
         default_value: 'All titles from all regions',
-        choose_text: 'Titles and NZ regions',
+        choose_text: 'Titles and regions',
         formats_to_show_on: [:newspapers]
       },
       {

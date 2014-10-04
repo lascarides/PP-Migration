@@ -1,10 +1,12 @@
+%h5 100 years ago today…
+
 .newspaper-pages
 	- NewspaperTitle.info.each do |symbol, title|
 		- if @front_pages.include? symbol
 			- paper_link = "/newspapers/title/#{title[:title].parameterize}/#{(Time.now-100.years).year}/#{Time.now.month}/#{Time.now.day}"
 			.newspaper-page
 				.newspaper-page-image
-					= link_to image_tag("http://paperspast.natlib.govt.nz/cgi-bin/imageserver/imageserver.pl?oid=#{symbol}#{(Time.now - 100.years).strftime('%Y%m%d')}.1.1&scale=8&color=32&ext=gif&key="), paper_link
+					= link_to image_tag("http://paperspast.natlib.govt.nz/cgi-bin/imageserver/imageserver.pl?oid=#{symbol}#{(Time.now - 100.years).strftime('%Y%m%d')}.1.1&scale=5&color=32&ext=gif&key="), paper_link
 				%p
 					= link_to title[:title], paper_link
 					= (Time.now - 100.years).strftime("%-d %B, %Y")

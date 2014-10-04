@@ -5,7 +5,13 @@ class NLNZObject
 	end
 
 	def self.search_results(search_params)
-		DigitalNZ.search_results(search_params[:query], self.dnz_search_scope)		
+		scope = self.dnz_search_scope
+		if search_params[:start_date] or search_params[:end_date]
+			start_date 	= search_params[:start_date] || 1839
+			end_date 	= search_params[:end_date] || 1945
+			scope += "&and[year]=[#{start_date}+TO+#{end_date}]"
+		end
+		DigitalNZ.search_results(search_params[:query], scope)		
 	end
 
 	def self.collections(search_term)

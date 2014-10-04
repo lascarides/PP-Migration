@@ -24,20 +24,34 @@
 
 			- if not @search_results.nil?
 
-				= render :partial => "#{@type}/search_results"
+				- if @search_results['search']['results'].size > 0
 
-				%ul.pagination
-					%li
-						%a{href: "#"}
-							%span.glyphicon.glyphicon-backward
-					%li.active
-						%a{href: "#"} 1
-					- 8.times do |n|
+					= render :partial => "#{@type}/search_results"
+
+				- else
+
+					%h2 No results
+
+					%p= "There are no results in #{@type} for your query '#{params[:query]}'."
+
+					- if params.size > 2
+
+						%p= link_to "Try a broader search for '#{params[:query]}' with fewer filters.", :query => params[:query]
+
+				- if @search_results['search']['results'].size > 10
+
+					%ul.pagination
 						%li
-							%a{href: "#"}= n + 2
-					%li
-						%a{href: "#"}
-							%span.glyphicon.glyphicon-forward
+							%a{href: "#"}
+								%span.glyphicon.glyphicon-backward
+						%li.active
+							%a{href: "#"} 1
+						- 8.times do |n|
+							%li
+								%a{href: "#"}= n + 2
+						%li
+							%a{href: "#"}
+								%span.glyphicon.glyphicon-forward
 
 			- elsif not @title_results.nil?
 

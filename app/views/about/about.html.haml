@@ -71,3 +71,12 @@
 				%p National Library curators select new newspaper titles for Papers Past based on a number of factors, such as national and regional significance, the availability of paper or microfilm copies of the newspaper, and ensuring a good range of regions and dates. We do not provide recent material because of copyright restrictions.
 
 				%p To learn more about our newspaper digitisation programme, visit the Papers Past page on the National Library website.
+
+%h2 Papers Past: Proposed palette
+
+- %w{neutral core accent1 accent2 accent3 accent4 accent5 highlight}.each do |c|
+	%div{:class => "color-test-row color-#{c}"}
+		- 9.times do |n|
+			%div{:class => "color-test color-#{n}00"}
+
+
