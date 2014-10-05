@@ -17,6 +17,7 @@ $(document).ready(function(){
 	// Form submittal
 	$('#search-form').submit(function(event){
 		event.preventDefault();
+		collateFacetValues();
 		var queryString = new Array;
 		$('input[type=hidden].sendable').each(function(){
 			var f = $(this);
@@ -42,16 +43,32 @@ $(document).ready(function(){
 			}
 		});
 		if (queryString != '') {
+			// FIXME hardcoded
 			window.location = 'http://0.0.0.0:3008/newspapers?' + queryString.join('&');
 		}
 	});
 
-	// Make form elements report up to their 'sendable' counterpart
+	// Make collatable form elements report up to their 'sendable' counterpart
 	// (This is where we harvest newspaper title checkboxen into a 
 	// single collated field, for example.)
-	$('.collatable').change(function(){
-		var panelScope = $(this).parent('.tools');
-	});	
+	function collateFacetValues() {
+		// TODO : Make sure significant changes in place (ie, all titles selected despite interaction)
+		$('.facet-interacted-with').each(function(){
+			var targetField = $(this).find('.sendable');
+			var boxen = new Array;
+			$(this).find('.collatable:checked').each(function(){
+				if ( !$(this).hasClass('inactive') ) {
+					boxen.push( $(this).val() );
+				}
+			});
+			targetField.val(boxen.join(','));
+		});
+	}
+
+	// Set collatable trigger
+	$('.collatable, .collatable-trigger').click(function(){
+		$(this).parents('.facet-tools').addClass('facet-interacted-with');
+	});
 
 	/////////////////////////////////////////
 	// DATE PICKER
@@ -161,7 +178,10 @@ $(document).ready(function(){
 	}
 
 	$('.timeline-bar').click(function(){
-
+		var sliderRange = $( ".slider-range" ).slider('option', 'values');
+		var thisYear = parseInt($(this).data('year'));
+		var which_date = (Math.abs(thisYear - parseInt(sliderRange[0])) < Math.abs(thisYear - parseInt(sliderRange[1]))) ? 'start' : 'end';
+		process_dates('y', $(this).data('year'), which_date); 
 	});
 
 
@@ -177,40 +197,52 @@ $(document).ready(function(){
 	// Set up advanced search
 	$('.title-select-all').click(function(){
 		$('.title-select, .region-select').prop('checked', $(this).is(':checked') );
-		harvestTitleCheckboxes();
+		displayDates();
 	});
 
 	$('.region-select').click(function(){
 		$('.title-select-all').prop('checked', false);
-		$("[data-region='" + $(this).attr('value') + "'] input").prop('checked', $(this).is(':checked') );
-		harvestTitleCheckboxes();
+		var checkboxen = $("[data-region='" + $(this).attr('value') + "'] input");
+		checkboxen.prop('checked', $(this).is(':checked') );
+		displayDates();
 	});
 
 	$('.title-select').click(function(){
-		harvestTitleCheckboxes();
+		displayDates();
 	});
 
 	// Show/hide titles based on selected year
 	function showHideTitles(startYear, endYear) {
-		var titleCount = 0;
-		var regionCount = 0;
 		var regionList = new Array;
 		// Hide regions when they are 'empty'
 		$('.region-group').addClass('inactive');
+		$('.region-select').addClass('inactive');
 		$('.region-group-all').removeClass('inactive');
+		$('.region-select').prop('checked', false);
+
 		// Show/hide each title
 		searchTitles.each(function(){
 			if ($(this).data('yearend') < startYear || $(this).data('yearstart') > endYear) {
 				$(this).addClass('inactive');
 			} else {
-				titleCount++;
-				regionCount = parseInt(titleCount / 5);
 				$(this).removeClass('inactive');
-				$(this).parents('.region-group').removeClass('inactive');
+				$(this).parents('.region-group').removeClass('inactive').find('.region-select').removeClass('inactive');
 			}
 		});
+
+		// Appropriately check regions
+		$('.region-group').each(function(){
+			var allActive = $(this).find('.title-select').length
+			var checkedActive = $(this).find('.title-select:checked').length
+			$(this).find('.region-select').prop('checked', (allActive == checkedActive) );
+		});
+
 		// Update date/title messages
-		$('#facet-title-region .facet-label').html(titleCount + ' titles from ' + regionCount + ' regions');
+		$('.title-select-all').prop('checked', ($('.title-select').not(':checked').not('.inactive').length == 0) );
+		var titleCount = $('.title-select:checked').not('.inactive').length;
+		var regionCount = $('.title-select:checked').not('.inactive').parents('.region-group').length;
+		var introText = ($('.title-select-all').prop('checked')) ? 'All ' : '';
+		$('#facet-title-region .facet-label').html(introText + titleCount + ' titles from ' + regionCount + ' regions');
 
 	}
 
@@ -275,20 +307,3 @@ $(document).ready(function(){
 
 });
 
-
-function harvestTitleCheckboxes() {
-	
-	var titleField = $('#selected_titles');
-	titleField.attr('value', '');
-
-	if ( $('.title-select-all').is(':checked') ) {
-		titleField.attr('value', 'ALL');
-	} else {
-		titleField.attr('value', '');
-		$('.title-select').each(function(){
-			if ( $(this).is(':checked') ) {
-				titleField.attr( 'value', titleField.attr('value') + $(this).attr('value') + ',' );
-			}
-		});
-	}
-}

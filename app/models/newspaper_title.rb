@@ -3,7 +3,7 @@ class NewspaperTitle
 	def self.find(id)
 		@title_info = nil
 		if self.info[id]
-			@title_info = self[id]
+			@title_info = self.info[id]
 		else
 			self.info.each do |code, title|
 				if id == ActiveSupport::Inflector.parameterize(title[:title])

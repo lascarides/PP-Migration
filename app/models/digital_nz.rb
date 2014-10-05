@@ -17,6 +17,7 @@ class DigitalNZ
 
 	def self.search_results(query, options = '')
 		url = "http://api.digitalnz.org/v3/records.json?api_key=#{DNZ_API_KEY}&text=#{CGI::escape(query)}#{options}"
+		puts url
 		response = Net::HTTP.get_response(URI.parse(url)).body.force_encoding("UTF-8")
 		result = JSON.parse(response)
 	end	
