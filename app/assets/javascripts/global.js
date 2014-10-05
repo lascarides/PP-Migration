@@ -43,8 +43,9 @@ $(document).ready(function(){
 			}
 		});
 		if (queryString != '') {
-			// FIXME hardcoded
-			window.location = 'http://0.0.0.0:3008/newspapers?' + queryString.join('&');
+			var currentLocation = location.href
+
+			window.location = currentLocation.split('?')[0] + '?' + queryString.join('&');
 		}
 	});
 
@@ -159,6 +160,7 @@ $(document).ready(function(){
 		$('.end-year h2').html(endDate);
 
 		showHideTitles(startDate, endDate);
+
 		// FIXME performance suck. vvvvvvv
 		$( "#search-options-dates h4 span" ).html( startDate + '-' + endDate );
 
@@ -238,9 +240,10 @@ $(document).ready(function(){
 		});
 
 		// Update date/title messages
-		$('.title-select-all').prop('checked', ($('.title-select').not(':checked').not('.inactive').length == 0) );
-		var titleCount = $('.title-select:checked').not('.inactive').length;
-		var regionCount = $('.title-select:checked').not('.inactive').parents('.region-group').length;
+		$('.title-select-all').prop('checked', ($('.title-select').not(':checked').length == 0) );
+		var activeTitles = $('.newspaper-title').not('.inactive').find('.title-select:checked');
+		var titleCount = activeTitles.length;
+		var regionCount = activeTitles.parents('.region-group').length;
 		var introText = ($('.title-select-all').prop('checked')) ? 'All ' : '';
 		$('#facet-title-region .facet-label').html(introText + titleCount + ' titles from ' + regionCount + ' regions');
 
@@ -284,8 +287,9 @@ $(document).ready(function(){
 
 	// Set up closeable panels
 	$('.closeable .close-widget').click(function(){
-		$('.facet').removeClass('active');
-		$(this).parent('.closeable').slideUp();
+		$('#search-form').submit();
+		// $('.facet').removeClass('active');
+		// $(this).parent('.closeable').slideUp();
 	});
 
 	// Multi-choice palettes

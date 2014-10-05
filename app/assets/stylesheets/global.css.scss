@@ -9,7 +9,7 @@ $ppGreen: desaturate(#91aa62, 10%);
 /* Yellow 		#f4be42; */
 /* Lavender 	#cca5db; */
 /* Blue		 	#42a6f3; */
-$ppAccent: #add86b;
+$ppAccent: #f4be42;
 $ppAccentText: darken($ppAccent, 40%);
 $ppGray: #e3e3d4;
 $ppSuperHighlight: #a00;
@@ -165,6 +165,12 @@ label {
 ol.breadcrumb {
 	text-transform: uppercase;
 }
+
+.back-search-link {
+	text-transform: uppercase;
+	margin: 0 0 1.5em;
+}
+
 
 .home {
 	h1 {

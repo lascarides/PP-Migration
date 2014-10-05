@@ -11,7 +11,11 @@
 					%a{:href => "/#{@type}/#{result['id']}"}
 						= result['title']
 				%td= result['collection'].first
-				%td= Date.parse(result['date'].to_a[0]).strftime("%e %B, %Y")
+				%td
+					- if result['date'].blank?
+						= 'Date unknown'
+					- else
+						= Date.parse(result['date'].to_a[0]).strftime("%e %B, %Y")
 
 
 

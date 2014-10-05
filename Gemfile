@@ -15,10 +15,7 @@ gem 'puma'
 gem 'simple_form'
 gem 'jquery-datatables-rails', git: 'git://github.com/rweng/jquery-datatables-rails.git'
 gem "d3-rails"
-
-group :assets do
-  gem "chardinjs-rails"
-end
+gem "chardinjs-rails"
 
 group :development do
   gem 'better_errors'

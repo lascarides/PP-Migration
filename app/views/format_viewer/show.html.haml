@@ -1,3 +1,7 @@
+- if request.referrer.to_s.include? "#{@type}?"
+	.back-search-link= link_to '« Back to search results', request.referrer
+
+
 %h4= render :partial => 'shared/breadcrumbs'
 
 %h1= @item[:title]
