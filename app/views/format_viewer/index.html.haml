@@ -4,11 +4,15 @@
 
 			- @facets.each do |facet|
 
-				%a.facet{ href: "##{facet[:name]}-picker", id: "facet-#{facet[:name]}", 'data-intro' => facet[:help_text], 'data-position' => 'right'}
-					%small= facet[:choose_text]
-					%span.facet-label= facet[:default_value]
-					%span.facet-arrow 
-						%span Change
+				.facet
+					%a{ href: "##{facet[:name]}-picker", id: "facet-#{facet[:name]}", 'data-intro' => facet[:help_text], 'data-position' => 'right'}
+						%small= facet[:choose_text]
+						%span.facet-label= facet[:default_value]
+						%span.facet-arrow 
+							%span Change
+					.facet-reset
+						%span.glyphicon.glyphicon-remove
+						%span.reset-label Clear
 
 			.well
 				%p= raw(@format_class.description)
@@ -16,8 +20,6 @@
 				%h4= link_to "About the #{@type} »", "/#{@type}/title"
 
 				%h4= link_to "Latest additions »", "/about"
-
-				%h4= link_to "About Papers Past »", "/about"
 
 		.col-md-9
 

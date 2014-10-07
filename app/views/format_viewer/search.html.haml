@@ -1,4 +1,4 @@
-.results 
+																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																.results 
 
 	%form.form-inline{:role => "form", :action => "/#{@type}/search", :method => 'get'}
 		.row
@@ -22,5 +22,7 @@
 				%button.btn.btn-info.input-lg.form-control{:type => "submit"} Search
 
 	= render :partial => "shared/search_controls"
+
+	%p.results-info=raw "There are #{number_with_delimiter(@search_results['search']['result_count'])} items matching <span>#{params[:query]}</span>. Here are the first #{@search_results['search']['per_page']}."
 
 	= render :partial => "#{@type}/search_results"

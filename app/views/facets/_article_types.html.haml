@@ -1,0 +1,17 @@
+= hidden_field_tag 'article_types', '', class: 'sendable'
+
+%h4 What types of articles would you like to search?
+
+
+%label
+	= check_box_tag "Articles", 'articles[]', true
+	Articles
+
+%label
+	= check_box_tag "Adverti", 'articles[]', true
+	Advertisements
+
+%label
+	= check_box_tag "Articles", 'articles[]', true
+	Illustrations
+

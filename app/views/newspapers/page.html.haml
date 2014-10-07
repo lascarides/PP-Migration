@@ -3,22 +3,15 @@
 
 %nav.navbar.navbar-default.navbar-subnav
 	%ul.nav.navbar-nav
-		%li.page-expander
-			%a.actual{href: '#'}
-				%span.glyphicon.glyphicon-fullscreen
-				Actual size
-			%a.fit{href: '#'}
-				%span.glyphicon.glyphicon-resize-small
-				Fit in window
 		%li.active
-			%a{href: "#thumbnails", 'data-toggle' => "tab"}
+			%a{href: "#page-image", 'data-toggle' => "tab"}
 				%span.glyphicon.glyphicon-th
-				Page image
+				Image
 
 		%li
 			%a{href: "#contents", 'data-toggle' => "tab"}
 				%span.glyphicon.glyphicon-list-alt
-				Outline of page contents
+				Contents outline
 		%li.dropdown
 			%a.dropdown-toggle{href: "#", 'data-toggle' => "dropdown"}
 				%span.glyphicon.glyphicon-file
@@ -42,11 +35,18 @@
 
 	.tab-content
 
-		#thumbnails.tab-pane.fade.in.active
+		#page-image.tab-pane.fade.in.active
 			.page-image-detail.page-image-detail-compressed
 				= image_tag("http://paperspast.natlib.govt.nz/cgi-bin/imageserver/imageserver.pl?oid=#{NewspaperTitle.code(@item[:title].parameterize)}#{@today.strftime('%Y%m%d')}.1.#{@page}&scale=30&color=32&ext=gif&key=")
 				- Newspaper.areas(NewspaperTitle.code(@item[:title].parameterize) + @today.strftime('%Y%m%d') + ".1.#{@page}").each do |area|
 					= link_to ' ', area[:href], :style => area[:style]
+				.page-expander
+					%a.actual{href: '#'}
+						%span.glyphicon.glyphicon-fullscreen
+						Enlarge
+					%a.fit{href: '#'}
+						%span.glyphicon.glyphicon-resize-small
+						Fit in window
 
 
 		#contents.tab-pane.fade

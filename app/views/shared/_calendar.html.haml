@@ -1,0 +1,33 @@
+.calendar
+	%h4= month
+	%table
+		%thead
+			%tr
+				%th S
+				%th M
+				%th T
+				%th W
+				%th T
+				%th F
+				%th S
+		%tbody
+			- 5.times do |week|
+				%tr
+					- 7.times do |d|
+						- day = (week * 7) + d + 1
+						- if day < 32
+							- if @item.nil?
+								- if day == 1
+									%td.selected= day
+								- else
+									%td= day
+							- else
+								- target = rand
+								- if target > 0.6
+									%td.published= link_to day, "/newspapers/title/#{@item[:title].parameterize}/#{@item[:start_year]}/#{m+1}/#{day}"
+								- elsif target > 0.5
+									%td.printed= day
+								- elsif target > 0.49
+									%td.unavailable= day
+								- else
+									%td= day

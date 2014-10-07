@@ -157,13 +157,14 @@ label {
 	    height: 50px;
 	    padding-top: 0;
 	}
-	.fit {
-		display: none;
-	}
 }
 
-ol.breadcrumb {
-	text-transform: uppercase;
+.breadcrumbs {
+	padding: 0;
+	background: transparent !important;
+	.breadcrumb-separator {
+		color: $ppGray;
+	}
 }
 
 .back-search-link {
@@ -212,47 +213,71 @@ ol.breadcrumb {
 	
 	padding-top: 1em;
 
-	a.facet {
+	.facet {
 		position: relative;
-		display: block;
-		font-family: $headingFont;
-		font-weight: 700;
-		font-size: 1.8em;
-		margin: 0 0 10px 0;
-		border: 3px solid $ppAccent;
-		border-radius: 10px;
-		padding: 10px;
-		line-height: 1.2;
-		background: lighten($ppAccent, 30%);
-		color: darken($ppAccent, 40%);
-
-		&:hover {
-			background: lighten($ppAccent, 20%);
-			text-decoration: none;
-		}
-		small {
-			margin: 0;
-			padding: 0;
+		a {
+			position: relative;
 			display: block;
-			line-height: auto;
-			text-transform: uppercase;
-			font-family: $bodyFont;
-			font-size: 0.5em;
-			padding: 0 0 0.5em 0;
-			color: darken($ppAccent, 30%);
+			font-family: $headingFont;
+			font-weight: 700;
+			font-size: 1.8em;
+			margin: 0 0 10px 0;
+			border: 3px solid $ppAccent;
+			border-radius: 10px;
+			padding: 10px;
+			line-height: 1.2;
+			background: lighten($ppAccent, 30%);
+			color: darken($ppAccent, 40%);
+
+			&:hover {
+				background: lighten($ppAccent, 20%);
+				text-decoration: none;
+			}
+			small {
+				margin: 0;
+				padding: 0;
+				display: block;
+				line-height: auto;
+				text-transform: uppercase;
+				font-family: $bodyFont;
+				font-size: 0.5em;
+				padding: 0 0 0.5em 0;
+				color: darken($ppAccent, 30%);
+			}
+			.facet-arrow {
+				position: absolute;
+				right: -12px;
+				width: 9px;
+				height: 40px;
+				top: 50%;
+				margin-top: -20px;
+				background: $ppAccent url(/assets/arrow-facet.png) 0 50% repeat-y;
+				background-size: 100% auto;
+				transition: width 0.4s, right 0.4s;
+				span {
+					display: none;
+				}
+			}
 		}
-		.facet-arrow {
+		.facet-reset {
+			display: none;
+			width: 4em;
+			color: $ppAccentText;
+			opacity: 0.5;
 			position: absolute;
-			right: -12px;
-			width: 9px;
-			height: 40px;
-			top: 50%;
-			margin-top: -20px;
-			background: $ppAccent url(/assets/arrow-facet.png) 0 50% repeat-y;
-			background-size: 100% auto;
-			transition: width 0.4s, right 0.4s;
-			span {
+			top: 0.5em;
+			left: -4.5em;
+			text-transform: uppercase;
+			text-align: right;
+			.reset-label {
 				display: none;
+			}
+			&:hover {
+				color: $ppSuperHighlight;
+				opacity: 1.0;
+				.reset-label {
+					display: inline;
+				}
 			}
 		}
 	}
@@ -363,7 +388,33 @@ ol.breadcrumb {
 	}
 }
 
+
 .page-image-detail {
+	.page-expander {
+		position: absolute;
+		top: 0;
+		left: 0;
+		z-index: 9999;
+		a {
+			background: $ppAccent !important;
+			padding: 0.5em;
+			display: block;
+			border-radius: 5px;
+			width: 10em;
+			text-align: center;
+			opacity: 0.8;
+			color: $ppAccentText;
+			&:hover {
+				opacity: 1.0;
+			}
+		}
+		.fit {
+			display: none;
+		}
+		.actual {
+			display: block;
+		}
+	}
 	position: relative;
 	a {
 		display: block;
@@ -678,6 +729,19 @@ tr:hover {
 		text-align: center;
 		margin-bottom: 1em;
 	}
+	.date-picker-sidebar {
+		.date-era-select {
+			a.active {
+				font-weight: bold;
+			}
+		}
+		h5 {
+			margin: 1em 0 0.5em 0;
+		}
+		#date-range-message {
+			display: none;
+		}
+	}
 	.timeline {
 		h5 {
 			margin: 1em 0;
@@ -843,6 +907,7 @@ tr:hover {
 	.title-note {
 		display: none;
 		color: #a00;
+		background: #ff0;
 		margin: 0 0 1em;
 	}
 	.search-cats-col {

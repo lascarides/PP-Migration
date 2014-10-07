@@ -32,8 +32,7 @@
 		%h1
 			= @item[:title]
 			%small
-				= link_to "#{@item[:region]},", "/newspapers/region/#{@item[:region].parameterize}"
-				= " #{@item[:start_year]}-#{@item[:end_year]}"
+				= "#{@item[:region]}, #{@item[:start_year]}-#{@item[:end_year]}"
 
 		.row
 			.col-md-6
@@ -74,7 +73,7 @@
 
 				%h2
 					%span.glyphicon.glyphicon-backward
-					= @item[:start_year]
+					= @year
 					%span.glyphicon.glyphicon-forward
 
 				- ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'].each_with_index do |month, m|

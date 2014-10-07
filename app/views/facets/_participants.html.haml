@@ -1,0 +1,13 @@
+= hidden_field_tag 'people', '', class: 'sendable'
+
+%h4 What people would you like to search?
+
+.search-cats-col
+
+	- ["McLean, Donald (Sir)", "Ormond, John Davies", "Kinross, John Gibson", "Locke, Samuel", "Clarke, Henry Tacy", "Kemp, Henry Tacy", "Fox, William (Sir)", "Fannin, George Thomas", "Strang, Robert Roger", "Vogel, Julius (Sir)", "Rogan, John", "Browne, Thomas Robert", "Moule, William (Colonel)", "St John, John Henry", "Rhodes, Joseph", "Bowen, George Ferguson", "Mair, William Gilbert", "Maclean, Robert Donald", "Mackay, James", "Gisborne, William", "Bush, Robert Smelt", "McLean, Archibald John", "Parris, Robert Reid", "Wilson, Peter (Dr)", "Searancke, William Nichol", "McLean, Susan Douglas", "Worgan, George Tovey Buck", "Hart, Robert", "Grey, George (Sir)", "Maning, Frederick Edward", "Russell, Henry Robert", "Richardson, Edward (Hon)", "Green, Edward Lister", "Colenso, William", "Fitzgerald, Michael", "Whitmore, George Stoddart", "Sinclair, Andrew (Dr)", "Porter, Thomas William", "Puckey, Edward Walter", "Campbell, James H", "Taylor, Richard (Rev)", "Hamlin, Francis Edwards", "Condie, Thomas", "Deighton, Samuel", "Lambert, Charles (Colonel)",].each do |section|
+		%label
+			= check_box_tag 'x', 'x', true
+			= section
+
+= link_to 'More...', "/#{@type.to_s.dasherize}/section"
+

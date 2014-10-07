@@ -1,0 +1,45 @@
+
+PROTOTYPE TO-DOS
+------------------------------------------------------------
+- Fix parliamentary sessions
+- Store selections in sessions (for format switching purposes)
+- Mark facets when they've been interacted with
+- Pagination
+- Title pages for other formats
+- Fill in front-pages for non-today dates
+- Next/prev search results
+- Try out cookie-based search history
+- Better home page
+- Thumbnail/list view switchers
+- Add region map (somehow. lightbox?)
+- Zoomable view (or equivalent)
+	- Leaflet-y?
+- Is there an easy way to get search term highlighting? 
+- Update URLs, and use 'gem rack-rewrite' to start mapping the rules.
+
+
+UX QUESTIONS
+------------------------------------------------------------
+- What do we need to communicate on the zero results pages?
+- What do the thumbnail pages for articles look like? 
+- Communication around change in date ranges
+- Do the facets communicate what's going on?
+- Think about Niupepa and Troopship use cases
+- Are front pages a good idea, or should we always go straight to articles?
+- Do "subject" and "people" facets make any sense in the browse context?
+- Do people use the Zoomable view?
+- What about ALL of the facets in Manuscripts? 
+- TEST EVERYTHING. BE HONEST.
+
+
+
+PRE-PRODUCTION
+------------------------------------------------------------
+- Think about how facet/title metadata model would work
+	- Investigate Backbone/Angular?
+	- Number of articles per title per year
+	- Facet name, granularity
+	- Collections, sub-collections
+- Better, more scalable structure of SCSS and reusable widgets
+- What do unit/integration tests look like?
+- Spec caching/failover parameters

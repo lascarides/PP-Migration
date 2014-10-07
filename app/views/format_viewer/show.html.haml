@@ -2,9 +2,10 @@
 	.back-search-link= link_to '« Back to search results', request.referrer
 
 
-%h4= render :partial => 'shared/breadcrumbs'
-
-%h1= @item[:title]
+%h2
+	= render :partial => 'shared/breadcrumbs'
+%h1
+	= @item[:title]
 
 .item
 	.row
@@ -15,12 +16,12 @@
 					%li.active
 						%a{href: "#images", 'data-toggle' => "tab"}
 							%span.glyphicon.glyphicon-th
-							Scanned page image
+							Image
 
 					%li
 						%a{href: "#fulltext", 'data-toggle' => "tab"}
 							%span.glyphicon.glyphicon-list-alt
-							Computer-generated text
+							Article text
 					%li
 						%a{href: "#researchtools", 'data-toggle' => "tab"}
 							%span.glyphicon.glyphicon-cog
@@ -45,7 +46,10 @@
 
 							.well
 								%small 
-									= "This article has been automatically clipped from the #{@item[:collection]}, organised into a single column, then optimised for display on your computer screen. As a result, it may not look exactly as it did on the original page. The article can be seen in its original form in the page view."
+									This article has been automatically clipped from the 
+									= "#{@item[:collection]}," 
+									organised into a single column, then optimised for display on your computer screen. As a result, it may not look exactly as it did on the original page. The article can be seen in its original form in the 
+									= link_to 'full page view.', '#'
 
 				#fulltext.tab-pane.fade
 					.row

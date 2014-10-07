@@ -1,0 +1,121 @@
+= hidden_field_tag 'start_date', params[:start_date], class: 'sendable'
+= hidden_field_tag 'end_date', params[:end_date], class: 'sendable'
+
+
+.search-option-panel-content.date-range-picker{'data-year-min' => @date_year_min, 'data-year-max' => @date_year_max }
+
+	.row
+		.start-date-picker.col-md-4
+			%h5 From
+			.row
+				.col-md-3.right-align
+					%a.date-step-button{ href: '#', 'data-date-part' => 'y', 'data-date-value' => '-1', 'data-date-which' => 'start' }
+						%span.glyphicon.glyphicon-chevron-left
+				.col-md-6.start-year.date-dropdown
+					%h2
+						= @date_year_min
+					.multi-choice-palette
+						.multi-choice-palette-contents
+							- (@date_year_min..@date_year_max).to_a.each do |yr|
+								- year_class = 'choose-item'
+								- year_class += ' choose-item-decade' if yr % 10 == 0
+								- year_class += ' choose-selected' if yr == @date_year_min
+								= link_to yr, '#', 'data-date-part' => 'y', 'data-date-which' => 'start', 'data-date-value' => yr, :class => year_class
+
+				.col-md-3
+					%a.date-step-button{ href: '#', 'data-date-part' => 'y', 'data-date-value' => '+1', 'data-date-which' => 'start' }
+						%span.glyphicon.glyphicon-chevron-right
+			.row
+				.col-md-3.right-align
+					%a.date-step-button{ href: '#', 'data-date-part' => 'm', 'data-date-value' => '-1', 'data-date-which' => 'start' }
+						%span.glyphicon.glyphicon-chevron-left
+				.col-md-6.start-month.date-dropdown
+					%h4
+						January
+					.multi-choice-palette{ 'data-date-part' => 'm', 'data-date-which' => 'start' }
+						.multi-choice-palette-contents.months
+							- 12.times do |m|
+								= link_to Time.new(2014, m+1, 1).strftime('%B'), '#', 'data-month' => m + 1
+				.col-md-3
+					%a.date-step-button{ href: '#', 'data-date-part' => 'm', 'data-date-value' => '+1', 'data-date-which' => 'start' }
+						%span.glyphicon.glyphicon-chevron-right
+			= render :partial => 'shared/calendar', :locals => { :month => 'January', :m => 0 }
+
+		.end-date-picker.col-md-4
+			%h5 To
+			.row
+				.col-md-3.right-align
+					%a.date-step-button{ href: '#', 'data-date-part' => 'y', 'data-date-value' => '-1', 'data-date-which' => 'end' }
+						%span.glyphicon.glyphicon-chevron-left
+				.col-md-6.end-year.month.date-dropdown
+					%h2
+						= @date_year_max
+					.multi-choice-palette
+						.multi-choice-palette-contents
+							- (@date_year_min..@date_year_max).to_a.each do |yr|
+								- year_class = 'choose-year'
+								- year_class += ' choose-year-decade' if yr % 10 == 0
+								- year_class += ' choose-selected' if yr == @date_year_min
+								= link_to yr, '#', 'data-date-part' => 'y', 'data-date-which' => 'end', 'data-date-value' => yr, :class => year_class
+				.col-md-3
+					%a.date-step-button{ href: '#', 'data-date-part' => 'y', 'data-date-value' => '+1', 'data-date-which' => 'end' }
+						%span.glyphicon.glyphicon-chevron-right
+			.row
+				.col-md-3.right-align
+					%a.date-step-button{ href: '#', 'data-date-part' => 'm', 'data-date-value' => '-1', 'data-date-which' => 'end' }
+						%span.glyphicon.glyphicon-chevron-left
+				.col-md-6.end-month.date-dropdown
+					%h4
+						December
+				.col-md-3
+					%a.date-step-button{ href: '#', 'data-date-part' => 'm', 'data-date-value' => '+1', 'data-date-which' => 'end' }
+						%span.glyphicon.glyphicon-chevron-right
+			= render :partial => 'shared/calendar', :locals => { :month => 'December', :m => 11 }
+		.col-md-4.date-picker-sidebar
+			#events-picker
+				%h5 
+					Major NZ Events
+					%small Quick select
+
+				.date-era-select
+					%a{href: '#', 'data-start' => 1839, 'data-end' => 1841} Treaty of Waitangi
+				.date-era-select
+					%a{href: '#', 'data-start' => 1861, 'data-end' => 1864} Otago Gold Rush
+				.date-era-select
+					%a{href: '#', 'data-start' => 1878, 'data-end' => 1893} Women's Suffrage Campaign
+				.date-era-select
+					%a{href: '#', 'data-start' => 1914, 'data-end' => 1919} First World War
+				.date-era-select
+					%a{href: '#', 'data-start' => 1939, 'data-end' => 1945} Second World War
+
+			#date-range-message.well
+				%strong= "Looking for dates after #{@date_year_max}?"
+				Papers Past contains only a portion of all NZ newspapers, and none from after 1945. 
+				Visit the <a href="http://natlib.govt.nz/">National Library of New Zealand</a> or your local library to view many more in person. 
+
+				%p
+					%strong= link_to 'Learn more', '/about'
+
+
+
+	.row
+		.col-md-12.timeline
+
+			%h5 
+				Timeline
+				%small= "Total number of #{@type.to_s.singularize} articles available per year"
+
+
+			.timeline-content
+				.timeline-hilite
+				- 11.times do |d|
+					.timeline-timescale{ :style => "left: #{7 + (d * 70)}px;" }= 1840 + (10 * d)
+				- @timeline_values.each do |year, count|
+					.timeline-bar{ :style => "left: #{7 * (year - 1839)}px;", 'data-year' => year }
+						.bar-magnitude{ :style => "height: #{(count * @timeline_x_scale).to_i + 5}px"}
+						.bar-label
+							= year 
+							%span= "#{number_with_delimiter(count)} articles"
+			.slider-range
+
+

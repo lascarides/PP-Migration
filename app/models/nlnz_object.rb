@@ -20,6 +20,12 @@ class NLNZObject
 				scope += CGI.escape( item[:title] )
 			}
 		end
+		if search_params[:sort]
+			scope += "&sort=" + search_params[:sort]
+		end
+		if search_params[:direction]
+			scope += "&direction=" + search_params[:direction]
+		end
 		DigitalNZ.search_results(search_params[:query], scope)		
 	end
 

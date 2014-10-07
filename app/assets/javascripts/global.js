@@ -9,7 +9,7 @@ $(document).ready(function(){
 
 	// Facet UI behaviour
 	$('#query').focus(function(){
-		$('.facet').removeClass('active');
+		$('.facet a').removeClass('active');
 		$('.facet-tools').slideUp();
 		$('.query-tools').slideDown();
 	});
@@ -123,6 +123,7 @@ $(document).ready(function(){
 		// FIXME More validation please, and dates not years
 		if (date_value > datePickerRangeMax) {
 			date_value = datePickerRangeMax;
+			triggerDateBoundaryMessage();
 		}
 		if (date_value < datePickerRangeMin) {
 			date_value = datePickerRangeMin;
@@ -131,6 +132,13 @@ $(document).ready(function(){
 		$('#' + which_date + '_date').val(date_value);
 		displayDates();	
 	}
+
+	// Show message to anyone looking for dates after boundary
+	function triggerDateBoundaryMessage() {
+		$('#events-picker').slideUp();
+		$('#date-range-message').slideDown();
+	}
+
 
 	// Once date is updated, adjust display of dates throughout page.
 	function displayDates() {
@@ -167,6 +175,14 @@ $(document).ready(function(){
 		updateTimeline(startDate, endDate);
 
 	}
+
+	$('.date-era-select a').click(function(){
+		$('.date-era-select a').removeClass('active');
+		$(this).addClass('active');
+		process_dates('y', $(this).data('start'), 'start');
+		process_dates('y', $(this).data('end'), 'end');
+		return false;
+	});
 
 	function updateTimeline(startDate, endDate) {
 		$('.timeline-hilite').css({
@@ -272,13 +288,13 @@ $(document).ready(function(){
 	});
 
 	// Search facets
-	$('.facet').click(function(e){
+	$('.facet a').click(function(e){
 		e.preventDefault();
 		if ($(this).hasClass('active')) {
 			$(this).removeClass('active');
 			$($(this).attr('href')).slideUp();
 		} else {
-			$('.facet').removeClass('active');
+			$('.facet a').removeClass('active');
 			$('.tools').slideUp();
 			$(this).addClass('active');
 			$($(this).attr('href')).slideDown();

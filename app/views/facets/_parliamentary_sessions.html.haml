@@ -1,0 +1,16 @@
+= hidden_field_tag 'parliamentary_sessions', '', class: 'sendable'
+
+%h4 What parliamentary session would you like to search?
+
+.search-cats-col
+
+	- (184..195).to_a.each do |section|
+		.region-group
+			%h5= "#{section}0-#{section}9"
+			- 10.times do |n|
+				%label
+					= check_box_tag 'x', 'x', true
+					= "AJHR_#{(section * 10)+n}_I_A-G"
+
+	= link_to 'More...', "/#{@type.to_s.dasherize}/section", :class => 'btn'
+

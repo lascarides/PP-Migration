@@ -36,6 +36,10 @@ class FormatViewerController < ApplicationController
 
   def show
     @item = @format_class.find(params[:id])
+    # FIXME - display hack
+    if @type == :newspapers
+      @item[:page_number] ||= 1
+    end
     respond_to do |format|
       format.html # show.html.erb
       format.json { render json: @item }

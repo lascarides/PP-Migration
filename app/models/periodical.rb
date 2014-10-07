@@ -16,6 +16,7 @@ class Periodical < NLNZObject
 		end
 
 		result = DigitalNZ.find(id)
+		puts result
 		record = {}
 		record[:title] 			= result['title']
 		record[:collection] 	= result['collection'].first
@@ -37,7 +38,11 @@ class Periodical < NLNZObject
 				text.to_s
 			}.join
 		else
-			record[:images] 		= [result['large_thumbnail_url']]
+			record[:images] 		= [result['large_thumbnail_url']].compact
+		end
+		if record[:images].size == 0
+			thumb = result['thumbnail_url'].gsub(/.*dps_pid=(IE[0-9]+).*$/, 'http://ndhadeliver.natlib.govt.nz/NLNZStreamGate/get?dps_pid=\1')
+			record[:images] 		= [thumb]
 		end
 		record[:original] 		= result['landing_url']
 		record
