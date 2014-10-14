@@ -4,10 +4,11 @@
 
 .search-cats-col
 
+	= render :partial => 'facets/select_all'
+
 	- ['Aborigines', 'Crown lands', 'Education', 'Finance', 'Immigration', 'Immigration and public works', 'Legislative and political', 'Legislative and political (Includes Native Affairs)', 'Miscellaneous', 'Native affairs', 'Petitions', 'Postal and telegraphic', 'Postal, telegraphic, etc.', 'Public works', 'Reports Select committees'].each do |section|
 		%label
 			= check_box_tag 'x', 'x', true
 			= section
 
-	= link_to 'More...', "/#{@type.to_s.dasherize}/section", :class => 'btn'
 

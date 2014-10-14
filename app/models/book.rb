@@ -1,2 +1,2 @@
-class Book < NLNZObject
+class Book < Format
 end

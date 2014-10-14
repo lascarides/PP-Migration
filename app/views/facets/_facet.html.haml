@@ -1,0 +1,39 @@
+= hidden_field_tag facet['name'], params[ facet['name'] ], class: 'sendable'
+
+%h4
+	= facet['header'] || "What #{facet['name'].titleize} would you like to search?"
+	- if facet['sync_to_dates']
+		%small= "Gray choices are not available in your selected dates"
+
+%div{ class: (facet['columns'] == '3') ? 'search-cats-col' : 'search-cats'}
+
+	.facet-group-all
+		%h5
+			%label
+				= check_box_tag :title, "all", true, :class => 'facet-select-all collatable-trigger'
+				Unselect all
+
+	- if facet['values'].size == 1
+
+		- facet['values'].each do |k, values|
+			- values.each do |facet_value|
+				%label.facet-item
+					= check_box_tag facet['name'], facet_value['id'], (params[facet['name']].to_s.split(',').include?(facet_value['id']) or params[facet['name']].nil?), class: 'collatable'
+					= facet_value['name']
+
+	- else
+
+		- facet['values'].each do |section, facets|
+			.facet-group
+				.facet-group-title
+					%h5
+						%label
+							= check_box_tag "sections[]", 'section', true , :class => 'facet-group-select collatable-trigger'
+							= section
+
+				- facets.each do |facet_value|
+					%label.facet-item{ 'data-start-year' => facet_value['start-year'], 'data-end-year' => facet_value['end-year'] }
+						= check_box_tag facet['name'], facet_value['id'], (params[facet['name']].to_s.split(',').include?(facet_value['id']) or params[facet['name']].nil?), class: 'collatable'
+						= facet_value['name']
+
+

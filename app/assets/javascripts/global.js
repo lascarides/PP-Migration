@@ -4,16 +4,6 @@ $(document).ready(function(){
 	// SEARCH BEHAVIOUR
 	/////////////////////////////////////////
 
-	// Convenience JQuery traversals
-	var searchTitles = $('.newspaper-title');
-
-	// Facet UI behaviour
-	$('#query').focus(function(){
-		$('.facet a').removeClass('active');
-		$('.facet-tools').slideUp();
-		$('.query-tools').slideDown();
-	});
-
 	// Form submittal
 	$('#search-form').submit(function(event){
 		event.preventDefault();
@@ -49,16 +39,23 @@ $(document).ready(function(){
 		}
 	});
 
+	// Show search query tools.
+	$('#query').focus(function(){
+		$('.facet a').removeClass('active');
+		$('.facet-tools').slideUp();
+		$('.query-tools').slideDown();
+	});
+
 	// Make collatable form elements report up to their 'sendable' counterpart
 	// (This is where we harvest newspaper title checkboxen into a 
 	// single collated field, for example.)
 	function collateFacetValues() {
 		// TODO : Make sure significant changes in place (ie, all titles selected despite interaction)
-		$('.facet-interacted-with').each(function(){
+		$('.search-box .facet-interacted-with').each(function(){
 			var targetField = $(this).find('.sendable');
 			var boxen = new Array;
 			$(this).find('.collatable:checked').each(function(){
-				if ( !$(this).hasClass('inactive') ) {
+				if ( !$(this).parents('label').hasClass('inactive') ) {
 					boxen.push( $(this).val() );
 				}
 			});
@@ -66,10 +63,153 @@ $(document).ready(function(){
 		});
 	}
 
-	// Set collatable trigger
-	$('.collatable, .collatable-trigger').click(function(){
-		$(this).parents('.facet-tools').addClass('facet-interacted-with');
+	/////////////////////////////////////////
+	// FACETS
+	/////////////////////////////////////////
+
+	// Facet display
+	$('.facet a').click(function(e){
+		e.preventDefault();
+		if ($(this).hasClass('active')) {
+			$(this).removeClass('active');
+			$($(this).attr('href')).slideUp();
+		} else {
+			$('.facet a').removeClass('active');
+			$('.tools').slideUp();
+			$(this).addClass('active');
+			$($(this).attr('href')).slideDown();
+		}
 	});
+
+	// Set collatable trigger & label accordingly
+	$('.collatable, .collatable-trigger').click(function(){
+		$(this).parents('.facet-tools').each(function(){
+			$(this).addClass('facet-interacted-with');
+			var facetName = $(this).attr('id').replace(/-picker/, '');
+			$('#facet-' + facetName).addClass('facet-interacted-with');
+		});
+	});
+
+	// Facet resetter (clear) behaviour
+	$('.facet-reset').click(function(){
+		$(this).parents('.facet').each(function(){
+			var facetName = $(this).attr('id').replace(/facet-/, '');
+			$('#' + facetName + '-picker .collatable').prop('checked', true);
+			$('#' + facetName + '-picker .collatable-trigger').prop('checked', true);
+			$('#' + facetName + '-picker .facet-select-all').prop('checked', true);
+			displayDates();
+			$(this).removeClass('facet-interacted-with');
+		});
+	});
+
+	// Facet "Select all" triggers
+	$('.facet-select-all').click(function(){
+		$(this).parents('.facet-tools').find('.collatable, .collatable-trigger').prop('checked', $(this).is(':checked') );
+		facetCheckboxenDisplay( $(this).parents('.facet-tools') );
+	});
+
+	// Facet group checkboxen
+	$('.facet-group-title input').click(function(){
+		$(this).parents('.facet-group').find('.facet-item input').prop('checked', $(this).is(':checked') );
+		facetCheckboxenDisplay( $(this).parents('.facet-tools') );
+	});
+
+	// Facet item checkboxen
+	$('.facet-item').click(function(){
+		facetCheckboxenDisplay( $(this).parents('.facet-tools') );
+	});
+
+	// Update bits & pieces of UI around page after facet checkboxes clicked
+	function facetCheckboxenDisplay(scope) {
+
+		var facetName = scope.attr('id').replace('-picker', '');
+		var facetLabel = '';
+		if (facetName == 'title-region') {
+			facetLabel = titleFacetText();
+		} else {
+			facetLabel = summarizeFacetText('#' + scope.attr('id') + ' .facet-item', facetName.replace('-', ' '));
+		}
+		$('#facet-' + facetName + ' .facet-label').html( facetLabel );
+
+
+		// Appropriately check grouped items
+		scope.find('.facet-group').each(function(){
+			var allActive = $(this).find('.facet-item input').length
+			var checkedActive = $(this).find('.facet-item input:checked').length
+			$(this).find('.facet-group-title input').prop('checked', (allActive == checkedActive) );
+		});
+
+		// TODO
+		// Appropriately check the "Select All" checkbox
+
+	}
+
+	// Show/hide titles based on selected year
+	function showHideFacetGroups(startYear, endYear) {
+
+		// Hide regions when they are 'empty'
+		$('.facet-group').addClass('inactive');
+
+		// Show/hide each item
+		$('.facet-item').each(function(){
+			if ($(this).data('end-year') < startYear || $(this).data('start-year') > endYear) {
+				$(this).addClass('inactive');
+			} else {
+				$(this).removeClass('inactive');
+				$(this).parents('.facet-group').removeClass('inactive');
+			}
+		});
+
+	}
+
+	// Title facet text
+	function titleFacetText() {
+		var titleText = summarizeFacetText('#title-region-picker .facet-item', 'newspaper');
+		var regionText = summarizeFacetText('#title-region-picker .facet-group-title label', 'region');
+		if (titleText == 'None selected') {
+			return titleText;
+		}
+		if (titleText == 'All') {
+			return 'All titles';
+		}
+		if (regionText == 'None selected' || regionText == 'All regions') {
+			return titleText;
+		}
+		return titleText + ' <small>From ' + regionText + '</small>';
+	}
+
+
+	// Text for facet summaries
+	function summarizeFacetText(scope, trailer) {
+
+		var allValues = $(scope).not('.inactive').find('input');
+		var checkedValues = $(scope).not('.inactive').find('input:checked').parents('label');
+		var txt;
+
+		if (allValues.length == checkedValues.length) {
+			txt = 'All ' + trailer + 's';
+		} else {
+			if (checkedValues.length == 0) {
+				txt = 'None selected';
+				return txt;
+			} else if (checkedValues.length == 1) {
+				txt = $(checkedValues.get(0)).text().trim();
+			} else if (checkedValues.length == 2) {
+				txt = $(checkedValues.get(0)).text().trim() + ' and ' + $(checkedValues.get(1)).text().trim();
+			} else if (checkedValues.length == 3) {
+				txt = $(checkedValues.get(0)).text().trim() + ', ' + $(checkedValues.get(1)).text().trim() + ', and ' + $(checkedValues.get(2)).text().trim();
+			} else {
+				txt = $(checkedValues.get(0)).text().trim() + ', ' + $(checkedValues.get(1)).text().trim() + ', and ';
+				txt = txt + (checkedValues.length - 2) + ' other ' + trailer;
+				if ( (checkedValues.length - 2) > 1) {
+					// FIXME: Naive pluralisation
+					txt = txt + 's';	
+				}
+			}
+		}
+		return txt.trim();
+	}
+
 
 	/////////////////////////////////////////
 	// DATE PICKER
@@ -139,6 +279,18 @@ $(document).ready(function(){
 		$('#date-range-message').slideDown();
 	}
 
+	// Multi-choice palettes (year, month, etc)
+	$('html').click(function() {
+	  $('.multi-choice-palette').hide();
+	});
+	$('.date-dropdown h2, .date-dropdown h4').click(function(e){
+		e.stopPropagation();
+		$(this).parent('.date-dropdown').find('.multi-choice-palette').toggle();
+	});
+	$('.multi-choice-palette a').click(function(e){
+		e.preventDefault();
+		process_dates($(this).data('date-part'), parseInt($(this).text()), $(this).data('date-which'));
+	});
 
 	// Once date is updated, adjust display of dates throughout page.
 	function displayDates() {
@@ -154,7 +306,6 @@ $(document).ready(function(){
 
 		$(".slider-range").slider('values', [startDate,endDate] );
 
-		// FIXME performance suck. vvvvvvv
 		if (startDate > datePickerRangeMin || endDate < datePickerRangeMax) {
 			$('.title-note').show();
 		} else {
@@ -163,13 +314,11 @@ $(document).ready(function(){
 
 		$('#facet-date-range .facet-label').html(startDate + ' - ' + endDate);
 
-		// FIXME performance suck. vvvvvvv
 		$('.start-year h2').html(startDate);
 		$('.end-year h2').html(endDate);
 
-		showHideTitles(startDate, endDate);
+		showHideFacetGroups(startDate, endDate);
 
-		// FIXME performance suck. vvvvvvv
 		$( "#search-options-dates h4 span" ).html( startDate + '-' + endDate );
 
 		updateTimeline(startDate, endDate);
@@ -184,6 +333,7 @@ $(document).ready(function(){
 		return false;
 	});
 
+	// Date Timeline rules
 	function updateTimeline(startDate, endDate) {
 		$('.timeline-hilite').css({
 			left: ((startDate - datePickerRangeMin) * 7) - 1 + 'px',
@@ -212,60 +362,11 @@ $(document).ready(function(){
 	// Kick off date display on load
 	displayDates();
 
-	// Set up advanced search
-	$('.title-select-all').click(function(){
-		$('.title-select, .region-select').prop('checked', $(this).is(':checked') );
-		displayDates();
-	});
-
-	$('.region-select').click(function(){
-		$('.title-select-all').prop('checked', false);
-		var checkboxen = $("[data-region='" + $(this).attr('value') + "'] input");
-		checkboxen.prop('checked', $(this).is(':checked') );
-		displayDates();
-	});
-
-	$('.title-select').click(function(){
-		displayDates();
-	});
-
-	// Show/hide titles based on selected year
-	function showHideTitles(startYear, endYear) {
-		var regionList = new Array;
-		// Hide regions when they are 'empty'
-		$('.region-group').addClass('inactive');
-		$('.region-select').addClass('inactive');
-		$('.region-group-all').removeClass('inactive');
-		$('.region-select').prop('checked', false);
-
-		// Show/hide each title
-		searchTitles.each(function(){
-			if ($(this).data('yearend') < startYear || $(this).data('yearstart') > endYear) {
-				$(this).addClass('inactive');
-			} else {
-				$(this).removeClass('inactive');
-				$(this).parents('.region-group').removeClass('inactive').find('.region-select').removeClass('inactive');
-			}
-		});
-
-		// Appropriately check regions
-		$('.region-group').each(function(){
-			var allActive = $(this).find('.title-select').length
-			var checkedActive = $(this).find('.title-select:checked').length
-			$(this).find('.region-select').prop('checked', (allActive == checkedActive) );
-		});
-
-		// Update date/title messages
-		$('.title-select-all').prop('checked', ($('.title-select').not(':checked').length == 0) );
-		var activeTitles = $('.newspaper-title').not('.inactive').find('.title-select:checked');
-		var titleCount = activeTitles.length;
-		var regionCount = activeTitles.parents('.region-group').length;
-		var introText = ($('.title-select-all').prop('checked')) ? 'All ' : '';
-		$('#facet-title-region .facet-label').html(introText + titleCount + ' titles from ' + regionCount + ' regions');
-
-	}
 
 
+	/////////////////////////////////////////
+	// UI MISCELLANY
+	/////////////////////////////////////////
 
 	// Set up sortable tables
 	$('.datatable').dataTable({
@@ -287,40 +388,12 @@ $(document).ready(function(){
 		$('.page-image-detail').toggleClass('page-image-detail-compressed');
 	});
 
-	// Search facets
-	$('.facet a').click(function(e){
-		e.preventDefault();
-		if ($(this).hasClass('active')) {
-			$(this).removeClass('active');
-			$($(this).attr('href')).slideUp();
-		} else {
-			$('.facet a').removeClass('active');
-			$('.tools').slideUp();
-			$(this).addClass('active');
-			$($(this).attr('href')).slideDown();
-		}
-	});
-
 	// Set up closeable panels
 	$('.closeable .close-widget').click(function(){
 		$('#search-form').submit();
 		// $('.facet').removeClass('active');
 		// $(this).parent('.closeable').slideUp();
 	});
-
-	// Multi-choice palettes
-	$('html').click(function() {
-	  $('.multi-choice-palette').hide();
-	});
-	$('.date-dropdown h2, .date-dropdown h4').click(function(e){
-		e.stopPropagation();
-		$(this).parent('.date-dropdown').find('.multi-choice-palette').toggle();
-	});
-	$('.multi-choice-palette a').click(function(e){
-		e.preventDefault();
-		process_dates($(this).data('date-part'), parseInt($(this).text()), $(this).data('date-which'));
-	});
-
 
 	// Kick off presentation.
 	$('#preso').jmpress();

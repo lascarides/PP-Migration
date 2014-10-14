@@ -1,37 +1,36 @@
-- unless current_page?(root_url)
-	%nav.navbar.navbar-default.navbar-fixed-top.navbar-primary
-		.navbar-header
-			%button.navbar-toggle{'data-toggle' => "collapse",  'data-target' => ".navbar-collapse"}
-				%span.icon-bar
-				%span.icon-bar
-				%span.icon-bar
-			= link_to raw("Papers Past"), root_path, :class => @type.nil? ? 'navbar-brand' : 'navbar-brand active'
-		.navbar-collapse.collapse
+%nav.navbar.navbar-default.navbar-fixed-top.navbar-primary
+	.navbar-header
+		%button.navbar-toggle{'data-toggle' => "collapse",  'data-target' => ".navbar-collapse"}
+			%span.icon-bar
+			%span.icon-bar
+			%span.icon-bar
+		= link_to raw("Papers Past"), root_path, :class => @type.nil? ? 'navbar-brand' : 'navbar-brand active'
+	.navbar-collapse.collapse
 
-			- if not @type.nil?
-				= link_to FORMAT_LABELS[@type], "/#{@type}", :class => 'navbar-brand active navbar-format'
-				
-			%ul.nav.navbar-nav{'data-intro' => "Choose the type of materials to explore", 'data-position' => "right"}
-				%li.dropdown.format-picker
-					%a.dropdown-toggle{href: '#', 'data-toggle' => 'dropdown'}
-						= @type.nil? ? 'Explore the collections' : 'More choices'
-						%span.caret
-					%ul.dropdown-menu{ role: 'menu' }
-						- FORMAT_LABELS.each do |fmt, label| 
-							- if fmt != @type
-								%li= link_to label, request.url.gsub(@type.to_s, fmt.to_s)
+		- if not @type.nil?
+			= link_to FORMAT_LABELS[@type], "/#{@type}", :class => 'navbar-brand active navbar-format'
+			
+		%ul.nav.navbar-nav{'data-intro' => "Choose the type of materials to explore", 'data-position' => "right"}
+			%li.dropdown.format-picker
+				%a.dropdown-toggle{href: '#', 'data-toggle' => 'dropdown'}
+					= @type.nil? ? 'Explore the collections' : 'Explore other collections'
+					%span.caret
+				%ul.dropdown-menu{ role: 'menu' }
+					- FORMAT_LABELS.each do |fmt, label| 
+						- if fmt != @type
+							%li= link_to label, (request.url =~ /\?/) ? request.url.gsub(@type.to_s, fmt.to_s) : "/#{fmt}"
 
-			%ul.nav.navbar-nav.navbar-right
-				%li
-					=link_to "Quick Help", '#', :class => 'quick-help-toggle'
-				%li
-					=link_to "Tutorial", '/help'
-				%li
-					=link_to "About", '/about'
-				%li.dropdown
-					%a.dropdown-toggle{href: '#', 'data-toggle' => 'dropdown'}
-						English
-						%span.caret
-					%ul.dropdown-menu{ role: 'menu' }
-						%li.active= link_to "English", '#'
-						%li= link_to "Te Reo Māori", '#'
+		%ul.nav.navbar-nav.navbar-right
+			%li
+				=link_to "Quick Help", '#', :class => 'quick-help-toggle'
+			%li
+				=link_to "Tutorial", '/help'
+			%li
+				=link_to "About", '/about'
+			%li.dropdown
+				%a.dropdown-toggle{href: '#', 'data-toggle' => 'dropdown'}
+					English
+					%span.caret
+				%ul.dropdown-menu{ role: 'menu' }
+					%li.active= link_to "English", '#'
+					%li= link_to "Te Reo Māori", '#'

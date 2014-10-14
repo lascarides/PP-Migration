@@ -1,4 +1,4 @@
-class NLNZObject
+class Format
 
 	def self.find(dnz_id)
 		DigitalNZ.find(dnz_id)		
@@ -27,6 +27,14 @@ class NLNZObject
 			scope += "&direction=" + search_params[:direction]
 		end
 		DigitalNZ.search_results(search_params[:query], scope)		
+	end
+
+	def self.start_year
+		1839
+	end
+
+	def self.end_year
+		1945
 	end
 
 	def self.collections(search_term)

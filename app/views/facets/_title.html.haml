@@ -1,6 +1,8 @@
-= hidden_field_tag 'titles', '', class: 'sendable'
+= hidden_field_tag 'titles', params[:titles], class: 'sendable'
 
 %h4 What titles would you like to search?
+
+= render :partial => 'facets/select_all'
 
 .row
 	.col-md-6
@@ -8,11 +10,11 @@
 		%h5 Magazines
 
 		%label
-			= check_box_tag "x", 'x', true
+			= check_box_tag "title[]", 'TAH', true
 			Te Ao Hou
 
 		%label
-			= check_box_tag "x", 'x', true
+			= check_box_tag "title[]", 'KT', true
 			Kai Tiaki: The Journal of New Zealand Nursing
 
 	.col-md-6
@@ -20,7 +22,7 @@
 		%h5 Journals
 
 		%label
-			= check_box_tag "x", 'x', true
+			= check_box_tag "title[]", 'RSNZ', true
 			Transactions and Proceedings of the Royal Society
 
 

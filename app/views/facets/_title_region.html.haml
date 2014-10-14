@@ -2,26 +2,26 @@
 
 %h4 
 	What titles and regions would you like to search?
-	%small.title-note Note: Showing only titles matching your selected date range.
+	%small Titles not published in your selected dates appear in gray
 
 .search-option-panel-content
 	.search-cats-col
-		.region-group-all
-			.title.region-title
+		.region-group-all.facet-group-all
+			.facet-title.region-title
 				%h5
 					%label
-						= check_box_tag :title, "all", true, :class => 'title-select-all collatable-trigger'
-						SELECT ALL TITLES
+						= check_box_tag :title, "all", true, :class => 'title-select-all facet-select-all collatable-trigger'
+						Select/Unselect all 
 		- @regions.each do |region|
-			.region-group
-				.title.region-title
+			.region-group.facet-group
+				.region-title
 					%h5
 						%label
 							= check_box_tag "region_#{region.parameterize}", region, true , :class => 'region-select collatable-trigger'
 							= "#{region} newspapers"
 				- NewspaperTitle.info.each do |symbol, title|
 					- if title[:region] == region
-						%label.title.newspaper-title{'data-region' => title[:region], 'data-yearstart' => title[:start_year], 'data-yearend' => title[:end_year]}
+						%label.facet-title.newspaper-title{'data-region' => title[:region], 'data-yearstart' => title[:start_year], 'data-yearend' => title[:end_year]}
 							- box_checked = (params[:titles].blank? or params[:titles].split(',').include?(symbol) )
 							= check_box_tag "title_#{symbol}", symbol, box_checked, :class => 'title-select collatable'
 							= title[:title]	

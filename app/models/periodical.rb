@@ -1,4 +1,4 @@
-class Periodical < NLNZObject
+class Periodical < Format
 
 	def self.dnz_search_scope
 		'&or[primary_collection][]=Te+Ao+Hou&or[primary_collection][]=Transactions+and+Proceedings+of+the+Royal+Society+of+New+Zealand+1868-1961'
@@ -47,5 +47,14 @@ class Periodical < NLNZObject
 		record[:original] 		= result['landing_url']
 		record
 	end
+
+	def self.start_year
+		1868
+	end
+
+	def self.end_year
+		1975
+	end
+
 
 end

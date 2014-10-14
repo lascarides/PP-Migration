@@ -1,6 +1,5 @@
 class FormatViewerController < ApplicationController
 
-  # STI : Invoices, Worksheets and Estimates use this controller
   before_filter :set_format_type
   before_filter :build_regions
   before_filter :build_facets
@@ -79,74 +78,24 @@ class FormatViewerController < ApplicationController
 
   def build_facets
 
-    @date_year_min = 1839
-    @date_year_max = 1945
+    @timeline_values = Newspaper.year_data_for_bar_chart
+    @timeline_x_scale = 1.0 / (@timeline_values.values.max / 86.0)
 
-    @facets = [
-      {
-        name: 'date-range',
-        help_text: 'Click here to choose a specific range of dates',
-        default_value: "#{@date_year_min} - #{@date_year_max}",
-        choose_text: 'Dates',
-        formats_to_show_on: [:all]
-      },
-      {
-        name: 'title-region',
-        help_text: 'Click here to choose specific newspaper titles by NZ region',
-        default_value: 'All titles from all regions',
-        choose_text: 'Titles and regions',
-        formats_to_show_on: [:newspapers]
-      },
-      {
-        name: 'title',
-        help_text: 'Click here to choose specific periodicals by title',
-        default_value: 'All titles',
-        choose_text: 'Titles',
-        formats_to_show_on: [:periodicals]
-      },
-      {
-        name: 'article-types',
-        help_text: 'Click here to choose the types of newspaper articles you\'d like to search',
-        default_value: 'All article types',
-        choose_text: 'Article types',
-        formats_to_show_on: [:newspapers]
-      },
-      {
-        name: 'collections',
-        help_text: 'Click here to choose collections (groupings of materials)',
-        default_value: 'All collections',
-        choose_text: 'Collections',
-        formats_to_show_on: [:manuscripts]
-      },
-      {
-        name: 'parliamentary-sessions',
-        help_text: 'Click here to choose the parliamentary session',
-        default_value: 'All parliamentary sessions',
-        choose_text: 'Parliamentary sessions',
-        formats_to_show_on: [:parliamentary_papers]
-      },
-      {
-        name: 'participants',
-        help_text: 'Click here to choose the people involved in the correspondence',
-        default_value: 'All people',
-        choose_text: 'People',
-        formats_to_show_on: [:manuscripts, :parliamentary_papers]
-      },
-      {
-        name: 'subjects',
-        help_text: 'Click here to choose the subjects in which you\'re interested',
-        default_value: 'All subjects',
-        choose_text: 'Subjects',
-        formats_to_show_on: [:periodicals, :manuscripts, :parliamentary_papers]
-      }
-    ].collect { |f|
-      if f[:formats_to_show_on].include?(@type) or f[:formats_to_show_on].include?(:all)
-        f 
+    @facets = JSON.parse( File.read('db/facet_metadata.json') ).collect { |label,f|
+      if f['formats_to_show_on'].include?(@type.to_s) or f['formats_to_show_on'].include?('all')
+        f['name'] = label
+        if label == 'newspapers'
+          f['values'] = NewspaperTitle.info.values.group_by{ |info|
+            info[:region]
+          }
+        end
+        f
       end
     }.compact
 
-    @timeline_values = Newspaper.year_data_for_bar_chart
-    @timeline_x_scale = 1.0 / (@timeline_values.values.max / 86.0)
+  n = {}
+  NewspaperTitle.info.each{|sym,vals| n[vals[:region]] ||= []; n[vals[:region]] << "{\"id\": \"#{sym}\", \"name\": \"#{vals[:title]}\", \"start-year\": \"#{vals[:start_year]}\", \"end-year\": \"#{vals[:end_year]}\"}" }
+  n.each{ |r,v| puts '"' + r + '": [' + v.join(',') + ' ]'}
 
   end
 

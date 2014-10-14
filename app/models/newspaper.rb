@@ -1,4 +1,4 @@
-class Newspaper < NLNZObject
+class Newspaper < Format
 
 	require 'nokogiri'
 	require 'open-uri'

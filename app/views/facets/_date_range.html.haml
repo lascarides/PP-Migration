@@ -2,7 +2,7 @@
 = hidden_field_tag 'end_date', params[:end_date], class: 'sendable'
 
 
-.search-option-panel-content.date-range-picker{'data-year-min' => @date_year_min, 'data-year-max' => @date_year_max }
+.search-option-panel-content.date-range-picker{'data-year-min' => @format_class.start_year, 'data-year-max' => @format_class.end_year }
 
 	.row
 		.start-date-picker.col-md-4
@@ -13,13 +13,13 @@
 						%span.glyphicon.glyphicon-chevron-left
 				.col-md-6.start-year.date-dropdown
 					%h2
-						= @date_year_min
+						= @format_class.start_year
 					.multi-choice-palette
 						.multi-choice-palette-contents
-							- (@date_year_min..@date_year_max).to_a.each do |yr|
+							- (@format_class.start_year..@format_class.end_year).to_a.each do |yr|
 								- year_class = 'choose-item'
 								- year_class += ' choose-item-decade' if yr % 10 == 0
-								- year_class += ' choose-selected' if yr == @date_year_min
+								- year_class += ' choose-selected' if yr == @format_class.start_year
 								= link_to yr, '#', 'data-date-part' => 'y', 'data-date-which' => 'start', 'data-date-value' => yr, :class => year_class
 
 				.col-md-3
@@ -49,13 +49,13 @@
 						%span.glyphicon.glyphicon-chevron-left
 				.col-md-6.end-year.month.date-dropdown
 					%h2
-						= @date_year_max
+						= @format_class.end_year
 					.multi-choice-palette
 						.multi-choice-palette-contents
-							- (@date_year_min..@date_year_max).to_a.each do |yr|
+							- (@format_class.start_year..@format_class.end_year).to_a.each do |yr|
 								- year_class = 'choose-year'
 								- year_class += ' choose-year-decade' if yr % 10 == 0
-								- year_class += ' choose-selected' if yr == @date_year_min
+								- year_class += ' choose-selected' if yr == @format_class.end_year
 								= link_to yr, '#', 'data-date-part' => 'y', 'data-date-which' => 'end', 'data-date-value' => yr, :class => year_class
 				.col-md-3
 					%a.date-step-button{ href: '#', 'data-date-part' => 'y', 'data-date-value' => '+1', 'data-date-which' => 'end' }
@@ -89,8 +89,11 @@
 					%a{href: '#', 'data-start' => 1939, 'data-end' => 1945} Second World War
 
 			#date-range-message.well
-				%strong= "Looking for dates after #{@date_year_max}?"
-				Papers Past contains only a portion of all NZ newspapers, and none from after 1945. 
+				%strong= "Looking for dates after #{@format_class.end_year}?"
+				Papers Past contains only a small portion of all NZ 
+				= "#{@type},"
+				and none from after
+				= "#{@format_class.end_year}." 
 				Visit the <a href="http://natlib.govt.nz/">National Library of New Zealand</a> or your local library to view many more in person. 
 
 				%p

@@ -1,4 +1,4 @@
-class ParliamentaryPaper < NLNZObject
+class ParliamentaryPaper < Format
 
 	def self.find(id)
 		result = DigitalNZ.find(id)
@@ -16,6 +16,14 @@ class ParliamentaryPaper < NLNZObject
 		article = Nokogiri::HTML(open(result['landing_url'] + '&st=1'))
 		record[:fulltext] = article.css("#ocr-nav .inner-contentwrap").to_s
 		record
+	end
+
+	def self.start_year
+		1854
+	end
+
+	def self.end_year
+		1950
 	end
 
 	def self.dnz_search_scope
