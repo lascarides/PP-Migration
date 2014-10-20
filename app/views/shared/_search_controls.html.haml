@@ -3,17 +3,17 @@
 
 	.pull-right
 		- if not @search_results.nil?
+			- if params[:sort] == 'date'
+				.search-control-panel
+					Order by 
+					.btn-group.btn-group-sm
+						= link_to 'Oldest first', params.merge(:direction => 'asc'), :class => btn_class + ((params[:direction] == 'asc') ? ' active' : '')
+						= link_to 'Most recent first', params.merge(:direction => nil), :class => btn_class + ((params[:direction].nil?) ? ' active' : '')
 			.search-control-panel
 				Sort by 
 				.btn-group.btn-group-sm
 					= link_to 'Best match', params.merge(:sort => nil, :direction => nil), :class => btn_class + ((params[:sort].nil?) ? ' active' : '')
 					= link_to 'Date', params.merge(:sort => "date"), :class => btn_class + ((params[:sort] == 'date') ? ' active' : '')
-			- if params[:sort] == 'date'
-				.search-control-panel
-					Order by 
-					.btn-group.btn-group-sm
-						= link_to 'Most recent first', params.merge(:direction => nil), :class => btn_class + ((params[:direction].nil?) ? ' active' : '')
-						= link_to 'Oldest first', params.merge(:direction => 'asc'), :class => btn_class + ((params[:direction] == 'asc') ? ' active' : '')
 		.search-control-panel
 			.btn-group.btn-group-sm
 				%button#view-style-list.btn.btn-default{ :type => "button", :title => 'View results as list' } 

@@ -1,0 +1,88 @@
+Format
+	:id
+	:title
+	:start_year
+	:end_year
+	:short_description
+	:essay
+	:api_domain
+	:api_path
+	:dates
+	:publications
+
+Publication
+	:id
+	:title
+	:region
+	:start_year
+	:end_year
+	:logo
+	:short_desc
+	:essay
+	:documents
+	:format_id
+
+Document
+	:id
+	:date
+	:feature_code
+	:position
+	:title
+	:document_type
+	:volume
+	:next_document_id
+	:prev_document_id
+	:pages
+	:sections
+	:publication_id
+
+Page
+	:id
+	:document_id
+	:feature_code
+	:image_url
+	:image_height
+	:image_width
+	:ocr_accuracy
+	:title
+	:sections
+	:image_html
+	:next_page_id
+	:prev_page_id
+	:pdf_url
+	:fulltext_html
+	:word_count
+
+Section	
+	:id
+	:document_id
+	:first_page_id
+	:parent_id
+	:images_html
+	:images
+	:section_type
+	:x_offset
+	:y_offset
+	:width
+	:height
+
+StaticText
+	:id
+	:language
+	:code
+	:parent_type
+	:parent_id
+	:language_id
+	:content
+
+Facet
+	:id
+	:title
+	:custom_template?
+	:link_to_dates?
+	:help_text
+	:default_value
+	:choose_text
+	:formats
+    :columns
+	:values

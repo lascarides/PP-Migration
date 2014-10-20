@@ -16,16 +16,18 @@
   %body{:class => "#{controller_name} #{action_name}"}
     = render 'layouts/navigation'
     #main{:role => "main"}
+      = render :partial => 'about/home_hero' if controller.action_name == 'home'
+
       .container
         = yield
       %footer
         .container
           .row
             .col-md-9
-              =link_to "Acknowledgements and thanks", '#'
+              =link_to t('nav-thanks'), '#'
               •
-              =link_to "Collaborative digitisation", '#'
+              =link_to t('nav-collab'), '#'
               •
-              =link_to "Legal notices", '#'
+              =link_to t('nav-legal'), '#'
             .col-md-3
               = link_to image_tag("logo-nlnz.jpg"), 'http://natlib.govt.nz/'

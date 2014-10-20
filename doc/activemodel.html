@@ -1,0 +1,291 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!-- saved from url=(0057)http://api.rubyonrails.org/classes/ActiveModel/Model.html -->
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>ActiveModel::Model</title>
+    
+    <link rel="stylesheet" href="./activemodel_files/reset.css" type="text/css" media="screen">
+<link rel="stylesheet" href="./activemodel_files/main.css" type="text/css" media="screen">
+<link rel="stylesheet" href="./activemodel_files/github.css" type="text/css" media="screen">
+<script src="./activemodel_files/jquery-1.3.2.min.js" type="text/javascript" charset="utf-8"></script>
+<script src="./activemodel_files/jquery-effect.js" type="text/javascript" charset="utf-8"></script>
+<script src="./activemodel_files/main.js" type="text/javascript" charset="utf-8"></script>
+<script src="./activemodel_files/highlight.pack.js" type="text/javascript" charset="utf-8"></script>
+
+</head>
+
+<body>     
+    <div class="banner">
+        
+            <span>Ruby on Rails 4.1.6</span><br>
+        
+        <h1>
+            <span class="type">Module</span> 
+            ActiveModel::Model 
+            
+        </h1>
+        <ul class="files">
+            
+            <li><a href="http://api.rubyonrails.org/files/activemodel/lib/active_model/model_rb.html">activemodel/lib/active_model/model.rb</a></li>
+            
+        </ul>
+    </div>
+    <div id="bodyContent">
+        <div id="content">
+  
+    <div class="description">
+      
+<h2 id="module-ActiveModel::Model-label-Active+Model+Basic+Model">Active Model Basic Model</h2>
+
+<p>Includes the required interface for an object to interact with
+<code>ActionPack</code>, using different <code>ActiveModel</code> modules.
+It includes model name introspections, conversions, translations and
+validations. Besides that, it allows you to initialize the object with a
+hash of attributes, pretty much like <code>ActiveRecord</code> does.</p>
+
+<p>A minimal implementation could be:</p>
+
+<pre class="ruby" data-result="[object Object]" data-second_best="[object Object]"><code><span class="class"><span class="keyword">class</span> <span class="title">Person</span></span>
+  <span class="identifier"><span class="keymethods">include</span></span> <span class="constant">ActiveModel::Model</span>
+  <span class="identifier">attr_accessor</span> <span class="symbol">:<span class="identifier"><span class="keymethods">name</span></span></span>, <span class="symbol">:<span class="identifier">age</span></span>
+<span class="identifier"><span class="keyword">end</span></span>
+
+<span class="identifier">person</span> = <span class="constant">Person</span>.<span class="identifier"><span class="keymethods">new</span></span>(<span class="identifier"><span class="keymethods">name</span></span><span class="symbol">:</span> <span class="string">'bob'</span>, <span class="identifier">age</span><span class="symbol">:</span> <span class="string">'18'</span>)
+<span class="identifier">person</span>.<span class="identifier"><span class="keymethods">name</span></span> <span class="comment"># =&gt; 'bob'</span>
+<span class="identifier">person</span>.<span class="identifier">age</span>  <span class="comment"># =&gt; 18</span>
+</code></pre>
+
+<p>Note that, by default, <code>ActiveModel::Model</code> implements
+<code>persisted?</code> to return <code>false</code>, which is the most
+common case. You may want to override it in your class to simulate a
+different scenario:</p>
+
+<pre class="ruby" data-result="[object Object]" data-second_best="[object Object]"><code><span class="class"><span class="keyword">class</span> <span class="title">Person</span></span>
+  <span class="identifier"><span class="keymethods">include</span></span> <span class="constant">ActiveModel::Model</span>
+  <span class="identifier">attr_accessor</span> <span class="symbol">:<span class="identifier"><span class="keymethods">id</span></span></span>, <span class="symbol">:<span class="identifier"><span class="keymethods">name</span></span></span>
+
+  <span class="function"><span class="keyword">def</span> <span class="title">persisted?</span></span>
+    <span class="identifier"><span class="keyword">self</span></span>.<span class="identifier"><span class="keymethods">id</span></span> == <span class="number">1</span>
+  <span class="identifier"><span class="keyword">end</span></span>
+<span class="identifier"><span class="keyword">end</span></span>
+
+<span class="identifier">person</span> = <span class="constant">Person</span>.<span class="identifier"><span class="keymethods">new</span></span>(<span class="identifier"><span class="keymethods">id</span></span><span class="symbol">:</span> <span class="number">1</span>, <span class="identifier"><span class="keymethods">name</span></span><span class="symbol">:</span> <span class="string">'bob'</span>)
+<span class="identifier">person</span>.<span class="identifier">persisted?</span> <span class="comment"># =&gt; true</span>
+</code></pre>
+
+<p>Also, if for some reason you need to run code on <code>initialize</code>,
+make sure you call <code>super</code> if you want the attributes hash
+initialization to happen.</p>
+
+<pre class="ruby" data-result="[object Object]" data-second_best="[object Object]"><code><span class="class"><span class="keyword">class</span> <span class="title">Person</span></span>
+  <span class="identifier"><span class="keymethods">include</span></span> <span class="constant">ActiveModel::Model</span>
+  <span class="identifier">attr_accessor</span> <span class="symbol">:<span class="identifier"><span class="keymethods">id</span></span></span>, <span class="symbol">:<span class="identifier"><span class="keymethods">name</span></span></span>, <span class="symbol">:<span class="identifier">omg</span></span>
+
+  <span class="function"><span class="keyword">def</span> <span class="title">initialize</span><span class="params">(<span class="identifier">attributes</span>={})</span></span>
+    <span class="identifier"><span class="keyword">super</span></span>
+    <span class="variable">@omg</span> ||= <span class="identifier"><span class="keyword">true</span></span>
+  <span class="identifier"><span class="keyword">end</span></span>
+<span class="identifier"><span class="keyword">end</span></span>
+
+<span class="identifier">person</span> = <span class="constant">Person</span>.<span class="identifier"><span class="keymethods">new</span></span>(<span class="identifier"><span class="keymethods">id</span></span><span class="symbol">:</span> <span class="number">1</span>, <span class="identifier"><span class="keymethods">name</span></span><span class="symbol">:</span> <span class="string">'bob'</span>)
+<span class="identifier">person</span>.<span class="identifier">omg</span> <span class="comment"># =&gt; true</span>
+</code></pre>
+
+<p>For more detailed information on other functionalities available, please
+refer to the specific modules included in <code>ActiveModel::Model</code>
+(see below).</p>
+
+    </div>
+  
+
+
+  
+
+
+  
+  
+
+
+  
+
+
+  
+    <!-- Method ref -->
+    <div class="sectiontitle">Methods</div>
+    <dl class="methods">
+      
+        <dt>N</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="http://api.rubyonrails.org/classes/ActiveModel/Model.html#method-c-new">new</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+        <dt>P</dt>
+        <dd>
+          <ul>
+            
+              
+              <li>
+                <a href="http://api.rubyonrails.org/classes/ActiveModel/Model.html#method-i-persisted-3F">persisted?</a>
+              </li>
+            
+          </ul>
+        </dd>
+      
+    </dl>
+  
+
+  
+    <!-- Includes -->
+    <div class="sectiontitle">Included Modules</div>
+    <ul>
+      
+        <li>
+          
+            <a href="http://api.rubyonrails.org/classes/ActiveModel/Validations.html">
+              ActiveModel::Validations
+            </a>
+          
+        </li>
+      
+        <li>
+          
+            <a href="http://api.rubyonrails.org/classes/ActiveModel/Conversion.html">
+              ActiveModel::Conversion
+            </a>
+          
+        </li>
+      
+    </ul>
+  
+
+
+
+  
+
+    
+
+    
+
+    
+
+
+    
+
+
+    <!-- Methods -->
+    
+      <div class="sectiontitle">Class Public methods</div>
+      
+        <div class="method">
+          <div class="title method-title" id="method-c-new">
+            
+              <b>new</b>(params={})
+            
+            <a href="http://api.rubyonrails.org/classes/ActiveModel/Model.html#method-c-new" name="method-c-new" class="permalink">Link</a>
+          </div>
+          
+          
+            <div class="description">
+              <p>Initializes a new model with the given <code>params</code>.</p>
+
+<pre class="ruby" data-result="[object Object]" data-second_best="[object Object]"><code><span class="class"><span class="keyword">class</span> <span class="title">Person</span></span>
+  <span class="identifier"><span class="keymethods">include</span></span> <span class="constant">ActiveModel::Model</span>
+  <span class="identifier">attr_accessor</span> <span class="symbol">:<span class="identifier"><span class="keymethods">name</span></span></span>, <span class="symbol">:<span class="identifier">age</span></span>
+<span class="identifier"><span class="keyword">end</span></span>
+
+<span class="identifier">person</span> = <span class="constant">Person</span>.<span class="identifier"><span class="keymethods">new</span></span>(<span class="identifier"><span class="keymethods">name</span></span><span class="symbol">:</span> <span class="string">'bob'</span>, <span class="identifier">age</span><span class="symbol">:</span> <span class="string">'18'</span>)
+<span class="identifier">person</span>.<span class="identifier"><span class="keymethods">name</span></span> <span class="comment"># =&gt; "bob"</span>
+<span class="identifier">person</span>.<span class="identifier">age</span>  <span class="comment"># =&gt; 18</span>
+</code></pre>
+            </div>
+          
+          
+          
+
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-c-new_source')" id="l_method-c-new_source">show</a>
+                
+                  | <a href="https://github.com/rails/rails/blob/fe49f432c9a88256de753a3f2263553677bd7136/activemodel/lib/active_model/model.rb#L78" target="_blank" class="github_url">on GitHub</a>
+                
+              </p>
+              <div id="method-c-new_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File activemodel/lib/active_model/model.rb, line 78</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">initialize</span>(<span class="ruby-identifier">params</span>={})
+  <span class="ruby-identifier">params</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">attr</span>, <span class="ruby-identifier">value</span><span class="ruby-operator">|</span>
+    <span class="ruby-keyword">self</span>.<span class="ruby-identifier">public_send</span>(<span class="ruby-node">"#{attr}="</span>, <span class="ruby-identifier">value</span>)
+  <span class="ruby-keyword">end</span> <span class="ruby-keyword">if</span> <span class="ruby-identifier">params</span>
+
+  <span class="ruby-keyword">super</span>()
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+                  
+      <div class="sectiontitle">Instance Public methods</div>
+      
+        <div class="method">
+          <div class="title method-title" id="method-i-persisted-3F">
+            
+              <b>persisted?</b>()
+            
+            <a href="http://api.rubyonrails.org/classes/ActiveModel/Model.html#method-i-persisted-3F" name="method-i-persisted-3F" class="permalink">Link</a>
+          </div>
+          
+          
+            <div class="description">
+              <p>Indicates if the model is persisted. Default is <code>false</code>.</p>
+
+<pre class="ruby" data-result="[object Object]" data-second_best="[object Object]"><code><span class="class"><span class="keyword">class</span> <span class="title">Person</span></span>
+  <span class="identifier"><span class="keymethods">include</span></span> <span class="constant">ActiveModel::Model</span>
+  <span class="identifier">attr_accessor</span> <span class="symbol">:<span class="identifier"><span class="keymethods">id</span></span></span>, <span class="symbol">:<span class="identifier"><span class="keymethods">name</span></span></span>
+<span class="identifier"><span class="keyword">end</span></span>
+
+<span class="identifier">person</span> = <span class="constant">Person</span>.<span class="identifier"><span class="keymethods">new</span></span>(<span class="identifier"><span class="keymethods">id</span></span><span class="symbol">:</span> <span class="number">1</span>, <span class="identifier"><span class="keymethods">name</span></span><span class="symbol">:</span> <span class="string">'bob'</span>)
+<span class="identifier">person</span>.<span class="identifier">persisted?</span> <span class="comment"># =&gt; false</span>
+</code></pre>
+            </div>
+          
+          
+          
+
+          
+          
+          
+            
+            <div class="sourcecode">
+              
+              <p class="source-link">
+                Source: 
+                <a href="javascript:toggleSource('method-i-persisted-3F_source')" id="l_method-i-persisted-3F_source">show</a>
+                
+                  | <a href="https://github.com/rails/rails/blob/fe49f432c9a88256de753a3f2263553677bd7136/activemodel/lib/active_model/model.rb#L95" target="_blank" class="github_url">on GitHub</a>
+                
+              </p>
+              <div id="method-i-persisted-3F_source" class="dyn-source">
+                <pre><span class="ruby-comment"># File activemodel/lib/active_model/model.rb, line 95</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword ruby-title">persisted?</span>
+  <span class="ruby-keyword">false</span>
+<span class="ruby-keyword">end</span></pre>
+              </div>
+            </div>
+            
+          </div>
+                    </div>
+
+    </div>
+  
+    </body></html>

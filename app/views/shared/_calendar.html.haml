@@ -15,19 +15,14 @@
 				%tr
 					- 7.times do |d|
 						- day = (week * 7) + d + 1
-						- if day < 32
+						- if day <= Date.new(current_year, m+1, 1).end_of_month.day
 							- if @item.nil?
 								- if day == 1
 									%td.selected= day
 								- else
 									%td= day
 							- else
-								- target = rand
-								- if target > 0.6
-									%td.published= link_to day, "/newspapers/title/#{@item[:title].parameterize}/#{@item[:start_year]}/#{m+1}/#{day}"
-								- elsif target > 0.5
-									%td.printed= day
-								- elsif target > 0.49
-									%td.unavailable= day
+								- if dates_list.include? Date.new(current_year, m+1, day)
+									%td.published= link_to day, "/newspapers/title/#{@item[:title].parameterize}/#{current_year}/#{m+1}/#{day}"
 								- else
 									%td= day

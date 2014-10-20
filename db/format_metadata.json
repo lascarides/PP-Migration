@@ -1,0 +1,30 @@
+[
+	{
+		"id": "newspapers",
+		"name": "Newspapers",
+		"start_year": 1839,
+		"end_year": 1945,
+		"api_address": "'http://paperspast-devel.natlib.govt.nz/veridian6/paperspast/cgi-bin/paperspast'"
+	},
+	{
+		"id": "periodicals",
+		"name": "Magazines and Journals",
+		"start_year": 1839,
+		"end_year": 1945,
+		"api_address": "'http://paperspast-devel.natlib.govt.nz/veridian6/paperspast/cgi-bin/paperspast'"
+	},
+	{
+		"id": "parliamentary_papers",
+		"name": "Parliamentary Papers",
+		"start_year": 1839,
+		"end_year": 1950,
+		"api_address": "'http://paperspast-devel.natlib.govt.nz/veridian6/paperspast/cgi-bin/paperspast'"
+	},
+	{
+		"id": "manuscripts",
+		"name": "Letters and Diaries",
+		"start_year": 1839,
+		"end_year": 1945,
+		"api_address": "'http://paperspast-devel.natlib.govt.nz/veridian6/paperspast/cgi-bin/paperspast'"
+	}
+]

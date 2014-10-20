@@ -171,21 +171,26 @@ label {
 	margin: 0 0 1.5em;
 }
 
-
-.home {
-	.hero-unit {
-		h1 {
-			color: $ppGreen;
-			font-size: 4em;	
-			padding: 0 0 0.3em 0;
-			border-bottom: 3px solid $ppGreen;
-			small {
-				font-weight: 200;
-				font-size: 0.4em;
-				font-family: $headingFont;
-			}
+.hero-unit {
+	margin: 0 0 1em;
+	padding: 1em;
+	background: url(/assets/temp-home-banner.jpg) 50% 50% no-repeat;
+	background-size: cover;
+	h1 {
+		color: white;
+		font-size: 4em;	
+		padding: 1.3em 0 0 0;
+		small {
+			color: #222;
+			font-weight: 200;
+			font-size: 0.4em;
+			font-family: $headingFont;
+			text-shadow: 0 0 5px white;
 		}
 	}
+}
+
+.home {
 	h3:first-child {
 		margin: 0 0 1.2em 0;
 	}
@@ -393,8 +398,8 @@ label {
 }
 
 
-.newspaper-pages {
-	.newspaper-page {
+.thumbnail-pages {
+	.thumbnail-page {
 		&:hover {
 			border: 2px solid $ppAccent;
 		}
@@ -424,13 +429,60 @@ label {
 				line-height: 1.2;
 			}
 		}
-		.newspaper-page-image {
+		.thumbnail-page-image {
 			max-width: 100%;
 			max-height: 300px;
 			overflow:hidden;
 			margin: 0 0 0.5em;
 			img {
 				display: block;
+			}
+		}
+	}
+}
+
+.thumbnail-pages-list-view {
+	.thumbnail-page {
+		&:hover {
+			border: 0;
+			border-top: 1px solid $ppGray;
+			background: $ppGray;
+		}
+		float: none;
+		margin: 0.5em 0 0 0;
+		width: 100%;
+		height: auto;
+		overflow: auto;
+		position: relative;
+		border: 0;
+		border-top: 1px solid $ppGray;
+		border-radius: 0 0 0 0;
+		p {
+			position: relative;
+			bottom: auto;
+			left: auto;
+			margin: 0 26% 0 260px;
+			padding: 0.5em;
+			height: auto;
+			background: transparent;
+			color: $ppGreen;
+			width: 100%;
+			a {
+				font-size: 1.2em;
+				font-weight: 700;
+				color: #444;
+			}
+		}
+		.thumbnail-page-image {
+			float: left;
+			width: 250px;
+			height: 70px;
+			margin: 0;
+			overflow: hidden;
+			img {
+				display: block;
+				width: 100%;
+				height: auto;
 			}
 		}
 	}
@@ -500,6 +552,10 @@ table {
 	.search-control-panel {
 		display: inline-block;
 		padding: 0 0 0 1em;
+	}
+	.active {
+		background: $ppAccent;
+		box-shadow: 0;
 	}
 }
 
@@ -922,8 +978,8 @@ tr:hover {
 			border: 2px solid lighten($ppAccent, 20%);
 			border-top: 0;
 			border-radius: 0 0 1em 1em;
-			z-index: 9000;
-			box-shadow: 10px 10px 10px rgba(0,0,0,0.4);
+			z-index: 999;
+			box-shadow: 10px 10px 25px rgba(0,0,0,0.4);
 			label {
 				font-family: $bodyFont;
 				padding: 0 1em 0 0;

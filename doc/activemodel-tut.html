@@ -1,0 +1,599 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!-- saved from url=(0089)http://yehudakatz.com/2010/01/10/activemodel-make-any-ruby-object-feel-like-activerecord/ -->
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en-US"><head profile="http://gmpg.org/xfn/11"><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><script type="text/javascript" src="./activemodel-tut_files/menu167.js"></script>
+
+
+<title>ActiveModel: Make Any Ruby Object Feel Like ActiveRecord «  Katz Got Your Tongue?</title>
+
+<link rel="stylesheet" href="./activemodel-tut_files/style.css" type="text/css" media="screen">
+<link rel="alternate" type="application/rss+xml" title="Katz Got Your Tongue? RSS Feed" href="http://yehudakatz.com/feed/">
+<link rel="alternate" type="application/atom+xml" title="Katz Got Your Tongue? Atom Feed" href="http://yehudakatz.com/feed/atom/">
+<link rel="pingback" href="http://yehudakatz.com/xmlrpc.php">
+
+ 
+
+<link rel="alternate" type="application/rss+xml" title="Katz Got Your Tongue? » ActiveModel: Make Any Ruby Object Feel Like ActiveRecord Comments Feed" href="http://yehudakatz.com/2010/01/10/activemodel-make-any-ruby-object-feel-like-activerecord/feed/">
+<link rel="stylesheet" id="wp-syntax-css-css" href="./activemodel-tut_files/wp-syntax.css" type="text/css" media="all">
+<script type="text/javascript" async="" src="./activemodel-tut_files/azcarbon_2_1_0_VERTDARK"></script><script type="text/javascript" src="./activemodel-tut_files/comment-reply.min.js"></script>
+<script type="text/javascript" src="./activemodel-tut_files/jquery.js"></script>
+<script type="text/javascript" src="./activemodel-tut_files/jquery-migrate.min.js"></script>
+<link rel="EditURI" type="application/rsd+xml" title="RSD" href="http://yehudakatz.com/xmlrpc.php?rsd">
+<link rel="wlwmanifest" type="application/wlwmanifest+xml" href="http://yehudakatz.com/wp-includes/wlwmanifest.xml"> 
+<link rel="prev" title="The Maximal Usage Doctrine for Open Source" href="http://yehudakatz.com/2010/01/05/the-maximal-usage-doctrine-for-open-source/">
+<link rel="next" title="jQuery 1.4 and Malformed JSON" href="http://yehudakatz.com/2010/01/15/jquery-1-4-and-malformed-json/">
+<meta name="generator" content="WordPress 3.8.4">
+<link rel="canonical" href="./activemodel-tut_files/activemodel-tut.html">
+<link rel="shortlink" href="http://yehudakatz.com/?p=401">
+<link rel="stylesheet" type="text/css" href="./activemodel-tut_files/widget007.old.css" media="all"><script id="_carbonads_projs" type="text/javascript" src="./activemodel-tut_files/C6AILKT.json"></script><style>.carbonad{background-color:#393939;border:2px solid #E8E8E8;height:215px;line-height:1.2;width:150px}.carbonad-img{float:left;height:100px;margin-left:11px;margin-top:11px;width:130px}.carbonad-text{color:#8A8A8A;float:left;font-family:Arial,Helvetica,sans-serif;font-size:11px;font-weight:400;height:50px;margin-left:15px;margin-top:9px;width:119px}.carbonad-text a{color:#FFF;text-decoration:none;text-transform:none;}.carbonad-tag{color:#6A6A6A;float:left;font-family:Arial,Helvetica,sans-serif;font-size:11px;font-weight:400;margin-left:17px;margin-top:13px;text-align:center}.carbonad-tag a{color:#6A6A6A;text-decoration:none;font-weight:700}</style></head>
+<body>
+  <div class="content">
+  <div class="header">
+    <div class="navigation">
+      <a href="http://yehudakatz.com/" id="blog-name"></a>
+      <a href="http://yehudakatz.com/">Blog</a>
+      <form action="http://yehudakatz.com/" class="search">
+        <p class="text"><input type="text" name="s" class="text"></p>
+        <input type="image" src="./activemodel-tut_files/search_button.png" value="Search">
+      </form>
+      <p class="rss"><a href="http://yehudakatz.com/rss"><img src="./activemodel-tut_files/rss.png"></a></p>
+    </div>
+    <div class="aboutme">
+      <img src="./activemodel-tut_files/headshot.png">
+      <p class="info">
+        Yehuda Katz is a member of the <a href="http://emberjs.com/">Ember.js</a>, 
+        <a href="http://rubyonrails.org/">Ruby on Rails</a> and <a href="http://www.jquery.com/">jQuery</a> 
+        Core Teams; his 9-to-5 home is at the startup he founded, <a href="http://www.tilde.io/">Tilde Inc.</a>. 
+        There he works on <a href="http://www.skylight.io/">Skylight</a>, the smart profiler for Rails, and does 
+        <a href="http://www.tilde.io/ember-consulting/">Ember.js consulting</a>﻿. He is best known for his open source 
+        work, which also includes <a href="https://github.com/erikhuda/thor">Thor</a> and 
+        <a href="http://www.handlebarsjs.com/">Handlebars</a>. He travels the world doing open source evangelism 
+        and web standards work.
+    </p></div>
+  </div>
+  <div class="body">
+
+	<div id="content" class="blog-post hentry">
+
+	
+    <!-- <div class="navigation">
+      <div class="alignleft">&laquo; <a href="http://yehudakatz.com/2010/01/05/the-maximal-usage-doctrine-for-open-source/" rel="prev">The Maximal Usage Doctrine for Open Source</a></div>
+      <div class="alignright"><a href="http://yehudakatz.com/2010/01/15/jquery-1-4-and-malformed-json/" rel="next">jQuery 1.4 and Malformed JSON</a> &raquo;</div>
+    </div> -->
+		<h1>ActiveModel: Make Any Ruby Object Feel Like ActiveRecord</h1>
+    <p class="dateline">January 10th, 2010</p>
+
+		<p>Rails 2.3 has a ton of really nice functionality locked up in monolithic components. I’ve posted quite a bit about how we’ve opened up a lot of that functionality in ActionPack, making it easier to reuse the router, dispatcher, and individual parts of ActionController. ActiveModel is another way we’ve exposed useful functionality to you in Rails 3.</p>
+<h2>Before I Begin, The ActiveModel API</h2>
+<p>Before I begin, there are two major elements to ActiveModel. The first is the ActiveModel API, the interface that models must adhere to in order to gain compatibility with ActionPack’s helpers. I’ll be talking more about that soon, but for now, the important thing about the ActiveModel API is that your models can become ActiveModel compliant without using a single line of Rails code.</p>
+<p>In order to help you ensure that your models are compliant, ActiveModel comes with a module called ActiveModel::Lint that you can include into your test cases to test compliance with the API:</p>
+
+<div class="wp_syntax"><table><tbody><tr><td class="code"><pre class="ruby" style="font-family:monospace;"><span style="color:#9966CC; font-weight:bold;">class</span> LintTest <span style="color:#006600; font-weight:bold;">&lt;</span> <span style="color:#6666ff; font-weight:bold;">ActiveModel::TestCase</span>
+  <span style="color:#9966CC; font-weight:bold;">include</span> <span style="color:#6666ff; font-weight:bold;">ActiveModel::Lint::Tests</span>
+&nbsp;
+  <span style="color:#9966CC; font-weight:bold;">class</span> CompliantModel
+    extend <span style="color:#6666ff; font-weight:bold;">ActiveModel::Naming</span>
+&nbsp;
+    <span style="color:#9966CC; font-weight:bold;">def</span> to_model
+      <span style="color:#0000FF; font-weight:bold;">self</span>
+    <span style="color:#9966CC; font-weight:bold;">end</span>
+&nbsp;
+    <span style="color:#9966CC; font-weight:bold;">def</span> valid?<span style="color:#006600; font-weight:bold;">(</span><span style="color:#006600; font-weight:bold;">)</span>      <span style="color:#0000FF; font-weight:bold;">true</span> <span style="color:#9966CC; font-weight:bold;">end</span>
+    <span style="color:#9966CC; font-weight:bold;">def</span> new_record?<span style="color:#006600; font-weight:bold;">(</span><span style="color:#006600; font-weight:bold;">)</span> <span style="color:#0000FF; font-weight:bold;">true</span> <span style="color:#9966CC; font-weight:bold;">end</span>
+    <span style="color:#9966CC; font-weight:bold;">def</span> destroyed?<span style="color:#006600; font-weight:bold;">(</span><span style="color:#006600; font-weight:bold;">)</span>  <span style="color:#0000FF; font-weight:bold;">true</span> <span style="color:#9966CC; font-weight:bold;">end</span>
+&nbsp;
+    <span style="color:#9966CC; font-weight:bold;">def</span> errors
+      obj = <span style="color:#CC00FF; font-weight:bold;">Object</span>.<span style="color:#9900CC;">new</span>
+      <span style="color:#9966CC; font-weight:bold;">def</span> obj.<span style="color:#006600; font-weight:bold;">[</span><span style="color:#006600; font-weight:bold;">]</span><span style="color:#006600; font-weight:bold;">(</span>key<span style="color:#006600; font-weight:bold;">)</span>         <span style="color:#006600; font-weight:bold;">[</span><span style="color:#006600; font-weight:bold;">]</span> <span style="color:#9966CC; font-weight:bold;">end</span>
+      <span style="color:#9966CC; font-weight:bold;">def</span> obj.<span style="color:#9900CC;">full_messages</span><span style="color:#006600; font-weight:bold;">(</span><span style="color:#006600; font-weight:bold;">)</span> <span style="color:#006600; font-weight:bold;">[</span><span style="color:#006600; font-weight:bold;">]</span> <span style="color:#9966CC; font-weight:bold;">end</span>
+      obj
+    <span style="color:#9966CC; font-weight:bold;">end</span>
+  <span style="color:#9966CC; font-weight:bold;">end</span>
+&nbsp;
+  <span style="color:#9966CC; font-weight:bold;">def</span> setup
+    <span style="color:#0066ff; font-weight:bold;">@model</span> = CompliantModel.<span style="color:#9900CC;">new</span>
+  <span style="color:#9966CC; font-weight:bold;">end</span>
+<span style="color:#9966CC; font-weight:bold;">end</span></pre></td></tr></tbody></table></div>
+
+<p>The <code>ActiveModel::Lint::Tests</code> provide a series of tests that are run against the <code>@model</code>, testing for compliance. </p>
+<h2>ActiveModel Modules</h2>
+<p>The second interesting part of ActiveModel is a series of modules provided by ActiveModel that you can use to implement common model functionality on your own Ruby objects. These modules were extracted from ActiveRecord, and are now included in ActiveRecord. </p>
+<p>Because we’re dogfooding these modules, you can be assured that APIs you bring in to your models will remain consistent with ActiveRecord, and that they’ll continue to be maintained in future releases of Rails.</p>
+<p>The ActiveModel comes with internationalization baked in, providing an avenue for much better community sharing around translating error messages and the like.</p>
+<h2>The Validations System</h2>
+<p>This was perhaps the most frustrating coupling in ActiveRecord, because it meant that people writing libraries for, say, CouchDB had to choose between painstakingly copying the API over, allowing inconsistencies to creep in, or just inventing a whole new API.</p>
+<p>Validations have a few different elements.</p>
+<p>First, declaring the validations themselves. You’ve seen the usage before in ActiveRecord:</p>
+
+<div class="wp_syntax"><table><tbody><tr><td class="code"><pre class="ruby" style="font-family:monospace;"><span style="color:#9966CC; font-weight:bold;">class</span> Person <span style="color:#006600; font-weight:bold;">&lt;</span> <span style="color:#6666ff; font-weight:bold;">ActiveRecord::Base</span>
+  validates_presence_of <span style="color:#ff3333; font-weight:bold;">:first_name</span>, <span style="color:#ff3333; font-weight:bold;">:last_name</span>
+<span style="color:#9966CC; font-weight:bold;">end</span></pre></td></tr></tbody></table></div>
+
+<p>To do the same thing for a plain old Ruby object, simply do the following:</p>
+
+<div class="wp_syntax"><table><tbody><tr><td class="code"><pre class="ruby" style="font-family:monospace;"><span style="color:#9966CC; font-weight:bold;">class</span> Person
+  <span style="color:#9966CC; font-weight:bold;">include</span> <span style="color:#6666ff; font-weight:bold;">ActiveModel::Validations</span>
+&nbsp;
+  validates_presence_of <span style="color:#ff3333; font-weight:bold;">:first_name</span>, <span style="color:#ff3333; font-weight:bold;">:last_name</span>
+&nbsp;
+  attr_accessor <span style="color:#ff3333; font-weight:bold;">:first_name</span>, <span style="color:#ff3333; font-weight:bold;">:last_name</span>
+  <span style="color:#9966CC; font-weight:bold;">def</span> initialize<span style="color:#006600; font-weight:bold;">(</span>first_name, last_name<span style="color:#006600; font-weight:bold;">)</span>
+    <span style="color:#0066ff; font-weight:bold;">@first_name</span>, <span style="color:#0066ff; font-weight:bold;">@last_name</span> = first_name, last_name
+  <span style="color:#9966CC; font-weight:bold;">end</span>
+<span style="color:#9966CC; font-weight:bold;">end</span></pre></td></tr></tbody></table></div>
+
+<p>The validations system calls <code>read_attribute_for_validation</code> to get the attribute, but by default, it aliases that method to <code>send</code>, which supports the standard Ruby attribute system of <code>attr_accessor</code>.</p>
+<p>To use a more custom attribute lookup, you can do:</p>
+
+<div class="wp_syntax"><table><tbody><tr><td class="code"><pre class="ruby" style="font-family:monospace;"><span style="color:#9966CC; font-weight:bold;">class</span> Person
+  <span style="color:#9966CC; font-weight:bold;">include</span> <span style="color:#6666ff; font-weight:bold;">ActiveModel::Validations</span>
+&nbsp;
+  validates_presence_of <span style="color:#ff3333; font-weight:bold;">:first_name</span>, <span style="color:#ff3333; font-weight:bold;">:last_name</span>
+&nbsp;
+  <span style="color:#9966CC; font-weight:bold;">def</span> initialize<span style="color:#006600; font-weight:bold;">(</span>attributes = <span style="color:#006600; font-weight:bold;">{</span><span style="color:#006600; font-weight:bold;">}</span><span style="color:#006600; font-weight:bold;">)</span>
+    <span style="color:#0066ff; font-weight:bold;">@attributes</span> = attributes
+  <span style="color:#9966CC; font-weight:bold;">end</span>
+&nbsp;
+  <span style="color:#9966CC; font-weight:bold;">def</span> read_attribute_for_validation<span style="color:#006600; font-weight:bold;">(</span>key<span style="color:#006600; font-weight:bold;">)</span>
+    <span style="color:#0066ff; font-weight:bold;">@attributes</span><span style="color:#006600; font-weight:bold;">[</span>key<span style="color:#006600; font-weight:bold;">]</span>
+  <span style="color:#9966CC; font-weight:bold;">end</span>
+<span style="color:#9966CC; font-weight:bold;">end</span></pre></td></tr></tbody></table></div>
+
+<p>Let’s look at what a validator actually is. First of all, the <vode>validates_presence_of method:</vode></p>
+<pre>def validates_presence_of(*attr_names)
+  validates_with PresenceValidator, _merge_attributes(attr_names)
+end</pre>
+<p>You can see that <code>validates_presence_of</code> is using the more primitive <code>validates_with</code>, passing it the validator class, merging in <code>{:attributes =&gt; attribute_names}</code> into the options passed to the validator. Next, the validator itself:</p>
+
+<div class="wp_syntax"><table><tbody><tr><td class="code"><pre class="ruby" style="font-family:monospace;"><span style="color:#9966CC; font-weight:bold;">class</span> PresenceValidator <span style="color:#006600; font-weight:bold;">&lt;</span> EachValidator
+  <span style="color:#9966CC; font-weight:bold;">def</span> validate<span style="color:#006600; font-weight:bold;">(</span>record<span style="color:#006600; font-weight:bold;">)</span>
+    record.<span style="color:#9900CC;">errors</span>.<span style="color:#9900CC;">add_on_blank</span><span style="color:#006600; font-weight:bold;">(</span>attributes, options<span style="color:#006600; font-weight:bold;">[</span><span style="color:#ff3333; font-weight:bold;">:message</span><span style="color:#006600; font-weight:bold;">]</span><span style="color:#006600; font-weight:bold;">)</span>
+  <span style="color:#9966CC; font-weight:bold;">end</span>
+<span style="color:#9966CC; font-weight:bold;">end</span></pre></td></tr></tbody></table></div>
+
+<p>The <code>EachValidator</code> that it inherits from validates each attribute with the <code>validate</code> method. In this case, it adds the error message to the record, only if the attribute is blank. </p>
+<p>The <code>add_on_blank</code> method does <code>add(attribute, :blank, :default =&gt; custom_message) if value.blank?</code> (among other things), which is adding the localized <code>:blank</code> message to the object. If you take a look at the built-in <code>locale/en.yml</code> looks like:</p>
+
+<div class="wp_syntax"><table><tbody><tr><td class="code"><pre class="yaml" style="font-family:monospace;"><span style="color: #007F45;">en</span>:<span style="color: #007F45;">
+  errors</span><span style="font-weight: bold; color: brown;">:
+</span>    <span style="color: blue;"># The default format use in full error messages.</span><span style="color: green;">
+    format</span><span style="font-weight: bold; color: brown;">: </span><span style="color: #CF00CF;">"{{attribute}} {{message}}"</span>
+&nbsp;
+    <span style="color: blue;"># The values :model, :attribute and :value are always available for interpolation</span>
+    <span style="color: blue;"># The value :count is available when applicable. Can be used for pluralization.</span><span style="color: #007F45;">
+    messages</span>:<span style="color: green;">
+      inclusion</span><span style="font-weight: bold; color: brown;">: </span><span style="color: #CF00CF;">"is not included in the list"</span><span style="color: green;">
+      exclusion</span><span style="font-weight: bold; color: brown;">: </span><span style="color: #CF00CF;">"is reserved"</span><span style="color: green;">
+      invalid</span><span style="font-weight: bold; color: brown;">: </span><span style="color: #CF00CF;">"is invalid"</span><span style="color: green;">
+      confirmation</span><span style="font-weight: bold; color: brown;">: </span><span style="color: #CF00CF;">"doesn't match confirmation"</span><span style="color: green;">
+      accepted</span><span style="font-weight: bold; color: brown;">: </span><span style="color: #CF00CF;">"must be accepted"</span><span style="color: green;">
+      empty</span><span style="font-weight: bold; color: brown;">: </span><span style="color: #CF00CF;">"can't be empty"</span><span style="color: green;">
+      blank</span><span style="font-weight: bold; color: brown;">: </span><span style="color: #CF00CF;">"can't be blank"</span><span style="color: green;">
+      too_long</span><span style="font-weight: bold; color: brown;">: </span><span style="color: #CF00CF;">"is too long (maximum is {{count}} characters)"</span><span style="color: green;">
+      too_short</span><span style="font-weight: bold; color: brown;">: </span><span style="color: #CF00CF;">"is too short (minimum is {{count}} characters)"</span><span style="color: green;">
+      wrong_length</span><span style="font-weight: bold; color: brown;">: </span><span style="color: #CF00CF;">"is the wrong length (should be {{count}} characters)"</span><span style="color: green;">
+      not_a_number</span><span style="font-weight: bold; color: brown;">: </span><span style="color: #CF00CF;">"is not a number"</span><span style="color: green;">
+      greater_than</span><span style="font-weight: bold; color: brown;">: </span><span style="color: #CF00CF;">"must be greater than {{count}}"</span><span style="color: green;">
+      greater_than_or_equal_to</span><span style="font-weight: bold; color: brown;">: </span><span style="color: #CF00CF;">"must be greater than or equal to {{count}}"</span><span style="color: green;">
+      equal_to</span><span style="font-weight: bold; color: brown;">: </span><span style="color: #CF00CF;">"must be equal to {{count}}"</span><span style="color: green;">
+      less_than</span><span style="font-weight: bold; color: brown;">: </span><span style="color: #CF00CF;">"must be less than {{count}}"</span><span style="color: green;">
+      less_than_or_equal_to</span><span style="font-weight: bold; color: brown;">: </span><span style="color: #CF00CF;">"must be less than or equal to {{count}}"</span><span style="color: green;">
+      odd</span><span style="font-weight: bold; color: brown;">: </span><span style="color: #CF00CF;">"must be odd"</span><span style="color: green;">
+      even</span><span style="font-weight: bold; color: brown;">: </span><span style="color: #CF00CF;">"must be even"</span></pre></td></tr></tbody></table></div>
+
+<p>As a result, the error message will read <code>first_name can't be blank</code>.</p>
+<p>The Error object is also a part of ActiveModel.</p>
+<h2>Serialization</h2>
+<p>ActiveRecord also comes with default serialization for JSON and XML, allowing you to do things like: <code>@person.to_json(:except =&gt; :comment)</code>.</p>
+<p>The main important part of the serialization support is adding general support for specifying the attributes to include across all serializers. That means that you can do <code>@person.to_xml(:except =&gt; :comment)</code> as well.</p>
+<p>To add serialization support to your own model, you will need to include the serialization module and implement <code>attributes</code>. Check it out:</p>
+
+<div class="wp_syntax"><table><tbody><tr><td class="code"><pre class="ruby" style="font-family:monospace;"><span style="color:#9966CC; font-weight:bold;">class</span> Person
+  <span style="color:#9966CC; font-weight:bold;">include</span> <span style="color:#6666ff; font-weight:bold;">ActiveModel::Serialization</span>
+&nbsp;
+  attr_accessor <span style="color:#ff3333; font-weight:bold;">:attributes</span>
+  <span style="color:#9966CC; font-weight:bold;">def</span> initialize<span style="color:#006600; font-weight:bold;">(</span>attributes<span style="color:#006600; font-weight:bold;">)</span>
+    <span style="color:#0066ff; font-weight:bold;">@attributes</span> = attributes
+  <span style="color:#9966CC; font-weight:bold;">end</span>
+<span style="color:#9966CC; font-weight:bold;">end</span>
+&nbsp;
+<span style="color:#CC0066; font-weight:bold;">p</span> = Person.<span style="color:#9900CC;">new</span><span style="color:#006600; font-weight:bold;">(</span><span style="color:#ff3333; font-weight:bold;">:first_name</span> <span style="color:#006600; font-weight:bold;">=&gt;</span> <span style="color:#996600;">"Yukihiro"</span>, <span style="color:#ff3333; font-weight:bold;">:last_name</span> <span style="color:#006600; font-weight:bold;">=&gt;</span> <span style="color:#996600;">"Matsumoto"</span><span style="color:#006600; font-weight:bold;">)</span>
+<span style="color:#CC0066; font-weight:bold;">p</span>.<span style="color:#9900CC;">to_json</span> <span style="color:#008000; font-style:italic;">#=&gt; %|{"first_name": "Yukihiro", "last_name": "Matsumoto"}|</span>
+<span style="color:#CC0066; font-weight:bold;">p</span>.<span style="color:#9900CC;">to_json</span><span style="color:#006600; font-weight:bold;">(</span><span style="color:#ff3333; font-weight:bold;">:only</span> <span style="color:#006600; font-weight:bold;">=&gt;</span> <span style="color:#ff3333; font-weight:bold;">:first_name</span><span style="color:#006600; font-weight:bold;">)</span> <span style="color:#008000; font-style:italic;">#=&gt; %|{"first_name": "Yukihiro"}|</span></pre></td></tr></tbody></table></div>
+
+<p>You can also pass in a <code>:methods</code> option to specify methods to call for certain attributes that are determined dynamically.</p>
+<p>Here's the Person model with validations and serialization:</p>
+
+<div class="wp_syntax"><table><tbody><tr><td class="code"><pre class="ruby" style="font-family:monospace;"><span style="color:#9966CC; font-weight:bold;">class</span> Person
+  <span style="color:#9966CC; font-weight:bold;">include</span> <span style="color:#6666ff; font-weight:bold;">ActiveModel::Validations</span>
+  <span style="color:#9966CC; font-weight:bold;">include</span> <span style="color:#6666ff; font-weight:bold;">ActiveModel::Serialization</span>
+&nbsp;
+  validates_presence_of <span style="color:#ff3333; font-weight:bold;">:first_name</span>, <span style="color:#ff3333; font-weight:bold;">:last_name</span>
+&nbsp;
+  attr_accessor <span style="color:#ff3333; font-weight:bold;">:attributes</span>
+  <span style="color:#9966CC; font-weight:bold;">def</span> initialize<span style="color:#006600; font-weight:bold;">(</span>attributes = <span style="color:#006600; font-weight:bold;">{</span><span style="color:#006600; font-weight:bold;">}</span><span style="color:#006600; font-weight:bold;">)</span>
+    <span style="color:#0066ff; font-weight:bold;">@attributes</span> = attributes
+  <span style="color:#9966CC; font-weight:bold;">end</span>
+&nbsp;
+  <span style="color:#9966CC; font-weight:bold;">def</span> read_attribute_for_validation<span style="color:#006600; font-weight:bold;">(</span>key<span style="color:#006600; font-weight:bold;">)</span>
+    <span style="color:#0066ff; font-weight:bold;">@attributes</span><span style="color:#006600; font-weight:bold;">[</span>key<span style="color:#006600; font-weight:bold;">]</span>
+  <span style="color:#9966CC; font-weight:bold;">end</span>
+<span style="color:#9966CC; font-weight:bold;">end</span></pre></td></tr></tbody></table></div>
+
+<h2>Others</h2>
+<p>Those are just two of the modules available in ActiveModel. Some others include:</p>
+<ul>
+<li><code>AttributeMethods</code>: Makes it easy to add attributes that are set like <code>table_name :foo</code></li>
+<li><code>Callbacks</code>: ActiveRecord-style lifecycle callbacks. </li>
+<li><code>Dirty</code>: Support for dirty tracking</li>
+<li><code>Naming</code>: Default implementations of <code>model.model_name</code>, which are used by ActionPack (for instance, when you do <code>render :partial =&gt; model</code></li>
+<li><code>Observing</code>: ActiveRecord-style observers</li>
+<li><code>StateMachine</code>: A simple state-machine implementation for models</li>
+<li><code>Translation</code>: The core translation support</li>
+</ul>
+<p>This mostly reflects the first step of ActiveRecord extractions done by Josh Peek for his Google Summer of Code project last summer. Over time, I expect to see more extractions from ActiveRecord and more abstractions built up around ActiveModel.</p>
+<p>I also expect to see a community building up around things like adding new validators, translations, serializers and more, especially now that they can be reused not only in ActiveRecord, but in MongoMapper, Cassandra Object, and other ORMs that leverage ActiveModel's built-in modules.</p>
+<script type="text/javascript">
+  addthis_url    = 'http%3A%2F%2Fyehudakatz.com%2F2010%2F01%2F10%2Factivemodel-make-any-ruby-object-feel-like-activerecord%2F';
+  addthis_title  = 'ActiveModel%3A+Make+Any+Ruby+Object+Feel+Like+ActiveRecord';
+  addthis_pub    = '';
+</script><script type="text/javascript" src="./activemodel-tut_files/addthis_widget.php"></script><div id="_atssh" style="visibility: hidden; height: 1px; width: 1px; position: absolute; z-index: 100000;"><iframe id="_atssh259" title="AddThis utility frame" src="./activemodel-tut_files/sh176.html" style="height: 1px; width: 1px; position: absolute; z-index: 100000; border: 0px; left: 0px; top: 0px;"></iframe></div><script type="text/javascript" src="./activemodel-tut_files/core159.js"></script>
+
+				
+		<p class="postmetadata alt">
+			<small>
+				This entry was posted
+								on Sunday, January 10th, 2010 at 11:43 pm				and is filed under <a href="http://yehudakatz.com/tags/other/" title="View all posts in Other" rel="category tag">Other</a>.
+				You can follow any responses to this entry through the <a href="http://yehudakatz.com/2010/01/10/activemodel-make-any-ruby-object-feel-like-activerecord/feed/">RSS 2.0</a> feed.
+
+									You can skip to the end and leave a response. Pinging is currently not allowed.
+
+				
+			</small>
+		</p>
+
+
+	
+<!-- You can start editing here. -->
+
+	<h3 id="comments">24 Responses to “ActiveModel: Make Any Ruby Object Feel Like ActiveRecord”</h3>
+
+  
+  <div class="comments">
+	  <div class="comment">
+    <img alt="" src="./activemodel-tut_files/eab29c2bb9cd37cd30b7b3e1a35926b9" class="avatar avatar-48 photo" height="48" width="48">    
+    <p class="dateline">Shimon Amit, Posted January 11, 2010, 1:59 am    </p><p>Very exciting! Interesting to a StateMachine in there. Will that be included in the default ActiveRecord  Rails 3.0 configurations?</p>
+  </div>
+<!-- #comment-## -->
+  <div class="comment">
+    <img alt="" src="./activemodel-tut_files/74198b06bc9e68739debfe6c23e070d3" class="avatar avatar-48 photo" height="48" width="48">    
+    <p class="dateline"><a href="http://k776.tumblr.com/" rel="external nofollow" class="url">Kieran P</a>, Posted January 11, 2010, 2:11 am    </p><p>Excellent post. Nice to be able to use these outside of Rails (like Sinatra).</p>
+  </div>
+<!-- #comment-## -->
+  <div class="comment">
+    <img alt="" src="./activemodel-tut_files/91caecf2a1182b691da4839b440f8b5b" class="avatar avatar-48 photo" height="48" width="48">    
+    <p class="dateline">Sammy, Posted January 11, 2010, 2:13 am    </p><p>AM#new_record? sounds odd for me. There is no records for example in a CouchRest or Mongo. Why not rename it to AM#new? or something more appropriate?</p>
+  </div>
+<!-- #comment-## -->
+  <div class="comment">
+    <img alt="" src="./activemodel-tut_files/1795b9c0791bb0bcc6d172b662e1702b" class="avatar avatar-48 photo" height="48" width="48">    
+    <p class="dateline"><a href="http://www.icoretech.org/" rel="external nofollow" class="url">kain</a>, Posted January 11, 2010, 3:07 am    </p><p>kinda cool, thanks for sharing</p>
+  </div>
+<!-- #comment-## -->
+  <div class="comment">
+    <img alt="" src="./activemodel-tut_files/7a2a1e3ce27a5da7c0849b923a9309b2" class="avatar avatar-48 photo" height="48" width="48">    
+    <p class="dateline"><a href="http://www.eet.nu/" rel="external nofollow" class="url">Gerard</a>, Posted January 11, 2010, 3:07 am    </p><p>hrmm.</p>
+<p>“…These modules were extracted from ActiveRecord, and are now included in ActiveRecord…”</p>
+<p>Was that a lot of work?</p>
+  </div>
+<!-- #comment-## -->
+  <div class="comment">
+    <img alt="" src="./activemodel-tut_files/3b687a35025c05dbc7627af428dff0da" class="avatar avatar-48 photo" height="48" width="48">    
+    <p class="dateline"><a href="http://johntopley.com/" rel="external nofollow" class="url">John Topley</a>, Posted January 11, 2010, 3:37 am    </p><p>Presumably ActiveResource will be also implement the ActiveModel API?</p>
+  </div>
+<!-- #comment-## -->
+  <div class="comment">
+    <img alt="" src="./activemodel-tut_files/88eb5665f537eacf51a2677aeaf1816b" class="avatar avatar-48 photo" height="48" width="48">    
+    <p class="dateline"><a href="http://lipsiadmin.com/" rel="external nofollow" class="url">DAddYE</a>, Posted January 11, 2010, 4:05 am    </p><p>Yehuda,</p>
+<p>your are a fan of datamapper, why activemodel can’t act as dm?</p>
+<p>Can be beautiful see in AR:</p>
+<p>property :id, Serial<br>
+…</p>
+<p>Thanks for the post!</p>
+  </div>
+<!-- #comment-## -->
+  <div class="comment">
+    <img alt="" src="./activemodel-tut_files/bd69f15d15cfdcd152330c15653750ab" class="avatar avatar-48 photo" height="48" width="48">    
+    <p class="dateline"><a href="http://altamore.org/" rel="external nofollow" class="url">Michelangelo Altamore</a>, Posted January 11, 2010, 6:25 am    </p><p>I think that ActiveModel ensures a minimal interface to which an ORM should adhere. IMHO it is reasonable to not force that the single point of thruth resides within the model (even if it may be the most logical place) as long as it is somewhere. In the AR case it is obtained by reflection on the database layer. So I like the actual design decision even if I prefer the datamapper way for declaring model properties.</p>
+  </div>
+<!-- #comment-## -->
+  <div class="comment">
+    <img alt="" src="./activemodel-tut_files/bbd147034f04bc4f8f3c3652cd2a2194" class="avatar avatar-48 photo" height="48" width="48">    
+    <p class="dateline"><a href="http://fhwang.net/" rel="external nofollow" class="url">Francis Hwang</a>, Posted January 11, 2010, 7:59 am    </p><p>Thanks for the info, Yehuda. It looks like it will be easier to introspect a model’s validations from the outside, then? This is something I keep wanting and then writing some nasty workaround for.</p>
+  </div>
+<!-- #comment-## -->
+  <div class="comment">
+    <img alt="" src="./activemodel-tut_files/bbd147034f04bc4f8f3c3652cd2a2194" class="avatar avatar-48 photo" height="48" width="48">    
+    <p class="dateline"><a href="http://fhwang.net/" rel="external nofollow" class="url">Francis Hwang</a>, Posted January 11, 2010, 7:59 am    </p><p>Thanks for the info, Yehuda. It looks like it will be easier to introspect a model’s validations from the outside, then? This is something I keep wanting and then writing some nasty workaround for.</p>
+  </div>
+<!-- #comment-## -->
+  <div class="comment">
+    <img alt="" src="./activemodel-tut_files/b890b90c56515997ddfa6b58882c5acd" class="avatar avatar-48 photo" height="48" width="48">    
+    <p class="dateline"><a href="http://www.akretion.com/" rel="external nofollow" class="url">Raphaël Valyi</a>, Posted January 11, 2010, 7:59 am    </p><p>Hello, very cool you did that finally.<br>
+However, I’ve got a question: how is ActiveModel being integrated with ActiveResource? It seems essential to me that one can build an ActiveResource that is ActiveModel compliant. Will ActiveResource be compliant by default, will it be somewhat rewritten to account for it when it’s enabled? Thank you for any clarification.</p>
+<p>The reason I’m asking this is that I’m the creator of the OOOR ActiveResource wrapper over OpenERP business objects <a href="http://github.com/rvalyi/ooor" rel="nofollow">http://github.com/rvalyi/ooor</a> (they also deal with relations and inheritance). We wanted ActiveModel for long to port directly into the Rails proxies the validations (and hopefully more) from OpenERP.</p>
+  </div>
+<!-- #comment-## -->
+  <div class="comment">
+    <img alt="" src="./activemodel-tut_files/cee5f57dec08a6e547f6e209393d9c63" class="avatar avatar-48 photo" height="48" width="48">    
+    <p class="dateline"><a href="http://www.rowtheboat.com/" rel="external nofollow" class="url">George Palmer</a>, Posted January 11, 2010, 10:53 am    </p><p>Great post Yehuda.  How will validates_uniqueness_of work in terms it needs to go back to database to check that’s it unique?  This was something that was problematic writing CouchFoo.</p>
+  </div>
+<!-- #comment-## -->
+  <div class="comment">
+    <img alt="" src="./activemodel-tut_files/e9e852b18079792bc5f4ec52b8e37c53" class="avatar avatar-48 photo" height="48" width="48">    
+    <p class="dateline">Elliot Winkler, Posted January 11, 2010, 11:07 am    </p><p>Woohoo! That stuff looks awesome. I especially like ActiveModel::Lint — it’s like code teaching you how to code!</p>
+  </div>
+<!-- #comment-## -->
+  <div class="comment">
+    <img alt="" src="./activemodel-tut_files/9bee19040f2a9c6a901e33426a968135" class="avatar avatar-48 photo" height="48" width="48">    
+    <p class="dateline"><a href="http://ryanangilly.com/" rel="external nofollow" class="url">Ryan Angilly</a>, Posted January 11, 2010, 12:31 pm    </p><p>This is some hot stuff, Yehuda.  Awesome job.</p>
+  </div>
+<!-- #comment-## -->
+  <div class="comment">
+    <img alt="" src="./activemodel-tut_files/328f0bb678423fcea01ebe3b0edc74e6" class="avatar avatar-48 photo" height="48" width="48">    
+    <p class="dateline"><a href="http://www.binarylogic.com/" rel="external nofollow" class="url">Ben Johnson</a>, Posted January 12, 2010, 10:55 am    </p><p>Thanks for the post Yehuuda. Quick question. I really want to use this in authlogic. What would you recommend the best way to do this while also supporting previous versions of rails? My only thought is to include the module with the library and load it if needed. That’s what I’ve saw other libraries do when named_scopes was a new feature. Thanks again!</p>
+  </div>
+<!-- #comment-## -->
+  <div class="comment">
+    <img alt="" src="./activemodel-tut_files/c728d93eb5205cf20cac0c2928b0ad62" class="avatar avatar-48 photo" height="48" width="48">    
+    <p class="dateline">Arj, Posted January 14, 2010, 1:46 am    </p><p>This looks perfect for something I might have to do for an upcoming project.</p>
+<p>Dynamic Models based on data retrieved from an API. Would this be a reasonable way of doing it? creating a model based on the data and then eval’ing it to create an ActiveModel class?</p>
+  </div>
+<!-- #comment-## -->
+  <div class="comment">
+    <img alt="" src="./activemodel-tut_files/89992299997cb05046d970aa3d867ff8" class="avatar avatar-48 photo" height="48" width="48">    
+    <p class="dateline"><a href="http://insiderpages.com/" rel="external nofollow" class="url">Steve</a>, Posted April 14, 2010, 11:47 am    </p><p>You might want to update your post to reflect that StateMachine has been taken out…    :(</p>
+  </div>
+<!-- #comment-## -->
+  <div class="comment">
+    <img alt="" src="./activemodel-tut_files/1b6873fee9a616094a174dc9d336aa47" class="avatar avatar-48 photo" height="48" width="48">    
+    <p class="dateline">ken, Posted April 21, 2010, 4:38 pm    </p><p>I’m a rails rookie. I’m surprised there isn’t validation support for the built-in date/time types. (I’ll try this plugin<br>
+<a href="http://github.com/adzap/validates_timeliness/" rel="nofollow">http://github.com/adzap/validates_timeliness/</a><br>
+)<br>
+It would be nice if rails came with more string types (email, url, etc) &amp; numeric types (currency, distance, etc).</p>
+<p>The lack of this ripples so the live-validations plugin doesn’t do this either.</p>
+  </div>
+<!-- #comment-## -->
+  <div class="comment">
+    <img alt="" src="./activemodel-tut_files/94f8eda88d8958101de58bec59436b0a" class="avatar avatar-48 photo" height="48" width="48">    
+    <p class="dateline">Billy Kimble, Posted September 1, 2010, 3:46 pm    </p><p>Good writeup! But I’d like to add one thing.</p>
+<p>In the example where you go over Serialization, you mention .to_xml but only demonstrate .to_json, which is included by default when you include ActiveModel::Serialization. To get to_xml to work, you need to include  ActiveModel::Serializers::Xml in your model instead of ActiveModel::Serialization .. also you need to be sure that your @attributes hash has stringified keys, or to_xml will fail.</p>
+<p>Here is the updated code, with a little bit extra to send attribute values to their proper setter methods.</p>
+<p>class Person<br>
+  include ActiveModel::Validations<br>
+  include ActiveModel::Serializers::Xml</p>
+<p>  attr_accessor :first_name, :last_name, :attributes</p>
+<p>  def initialize(attributes={})<br>
+    @attributes = attributes.stringify_keys.inject({}) do |x,y|<br>
+      respond_to?(“#{y.first}=”) &amp;&amp; send(“#{y.first}=”, y.last) ? x.merge(y.first =&gt; y.last) : x<br>
+    end<br>
+  end<br>
+end</p>
+  </div>
+<!-- #comment-## -->
+  <div class="comment">
+    <img alt="" src="./activemodel-tut_files/ce106020ea8996be74c709e0288e3dfc" class="avatar avatar-48 photo" height="48" width="48">    
+    <p class="dateline">Seth Geoghegan, Posted September 17, 2010, 11:03 am    </p><p>Fantastic post Yehuda!  </p>
+<p>To follow up on Billy’s comment on to_xml, I found that I also had to add the model_name method to my class in order to get to_xml to work properly.  For example:</p>
+<p>def self.model_name<br>
+   ActiveModel::Name.new()<br>
+end</p>
+<p>If it did not do this, I would get the following error:<br>
+  undefined method ‘model_name’ for :Class<br>
+  from /activemodel-3.0.0/lib/active_model/serializers/xml.rb:94 in ‘serialize’</p>
+  </div>
+<!-- #comment-## -->
+  <div class="comment">
+    <img alt="" src="./activemodel-tut_files/ce106020ea8996be74c709e0288e3dfc" class="avatar avatar-48 photo" height="48" width="48">    
+    <p class="dateline">Seth Geoghegan, Posted September 17, 2010, 11:16 am    </p><p>Quick follow up to my last comment…</p>
+<p>An alternative to defining model_name on your model, you can simply extend ActiveModel::Naming.</p>
+  </div>
+<!-- #comment-## -->
+  <div class="comment">
+    <img alt="" src="./activemodel-tut_files/41b6adfe6420768dcaf04eeecb7d7781" class="avatar avatar-48 photo" height="48" width="48">    
+    <p class="dateline"><a href="http://puneetpandey.com/" rel="external nofollow" class="url">Puneet</a>, Posted October 11, 2010, 6:35 am    </p><p>Thanks for Sharing this post.</p>
+<p>I have a doubt. How does the relationships work in rails 3?</p>
+<p>In my rails-3 app, I have 2 models.<br>
+class User<br>
+  has_many :posts<br>
+  include ActiveModel::Validations<br>
+  validates_presence_of :username<br>
+end</p>
+<p>class Post<br>
+  belongs_to :user<br>
+  include ActiveModel::Validations<br>
+  validates_presence_of :title<br>
+end</p>
+<p>When I am running this:<br>
+@users = User.where(:activated =&gt; true).joins(:posts)</p>
+<p>Log says Undefined Method ‘has_many’ for User:Class</p>
+<p>Is it necessary to inherit ActiveRecord::Base ?</p>
+<p>Any help would be highly appreciated.</p>
+<p>Thanks<br>
+Puneet</p>
+  </div>
+<!-- #comment-## -->
+  <div class="comment">
+    <img alt="" src="./activemodel-tut_files/ca23e05ed2e12e67b89d030aabc244dc" class="avatar avatar-48 photo" height="48" width="48">    
+    <p class="dateline">Matt C., Posted November 1, 2010, 4:46 pm    </p><p>Puneet,</p>
+<p>You are getting an Undefined Method error for has_many because your models (User, Post) are not derived from ActiveRecord and hence they have no functionality concerning database associations. I would love to know an elegant way around this (only because I like working with the rails has/belongs_to, etc way of doing things) but until then I strictly keep an object member such as user_id or post_id to keep tabs on what User or Post I’m looking for. Hope this helps.</p>
+  </div>
+<!-- #comment-## -->
+  <div class="comment">
+    <img alt="" src="./activemodel-tut_files/8630d3965de0c12f71d6d7ef3e5006e5" class="avatar avatar-48 photo" height="48" width="48">    
+    <p class="dateline">Mukesh, Posted November 8, 2011, 12:34 pm    </p><p>Correction </p>
+<p>These modules were extracted from ActiveRecord, and are now included in<br>
+ActiveModel not (ActiveRecord).</p>
+  </div>
+<!-- #comment-## -->
+	</div>
+
+   
+
+
+<div id="respond">
+
+<h3>Leave a Reply</h3>
+
+<div class="cancel-comment-reply">
+	<small><a rel="nofollow" id="cancel-comment-reply-link" href="http://yehudakatz.com/2010/01/10/activemodel-make-any-ruby-object-feel-like-activerecord/#respond" style="display:none;">Click here to cancel reply.</a></small>
+</div>
+
+
+<form action="http://yehudakatz.com/wp-comments-post.php" method="post" id="commentform">
+
+
+<p>
+  <label for="author"><small>Name (required)</small></label>
+  <input type="text" name="author" id="author" value="" size="22" tabindex="1" aria-required="true">
+</p>
+
+<p>
+  <label for="email"><small>Mail (will not be published) (required)</small></label>
+  <input type="text" name="email" id="email" value="" size="22" tabindex="2" aria-required="true">
+</p>
+
+<p>
+  <label for="url"><small>Website</small></label>
+  <input type="text" name="url" id="url" value="" size="22" tabindex="3">
+</p>
+
+
+<!--<p><small><strong>XHTML:</strong> You can use these tags: <code>&lt;a href=&quot;&quot; title=&quot;&quot;&gt; &lt;abbr title=&quot;&quot;&gt; &lt;acronym title=&quot;&quot;&gt; &lt;b&gt; &lt;blockquote cite=&quot;&quot;&gt; &lt;cite&gt; &lt;code&gt; &lt;del datetime=&quot;&quot;&gt; &lt;em&gt; &lt;i&gt; &lt;q cite=&quot;&quot;&gt; &lt;strike&gt; &lt;strong&gt; </code></small></p>-->
+
+<p><textarea name="comment" id="comment" cols="100%" rows="10" tabindex="4"></textarea></p>
+
+<p><input name="submit" type="submit" id="submit" tabindex="5" value="Submit Comment">
+<input type="hidden" name="comment_post_ID" value="401" id="comment_post_ID">
+<input type="hidden" name="comment_parent" id="comment_parent" value="0">
+</p>
+<p style="display: none;"><input type="hidden" id="akismet_comment_nonce" name="akismet_comment_nonce" value="e649984b79"></p><script type="text/javascript" src="./activemodel-tut_files/form.js"></script>
+<p style="display: none;"></p>
+<input type="hidden" id="ak_js" name="ak_js" value="1413713539594"></form>
+
+</div>
+
+
+	
+	<span id="atb54438e83958f1e92"><a href="http://www.addthis.com/bookmark.php?v=120&winname=addthis&pub=unknown&source=men-120&lng=en&s=&url=http%253A%252F%252Fyehudakatz.com%252F2010%252F01%252F10%252Factivemodel-make-any-ruby-object-feel-like-activerecord%252F&title=ActiveModel%253A%2BMake%2BAny%2BRuby%2BObject%2BFeel%2BLike%2BActiveRecord&logo=&logobg=&logocolor=&ate=AT-unknown/-/-/54438e83a1163968/2/4bb7b5dc7f48748c&frommenu=1&uid=4bb7b5dc7f48748c&ct=0&pre=https%3A%2F%2Fwww.google.co.nz%2F&tt=0&captcha_provider=nucaptcha" onmouseover="return addthis_open(this, &#39;share&#39;, &#39;http%3A%2F%2Fyehudakatz.com%2F2010%2F01%2F10%2Factivemodel-make-any-ruby-object-feel-like-activerecord%2F&#39;, &#39;ActiveModel%3A+Make+Any+Ruby+Object+Feel+Like+ActiveRecord&#39;)" onmouseout="addthis_close()" onclick="return addthis_to()" class="snap_noshots"><img src="./activemodel-tut_files/lg-bookmark-en.gif" width="125" height="16" style="border:none;padding:0px" alt="AddThis"></a></span></div>
+
+  <div class="common-sidebar">
+    <div id="writeSkribitHere"></div><script src="http://assets.skribit.com/javascripts/SkribitWidget.js?renderTo=writeSkribitHere&blog=c5e1ff10322e9cf67bb02cd67ab06b11&cnt=3"></script><noscript>Sorry, but the &lt;a href="http://skribit.com" title="Skribit - Cure Writer's Block"&gt;Skribit&lt;/a&gt; widget only works on browsers with JavaScript support.  &lt;a href="http://skribit.com/blogs/katz-got-your-tongue" title="Skribit Suggestions for Katz Got Your Tongue"&gt;View suggestions for this blog here.&lt;/a&gt;</noscript>
+			<!-- Author information is disabled per default. Uncomment and fill in your details if you want to use it.
+			<li><h2>Author</h2>
+			<p>A little something about you, the author. Nothing lengthy, just an overview.</p>
+			</li>
+			-->
+
+			
+      <div id="carbonads-container"><div class="carbonad"><div id="azcarbon"><span><span class="carbonad-image"><a href="http://srv.carbonads.net/ads/click/x/GTND423JCKSI4KJ7F6A4YKQWC67I5KJECWSDTZ3JCEYIC27JF6BD523KC6BD4K7UC67DEK3EHJNCLSIZZRLCP7I35MNFV?segment=placement:yehudakatzcom&encredirect=https%3A%2F%2Fad.doubleclick.net%2Fjump%2FN7384.734586.CARBONADS.NET%2FB8280543.111875483%3Bsz%3D130x100%3Bord%3D1413713540%3F" target="_blank"><img width="130" height="100" border="0" src="./activemodel-tut_files/B8280543.111875483;sz=130x100" class="carbonad-image carbonad-img"></a></span><span class="carbonad-text"><a href="http://srv.carbonads.net/ads/click/x/GTND423JCKSI4KJ7F6A4YKQWC67I5KJECWSDTZ3JCEYIC27JF6BD523KC6BD4K7UC67DEK3EHJNCLSIZZRLCP7I35MNFV?segment=placement:yehudakatzcom&encredirect=https%3A%2F%2Fad.doubleclick.net%2Fjump%2FN7384.734586.CARBONADS.NET%2FB8280543.111875483%3Bsz%3D130x100%3Bord%3D1413713540%3F">Try our new, simpler pricing. No monthly fees. No minimums.</a></span><span class="carbonad-tag">ads via <a href="http://carbonads.com/">Carbon</a></span></span></div><script type="text/javascript">var z = document.createElement("script"); z.type = "text/javascript"; z.async = true; z.src = "http://engine.carbonads.com/z/132/azcarbon_2_1_0_VERTDARK"; var s = document.getElementsByTagName("script")[0]; s.parentNode.insertBefore(z, s);</script></div></div>
+
+      <h3>Archives</h3>
+      <div class="blogroll">
+			<ul>
+				<li><a href="http://yehudakatz.com/2013/05/">May 2013</a></li>
+	<li><a href="http://yehudakatz.com/2012/12/">December 2012</a></li>
+	<li><a href="http://yehudakatz.com/2012/09/">September 2012</a></li>
+	<li><a href="http://yehudakatz.com/2012/08/">August 2012</a></li>
+	<li><a href="http://yehudakatz.com/2012/06/">June 2012</a></li>
+	<li><a href="http://yehudakatz.com/2012/04/">April 2012</a></li>
+	<li><a href="http://yehudakatz.com/2012/01/">January 2012</a></li>
+	<li><a href="http://yehudakatz.com/2011/12/">December 2011</a></li>
+	<li><a href="http://yehudakatz.com/2011/11/">November 2011</a></li>
+	<li><a href="http://yehudakatz.com/2011/09/">September 2011</a></li>
+			</ul>
+			</div>
+
+      <h3>Categories</h3>
+      <div class="blogroll">
+				<li class="cat-item cat-item-19"><a href="http://yehudakatz.com/tags/bundler/" title="View all posts filed under Bundler">Bundler</a> (2)
+</li>
+	<li class="cat-item cat-item-2"><a href="http://yehudakatz.com/tags/conferences/" title="View all posts filed under Conferences">Conferences</a> (9)
+</li>
+	<li class="cat-item cat-item-13"><a href="http://yehudakatz.com/tags/ruby/datamapper/" title="View all posts filed under DataMapper">DataMapper</a> (1)
+</li>
+	<li class="cat-item cat-item-15"><a href="http://yehudakatz.com/tags/engine-yard/" title="View all posts filed under Engine Yard">Engine Yard</a> (2)
+</li>
+	<li class="cat-item cat-item-18"><a href="http://yehudakatz.com/tags/food/" title="View all posts filed under Food">Food</a> (1)
+</li>
+	<li class="cat-item cat-item-9"><a href="http://yehudakatz.com/tags/javascript/" title="View all posts filed under JavaScript">JavaScript</a> (9)
+</li>
+	<li class="cat-item cat-item-3"><a href="http://yehudakatz.com/tags/javascript/jquery/" title="View all posts filed under jQuery">jQuery</a> (15)
+</li>
+	<li class="cat-item cat-item-8"><a href="http://yehudakatz.com/tags/ruby/merb/" title="View all posts filed under Merb">Merb</a> (26)
+</li>
+	<li class="cat-item cat-item-1"><a href="http://yehudakatz.com/tags/other/" title="View all posts filed under Other">Other</a> (81)
+</li>
+	<li class="cat-item cat-item-5"><a href="http://yehudakatz.com/tags/personal/" title="View all posts filed under Personal">Personal</a> (4)
+</li>
+	<li class="cat-item cat-item-14"><a href="http://yehudakatz.com/tags/publications/" title="View all posts filed under Publications">Publications</a> (1)
+</li>
+	<li class="cat-item cat-item-17"><a href="http://yehudakatz.com/tags/rails-3/" title="View all posts filed under Rails 3">Rails 3</a> (18)
+</li>
+	<li class="cat-item cat-item-21"><a href="http://yehudakatz.com/tags/rubinius/" title="View all posts filed under Rubinius">Rubinius</a> (3)
+</li>
+	<li class="cat-item cat-item-12"><a href="http://yehudakatz.com/tags/ruby/" title="View all posts filed under Ruby">Ruby</a> (52)
+</li>
+	<li class="cat-item cat-item-20"><a href="http://yehudakatz.com/tags/ruby-2-0/" title="View all posts filed under Ruby 2.0">Ruby 2.0</a> (1)
+</li>
+	<li class="cat-item cat-item-4"><a href="http://yehudakatz.com/tags/ruby/ruby-on-rails/" title="View all posts filed under Ruby on Rails">Ruby on Rails</a> (39)
+</li>
+	<li class="cat-item cat-item-22"><a href="http://yehudakatz.com/tags/sproutcore/" title="View all posts filed under SproutCore">SproutCore</a> (1)
+</li>
+	<li class="cat-item cat-item-7"><a href="http://yehudakatz.com/tags/textmate/" title="View all posts filed under TextMate">TextMate</a> (7)
+</li>
+	<li class="cat-item cat-item-23"><a href="http://yehudakatz.com/tags/tokaido/" title="View all posts filed under Tokaido">Tokaido</a> (1)
+</li>
+	<li class="cat-item cat-item-24"><a href="http://yehudakatz.com/tags/web-standards/" title="View all posts filed under Web Standards">Web Standards</a> (1)
+</li>
+			</div>
+
+			
+      <h3>Meta</h3>
+      <div class="blogroll">
+			<ul>
+								<li><a href="http://yehudakatz.com/wp-login.php">Log in</a></li>
+				<li><a href="http://validator.w3.org/check/referer" title="This page validates as XHTML 1.0 Transitional">Valid <abbr title="eXtensible HyperText Markup Language">XHTML</abbr></a></li>
+				<li><a href="http://gmpg.org/xfn/"><abbr title="XHTML Friends Network">XFN</abbr></a></li>
+				<li><a href="http://wordpress.org/" title="Powered by WordPress, state-of-the-art semantic personal publishing platform.">WordPress</a></li>
+							</ul>
+      </div>
+
+	</div>
+
+
+</div>
+<div class="footer">
+  <div class="image-link rails"><a href="http://rubyonrails.org/core"></a>Core Team, <br> Ruby on Rails</div>
+  <div class="image-link jquery"><a href="http://docs.jquery.com/Contributors"></a>Core Team, <br>jQuery</div>
+  <div class="image-link ey"><a href="http://www.tilde.io/"></a>Co-Founder,<br>Tilde</div>
+  <div class="image-link newleaders"><a href="http://www.newleaders.com/"></a>Designed in California<br>by New Leaders</div>
+</div>
+</div>
+
+<!-- Gorgeous design by Michael Heilemann - http://binarybonsai.com/kubrick/ -->
+
+		<script type="text/javascript">
+var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+</script><script src="./activemodel-tut_files/ga.js" type="text/javascript"></script>
+<script type="text/javascript">
+var pageTracker = _gat._getTracker("UA-557621-6");
+pageTracker._initData();
+pageTracker._trackPageview();
+</script>
+
+
+<!-- Dynamic page generated in 1.576 seconds. -->
+<!-- Cached page generated by WP-Super-Cache on 2014-10-06 04:46:14 -->
+
+<!-- super cache --></body></html>

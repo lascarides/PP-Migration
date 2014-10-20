@@ -24,29 +24,23 @@
 					%ul.dropdown-menu{role: "menu"}
 						%li= link_to 'PDF', '#'
 			%ul.nav.navbar-nav.navbar-right
-				- tomorrow = @today + 1.day
-				- yesterday = @today - 1.day
-				%li
-					%a{href: "/newspapers/title/#{@item[:title].parameterize}/#{yesterday.year}/#{yesterday.month}/#{yesterday.day}"}
-						%span.glyphicon.glyphicon-arrow-left
-						Previous issue
-				%li
-					%a{href: "/newspapers/title/#{@item[:title].parameterize}/#{tomorrow.year}/#{tomorrow.month}/#{tomorrow.day}"}
-						Next issue
-						%span.glyphicon.glyphicon-arrow-right
+				- if not @item[:prev_document_id].nil?
+					%li
+						%a{href: veridian_id_to_route(@item[:prev_document_id])}
+							%span.glyphicon.glyphicon-arrow-left
+							Previous issue
+				- if not @item[:next_document_id].nil?
+					%li
+						%a{href: veridian_id_to_route(@item[:next_document_id])}
+							Next issue
+							%span.glyphicon.glyphicon-arrow-right
 
-		.newspaper-pages
+		.thumbnail-pages
 
 			.tab-content
 
 				#thumbnails.tab-pane.fade.in.active
-					- if @num_pages > 0
-						- (1..@num_pages).each do |pn|
-							.newspaper-page
-								.newspaper-page-image
-									= link_to image_tag(Newspaper.page_image_url(@today, @code, pn, 3)), "/newspapers/title/#{@item[:title].parameterize}/#{@year}/#{@month}/#{@day}/#{pn}"
-								%p= link_to "Page #{pn}", "/newspapers/title/#{@item[:title].parameterize}/#{@year}/#{@month}/#{@day}/#{pn}"
-					- else
+					- if @issue.nil?
 
 						%h2 No newspaper on this date.
 
@@ -54,15 +48,22 @@
 
 						%p Learn more...
 
+					- else
+						- @issue[:pages].each_with_index do |page, i|
+							.thumbnail-page
+								.thumbnail-page-image
+									= link_to image_tag(Newspaper.page_image_url(@issue[:date], @issue[:publication_id], i+1, 3)), veridian_id_to_route(page[:id])
+								%p= link_to page[:title], veridian_id_to_route(page[:id])
+
 				#contents.tab-pane.fade
 
 					%h2 Contents of this issue
 
-					- Newspaper.outline(NewspaperTitle.code(@item[:title].parameterize) + @today.strftime('%Y%m%d'), @page).each do |page, items|
-						%h4= page
+					- @issue[:logical_sections]group_by(:page_id).each do |page, sections|
+						%h4= link_to veridian_id_to_page_number(ls[:page_id]), veridian_id_to_route(ls[:page_id])
 						%ul
-							- items.each do |item|
-								%li= link_to item[:label], item[:href]
+							- sections.each do |ls|
+								%li= link_to ls[:title], veridian_id_to_route(ls[:id])
 
 	.col-md-3.sidebar
 

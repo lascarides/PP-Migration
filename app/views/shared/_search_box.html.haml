@@ -3,9 +3,9 @@
 		.input-group
 			%input#query.form-control.input-lg.sendable{:name => 'query', :placeholder => "What are you looking for?", :value => params[:query]}
 			%span.input-group-btn
-				%button.btn.btn-default.input-lg{:type => "submit", 'data-intro' => "Enter words here to find articles containing those words", 'data-position' => "bottom"} Search
+				%button.btn.btn-default.input-lg{:type => "submit", 'data-intro' => "Enter words here to find articles containing those words", 'data-position' => "bottom"}= t('search-button')
 		.toolbox
-			.tools.query-tools.closeable
+			.tools.query-tools
 				Search full text for
 				%label 
 					%input.sendable{:type => "radio", :name => "mode", :value => "", :checked => "checked"}
@@ -18,7 +18,7 @@
 					This <strong>exact phrase</strong>
 
 			- @facets.each do |facet|
-				.tools.facet-tools{ :id => "#{facet['name']}-picker"}
+				.tools.facet-tools.closeable{ :id => "#{facet['name']}-picker"}
 					= render :partial => 'shared/done_widget'
 					- if facet['custom_template']
 						= render :partial => "facets/#{facet['name'].gsub('-', '_')}"

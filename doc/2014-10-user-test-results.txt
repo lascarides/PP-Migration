@@ -1,0 +1,72 @@
+User testing results
+
+5 tests of 1 hour each, week of 7 October 2014. 4 volunteers from a recent family history event, and 1 ATL staff member (Fiona Gray). Four considered themselves "Advanced" Papers Past users (group included professional researchers), while one was a more casual user who was almost entirely search bar-driven.
+
+Note: Only two sessions were fully recorded; due to a setup error, no audio was captured for the other three, although we've got the screencasts.
+
+THE SHORT SUMMARY
+
+Overall reception was good. The simplicity was praised. There were very few complaints or concerns about missing functionality. 
+
+The sidebar facets worked reasonably well, but 2/5 of the participants needed to be prompted to discover that they were interactive. This is a critical (but very fixable) issue that requires more testing.
+
+There were numerous smaller changes to language and design throughout made as a result of noticeable hiccups. 
+
+All five participants showed some interest in the tutorial (which is not complete), which bodes well for the utility of a future guided "onboarding" walkthrough!
+
+THE DETAILS
+
+SIDEBAR FACETS
+
+	- The only critical issue to come out of this round of testing was that two of the five participants failed to read the sidebar facets as interactive. Once they finally clicked on the sidebar, the usability was fine, but it was clear that the current UI treatment is not intuitive for all. A tutorial for the new design will help, but there is clearly work to do to make this better. CHanges have been made to these elements to make them appear more "button-like" but this has not been tested yet. This interaction should be a focus for Click Suite as they begin their work.
+
+SEARCH
+
+	- Most users mentioned making significant use of the Boolean (and/or) search capability and quoted strings.
+	- Most users wanted to make use of the any/all/exact phrase settings (these were present but not operating on the prototype)
+	- A couple of users were looking for an "Advanced search" button. All of the functions of the advanced search are present in the facets (there is no longer a separate "advanced search" page), so this is a consideration that factors into the facet issue above.
+	- Snippet view and search term highlighting were highly desired, although neither were working for this test.
+	- People were split on whether or not sort by date should default to oldest first or newest first. Seemed to be a slight preference for oldest first (chronological order). One participant reported preferring oldest first for Newspapers and newest first for everything else!
+	- Multiple participants requested a "search within this article" view. (Bear in mind that there was no search term highlighting available for these tests.)
+	- There is currently no search box visible on the inside pages. This didn't raise any issues for anyone, but worth consideration. 
+	- Multiple users liked the cleanliness and scannability of the columns of the new search results pages.
+	- While the whole row of the search result highlights on mouseover, only the titles are clickable. We should make the whole row clickable (Fitt's Law in action!).
+
+FORMAT SWITCHING
+
+	- "More choices" was not enticing enough as a label for the format switcher. We changed it to "Explore other collections" after the first test and had no further issues.
+	- Most people were easily able to understand how to move between the formats, although the new home page "preloaded" that idea in them. Andy has suggested a round of testing that starts from an item landing page (as would be the case in a Google search), which we will try to undertake next week (~20 Oct).
+
+
+DATE PICKER
+
+	- Note: the datepicker only worked at the year level for this test (month/day were not yet operating)
+	- Only one person figured out that clicking on the year generated a dropdown.
+	- The timeline was positively viewed. Only one person interacted with it straight away, but three others began to interact with it after they saw it "move" when changing the dates on the calendar.
+	- Almost universally, participants wanted the timeline values to reflect the current search. It remains to be determined if this is technically feasible. 
+	- One person asked for a place to type in a date (Same person later said that the interface was fine as is).
+
+NAV/LANGUAGE
+
+	- The text label on the facet button was regarded as weak ("15 titles from 3 regions"). After the second test, we added a smarter labeling routine that spells out the first three titles and regions in a plain-language sentence. No further negative comments were recieved. 
+	- The term "Parliamentary Papers" works well as the "A to Js" section heading. One of the particpants was a professional researcher hwo used A to Js frequently, and we had a long conversation about this section. She felt the label worked well. She also mentioned that adding the Gazette to this section would make for a very potent offering. 
+	- "Sort by: relevance" was not a term some were familiar with. We changed the choice to "Sort by: best match" after the second test and had no further issues.
+	- We will need to think abou the best format of page titles. More than one user opened potential search results into new tabs.
+
+USER INTERFACE 
+
+	- Sliding the facet panels down and pushing the content down the page led to confusion when scrolling to the bottom of the longer panels... the current search results were read as more facet-related "stuff" at the bottom. After the third test, we positioned these panels on top of the content with a drop shadow, which seems to have rectified the issue.
+	- Users were able to figure out the "breadcrumbs" to navigate from an article back up to a page (for example). Some slight hesitation the first time, but no failures.
+	- "Save as" options seemed to get lost a bit in the secondary navbar. 
+	- The "Select All" feature in the title picker was often overlooked, and users would uncheck unwanted items manually. We have since changed the design and language of the Select All button, but this has not yet been tested.
+
+INSIGHTS FROM THE PARTICIPANTS
+	
+	- One researcher suggested digitising "NZ Railways Magazine", as a surprisingly deep trove of historical information.
+	- Multiple participants stressed the importance of the "What's New" materials. We redesigned the homepage after the first test to increase their prominence.
+	- I have been asking all participants how they save and keep track of the items that they find in Papers Past. Many just print materials, others take screenshots, and some use the PDF downloads. There is a huge opportunity to make some great researcher tools (saving items to lists, adding cropping tools to images, etc.). Image cropping (ie, only saving the relevant part of an article) was requested, unprompted, by three of the five participants.
+	- One participant gave a rather nice rundown of the features that make a good printable PDF of the article view. One insight was to add a Papers Past logo to the PDF so that she can quickly tell which research came from where, as researchers are often pulling from many, many sources at once. Her rule of thumb was this (paraphrased, as recording sadly failed): "I want to make sure that if I drop all of my research on the street and all the papers get shuffled, that I'm able to trace them back to the source and to reassemble them in the order in which they should appear."
+	- Another lovely insight was from a family researcher who bookmarked mentions of non-family members as often as family members when searching by last name. "I like to have the whole picture", she said.
+
+
+

@@ -5,10 +5,9 @@
 			%th.col-md-3 Newspaper
 			%th.col-md-3 Date
 	%tbody
-		- @search_results['search']['results'].each do |result|
-			- parts = result['title'].gsub(/^(.*)\(([^(]+),(.*)\)/, '\1**\2**\3').split("**")
+		- @search_results[:search_results].each do |result|
 			%tr
 				%td
-					%a{:href => "/#{@type}/#{result['id']}"}= parts[0]
-				%td= parts[1]
-				%td= parts[2]
+					%a{:href => "/#{@type}/#{result[:id].gsub('.', '-')}"}= result[:title]
+				%td= @search_results[:publication_title]
+				%td= @search_results[:date]

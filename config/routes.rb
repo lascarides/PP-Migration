@@ -4,6 +4,7 @@ PPMigration::Application.routes.draw do
 	get '/charts', to: 'about#charts'
 	get '/about/dates', to: 'about#dates'
 	get '/help', to: 'about#help'
+	get '/set_language', to: 'about#set_language'
 	get '/presentation', to: 'about#presentation'
 
 	get '/newspapers/title', to: 'newspapers#title'
@@ -12,7 +13,6 @@ PPMigration::Application.routes.draw do
 	get '/newspapers/title/:id/:year/:month', to: 'newspapers#title'
 	get '/newspapers/title/:id/:year/:month/:day', to: 'newspapers#title'
 	get '/newspapers/title/:id/:year/:month/:day/:page', to: 'newspapers#title'
-	get '/newspapers/title/:id/:year/:month/:day/:page/:article', to: 'newspapers#title'
 
 	SUPPORTED_FORMATS.each do |format|
 		resources format, :controller => 'format_viewer', :type => format do

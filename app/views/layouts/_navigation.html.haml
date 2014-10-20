@@ -8,29 +8,29 @@
 	.navbar-collapse.collapse
 
 		- if not @type.nil?
-			= link_to FORMAT_LABELS[@type], "/#{@type}", :class => 'navbar-brand active navbar-format'
+			= link_to t("format-#{@type.to_s.parameterize}"), "/#{@type}", :class => 'navbar-brand active navbar-format'
 			
-		%ul.nav.navbar-nav{'data-intro' => "Choose the type of materials to explore", 'data-position' => "right"}
+		%ul.nav.navbar-nav{'data-intro' => t('chooser-help'), 'data-position' => "right"}
 			%li.dropdown.format-picker
 				%a.dropdown-toggle{href: '#', 'data-toggle' => 'dropdown'}
-					= @type.nil? ? 'Explore the collections' : 'Explore other collections'
+					= @type.nil? ? t('nav-switcher-all') : t('nav-switcher-others')
 					%span.caret
 				%ul.dropdown-menu{ role: 'menu' }
 					- FORMAT_LABELS.each do |fmt, label| 
 						- if fmt != @type
-							%li= link_to label, (request.url =~ /\?/) ? request.url.gsub(@type.to_s, fmt.to_s) : "/#{fmt}"
+							%li= link_to t("format-#{fmt.to_s.parameterize}"), (request.url =~ /\?/) ? request.url.gsub(@type.to_s, fmt.to_s) : "/#{fmt}"
 
 		%ul.nav.navbar-nav.navbar-right
 			%li
-				=link_to "Quick Help", '#', :class => 'quick-help-toggle'
+				=link_to t('nav-quick-help'), '#', :class => 'quick-help-toggle'
 			%li
-				=link_to "Tutorial", '/help'
+				=link_to t('nav-tutorial'), '/help'
 			%li
-				=link_to "About", '/about'
+				=link_to t('nav-about'), '/about'
 			%li.dropdown
 				%a.dropdown-toggle{href: '#', 'data-toggle' => 'dropdown'}
-					English
+					= @languages[session[:language]]
 					%span.caret
 				%ul.dropdown-menu{ role: 'menu' }
-					%li.active= link_to "English", '#'
-					%li= link_to "Te Reo Māori", '#'
+					- @languages.each do |id, lang|
+						%li{ :class => (id == session[:language]) ? 'active' : '' }= link_to lang, "/set_language?lang=#{id}"

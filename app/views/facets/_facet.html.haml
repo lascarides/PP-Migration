@@ -7,11 +7,7 @@
 
 %div{ class: (facet['columns'] == '3') ? 'search-cats-col' : 'search-cats'}
 
-	.facet-group-all
-		%h5
-			%label
-				= check_box_tag :title, "all", true, :class => 'facet-select-all collatable-trigger'
-				Unselect all
+	= render :partial => 'facets/select_all'
 
 	- if facet['values'].size == 1
 

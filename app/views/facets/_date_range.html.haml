@@ -39,7 +39,7 @@
 				.col-md-3
 					%a.date-step-button{ href: '#', 'data-date-part' => 'm', 'data-date-value' => '+1', 'data-date-which' => 'start' }
 						%span.glyphicon.glyphicon-chevron-right
-			= render :partial => 'shared/calendar', :locals => { :month => 'January', :m => 0 }
+			= render :partial => 'shared/calendar', :locals => { :month => 'January', :m => 0, :dates_list => [], :current_year => 0 }
 
 		.end-date-picker.col-md-4
 			%h5 To
@@ -70,7 +70,7 @@
 				.col-md-3
 					%a.date-step-button{ href: '#', 'data-date-part' => 'm', 'data-date-value' => '+1', 'data-date-which' => 'end' }
 						%span.glyphicon.glyphicon-chevron-right
-			= render :partial => 'shared/calendar', :locals => { :month => 'December', :m => 11 }
+			= render :partial => 'shared/calendar', :locals => { :month => 'December', :m => 11, :dates_list => [], :current_year => 0 }
 		.col-md-4.date-picker-sidebar
 			#events-picker
 				%h5 

@@ -10,7 +10,12 @@ class FormatViewerController < ApplicationController
     if params[:query]
       @search_results = @format_class.search_results(params)
     elsif @format_class.respond_to? :front_pages
-      @front_pages = @format_class.front_pages
+      begin
+        @front_pages = @format_class.front_pages
+      rescue
+        # FIXME Temporary offline hack
+        @front_pages = []
+      end
     end
     respond_to do |format|
       format.html {}
@@ -20,6 +25,10 @@ class FormatViewerController < ApplicationController
 
   def search
     @search_results = @format_class.search_results(params)
+    # TODO : Make this work
+    if not request.query_string.nil?
+      session[:recent_searches] << request.query_string
+    end
     respond_to do |format|
       format.html {}
       format.json {}
@@ -35,10 +44,6 @@ class FormatViewerController < ApplicationController
 
   def show
     @item = @format_class.find(params[:id])
-    # FIXME - display hack
-    if @type == :newspapers
-      @item[:page_number] ||= 1
-    end
     respond_to do |format|
       format.html # show.html.erb
       format.json { render json: @item }
@@ -85,17 +90,13 @@ class FormatViewerController < ApplicationController
       if f['formats_to_show_on'].include?(@type.to_s) or f['formats_to_show_on'].include?('all')
         f['name'] = label
         if label == 'newspapers'
-          f['values'] = NewspaperTitle.info.values.group_by{ |info|
+          f['values'] = Publication.info.values.group_by{ |info|
             info[:region]
           }
         end
         f
       end
     }.compact
-
-  n = {}
-  NewspaperTitle.info.each{|sym,vals| n[vals[:region]] ||= []; n[vals[:region]] << "{\"id\": \"#{sym}\", \"name\": \"#{vals[:title]}\", \"start-year\": \"#{vals[:start_year]}\", \"end-year\": \"#{vals[:end_year]}\"}" }
-  n.each{ |r,v| puts '"' + r + '": [' + v.join(',') + ' ]'}
 
   end
 
