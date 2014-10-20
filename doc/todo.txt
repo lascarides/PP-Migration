@@ -22,6 +22,8 @@ PROTOTYPE TO-DOS
 - Update URLs, and use 'gem rack-rewrite' to start mapping the rules.
 - More tooltips
 - Tutorial? At least think about it...
+- Add acknowledgements (including search results)
+- Investigate Acknowledgemements Policy (with Sam)
 
 
 UX QUESTIONS
