@@ -4,11 +4,10 @@
 
 .search-cats-col
 
-	= render :partial => 'facets/select_all'
-
 	- ["Series 1 - Letters written to Donald McLean (in English)", "Series 2 - Letters written to Donald McLean (in Māori)", "Series 3 - Donald McLean's Letter Books", "Series 4 - Drafts and fragments of letters written by Donald McLean", "Series 5 - Donald McLean's diaries and notebooks", "Series 6 - Telegrams to and from Donald McLean", "Series 7 - Donald McLean's official papers", "Series 8 - Maps", "Series 9 - Letters written to Donald McLean by family members", "Series 13 - Other papers"].each do |section|
 		%label
 			= check_box_tag 'x', 'x', true
 			= section
 
+= link_to 'More...', "/#{@type.to_s.dasherize}/section"
 

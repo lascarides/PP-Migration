@@ -6,7 +6,7 @@
 			.search-control-panel
 				Sort by 
 				.btn-group.btn-group-sm
-					= link_to 'Best match', params.merge(:sort => nil, :direction => nil), :class => btn_class + ((params[:sort].nil?) ? ' active' : '')
+					= link_to 'Relevance', params.merge(:sort => nil, :direction => nil), :class => btn_class + ((params[:sort].nil?) ? ' active' : '')
 					= link_to 'Date', params.merge(:sort => "date"), :class => btn_class + ((params[:sort] == 'date') ? ' active' : '')
 			- if params[:sort] == 'date'
 				.search-control-panel

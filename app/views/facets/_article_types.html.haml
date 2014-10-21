@@ -3,18 +3,15 @@
 %h4 What types of articles would you like to search?
 
 
-= render :partial => 'facets/select_all'
-
-
 %label
-	= check_box_tag "Articles", 'articles', true, :class => 'collatable'
+	= check_box_tag "Articles", 'articles[]', true
 	Articles
 
 %label
-	= check_box_tag "Adverti", 'advertisements', true, :class => 'collatable'
+	= check_box_tag "Adverti", 'articles[]', true
 	Advertisements
 
 %label
-	= check_box_tag "Illos", 'illustrations', true, :class => 'collatable'
+	= check_box_tag "Articles", 'articles[]', true
 	Illustrations
 

@@ -4,12 +4,10 @@
 
 			- @facets.each do |facet|
 
-				.facet{ id: "facet-#{facet['name']}" }
-					%a{ href: "##{facet['name']}-picker", 'data-intro' => facet['help_text'], 'data-position' => 'right'}
-						%small
-							Choose
-							= facet['choose_text']
-						%span.facet-label= facet['default_value']
+				.facet
+					%a{ href: "##{facet[:name]}-picker", id: "facet-#{facet[:name]}", 'data-intro' => facet[:help_text], 'data-position' => 'right'}
+						%small= facet[:choose_text]
+						%span.facet-label= facet[:default_value]
 						%span.facet-arrow 
 							%span Change
 					.facet-reset

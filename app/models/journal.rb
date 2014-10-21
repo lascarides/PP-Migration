@@ -1,2 +1,2 @@
-class Journal < Format
+class Journal < NLNZObject
 end

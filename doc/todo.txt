@@ -3,14 +3,10 @@ PROTOTYPE TO-DOS
 ------------------------------------------------------------
 - Fix parliamentary sessions
 - Store selections in sessions (for format switching purposes)
-- Accurate dates for all sections
 - Mark facets when they've been interacted with
 - Pagination
 - Title pages for other formats
 - Fill in front-pages for non-today dates
-- Facet config and regions list into YAML config files (discoverable from Veridian?)
-- Select none (regions)
-- Generic list facet tools by default
 - Next/prev search results
 - Try out cookie-based search history
 - Better home page
@@ -20,14 +16,12 @@ PROTOTYPE TO-DOS
 	- Leaflet-y?
 - Is there an easy way to get search term highlighting? 
 - Update URLs, and use 'gem rack-rewrite' to start mapping the rules.
-- More tooltips
-- Tutorial? At least think about it...
 
 
 UX QUESTIONS
 ------------------------------------------------------------
 - What do we need to communicate on the zero results pages?
-- What do the thumbnail pages for articles look like?
+- What do the thumbnail pages for articles look like? 
 - Communication around change in date ranges
 - Do the facets communicate what's going on?
 - Think about Niupepa and Troopship use cases
@@ -49,28 +43,3 @@ PRE-PRODUCTION
 - Better, more scalable structure of SCSS and reusable widgets
 - What do unit/integration tests look like?
 - Spec caching/failover parameters
-
-
-
-DL QUESTIONS
-------------------------------------------------------------
-- *** Can we get a unified API over a combined index for Periodicals?
-- *** How are they anticipating structuring the collections metadata for the McLean Papers?
-	- What about people, subjects?
-- Why is the search not working?
-- Can I control the fields that are returned for a given query?
-- Can I specify the facets I want returned? Is Year a facet?
-- What do the XML error messages look like? Can we get a list of error codes returned? 
-- Is the raw data for the images that make up a LogicalSection available? Or is it only expressed in the HTML Snippet? 
-- Can logical sections be nested? How is this handled in the metadata? Is there a parent_id or similar?
-- Are Boolean searches supported? 
-- How much validation should we be doing?
-- How many queries are currently being performed on a given page? Is there a number we should be shooting for, or a hard limit?
-- Let's talk about caching strategies....
-	- What's already in place?
-- Let's talk about IIIF
-
-
-
-
-

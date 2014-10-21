@@ -147,7 +147,8 @@ label {
 }
 
 .navbar-subnav {
-	background: $ppGray;
+	background: white;
+	border: 3px solid $ppAccent;
 	.active a {
 		background: $ppAccent !important;
 	}
@@ -173,45 +174,27 @@ label {
 
 
 .home {
-	.hero-unit {
-		h1 {
-			color: $ppGreen;
-			font-size: 4em;	
-			padding: 0 0 0.3em 0;
-			border-bottom: 3px solid $ppGreen;
-			small {
-				font-weight: 200;
-				font-size: 0.4em;
-				font-family: $headingFont;
-			}
+	h1 {
+		color: lighten($ppGreen, 60%);
+		background: darken($ppGreen, 20%);
+		font-size: 4em;	
+		padding: 0.3em 0.5em;
+		border-bottom: 0px;
+		border-radius: 0 0 10px 10px;
+		margin: -60px 0 0.5em;
+		small {
+			color: lighten($ppGreen, 40%);
+			font-weight: 200;
+			font-size: 0.4em;
+			font-family: $headingFont;
 		}
 	}
-	h3:first-child {
-		margin: 0 0 1.2em 0;
+	.media-object {
+		border-radius: 6px;
+		border: 1px solid darken($ppGray, 10%);
 	}
-	.media{
-		h2 {
-			margin: 0 0 1em;
-			padding: 0.3em;
-			background: $ppGreen;
-			height: 3em;
-			border-radius: 0 0 10px 10px;
-			a {
-				color: white;
-			}
-		}
-		.media-object {
-			width: 100%;
-			height: 150px;
-			overflow: hidden;
-			border-radius: 10px 10px 0 0;
-			img {
-				width: 100%;
-			}
-		}
-		.media-body p {
-			color: #555;
-		}
+	.media-body p {
+		color: #555;
 	}
 	.alert, .well {
 		h3, h4 {
@@ -239,22 +222,12 @@ label {
 			font-weight: 700;
 			font-size: 1.8em;
 			margin: 0 0 10px 0;
-			border: 3px solid darken($ppAccent, 10%);
-			border-top: 3px solid lighten($ppAccent, 20%);
-			border-left: 3px solid lighten($ppAccent, 20%);
-			color: darken($ppAccent, 40%);
+			border: 3px solid $ppAccent;
 			border-radius: 10px;
 			padding: 10px;
 			line-height: 1.2;
-
-			background: lighten($ppAccent, 30%); /* Old browsers */
-			background: -moz-linear-gradient(top,  lighten($ppAccent, 30%) 0%, $ppAccent 100%); /* FF3.6+ */
-			background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,lighten($ppAccent, 30%)), color-stop(100%,$ppAccent)); /* Chrome,Safari4+ */
-			background: -webkit-linear-gradient(top,  lighten($ppAccent, 30%) 0%,$ppAccent 100%); /* Chrome10+,Safari5.1+ */
-			background: -o-linear-gradient(top,  lighten($ppAccent, 30%) 0%,$ppAccent 100%); /* Opera 11.10+ */
-			background: -ms-linear-gradient(top,  lighten($ppAccent, 30%) 0%,$ppAccent 100%); /* IE10+ */
-			background: linear-gradient(to bottom,  lighten($ppAccent, 30%) 0%,$ppAccent 100%); /* W3C */
-			filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='lighten($ppAccent, 30%)', endColorstr='$ppAccent',GradientType=0 ); /* IE6-9 */
+			background: lighten($ppAccent, 30%);
+			color: darken($ppAccent, 40%);
 
 			&:hover {
 				background: lighten($ppAccent, 20%);
@@ -308,14 +281,6 @@ label {
 			}
 		}
 	}
-	.facet-interacted-with {
-		a {
-
-		}
-		.facet-reset {
-			display: block;
-		}
-	}
 	.facets a.active {
 		background: $ppAccent !important;
 		.facet-arrow {
@@ -364,19 +329,6 @@ label {
 
 
 .close-widget {
-	color: $ppAccentText;
-	font-weight: 700;
-	padding: 0.5em 1em;
-	font-size: small;
-	text-transform: uppercase;
-	float: right;
-	margin: 0 0 1em 0;
-}
-.close-widget:hover {
-	background: $ppAccent;
-}
-
-.done-widget {
 	border: 3px solid $ppAccent;
 	background: lighten($ppAccent, 20%);
 	color: $ppAccentText;
@@ -388,7 +340,7 @@ label {
 	float: right;
 	margin: 0 0 1em 0;
 }
-.done-widget:hover {
+.close-widget:hover {
 	background: $ppAccent;
 }
 
@@ -573,13 +525,7 @@ tr:hover {
 	}
 }
 
-.facet-group-all {
-	h5 {
-		background: $ppAccent;
-	}
-}
-
-.facet-group {
+.region-group {
 	padding: 0 0 1.5em 0;
 	display: inline-block;
 	width: 100%;
@@ -590,14 +536,15 @@ tr:hover {
 	h5 {
 		border-radius: 10px 10px 0 0;
 	}
+	.title {
+		display: block;
+	}
+	.newspaper-title {
+		padding-left: 1em !important;
+	}
 	input {
 		background: white;
 	}
-}
-
-.facet-item {
-	display: block;
-	padding-left: 1em !important;
 }
 
 .title-search-tools {
@@ -908,34 +855,25 @@ tr:hover {
 		text-transform: uppercase;
 		font-weight: 700;
 	}
-	.toolbox {
+	.tools {
 		position: relative;
-		.tools {
-			position: absolute;
-			top: 0;
-			left: 2%;
-			width: 96%;
-			display: none;
-			padding: 1em 1em 1em;
-			margin: 0 0 2em 0;
-			background: lighten($ppAccent, 37%);
-			border: 2px solid lighten($ppAccent, 20%);
-			border-top: 0;
-			border-radius: 0 0 1em 1em;
-			z-index: 9000;
-			box-shadow: 10px 10px 10px rgba(0,0,0,0.4);
-			label {
-				font-family: $bodyFont;
-				padding: 0 1em 0 0;
-				font-weight: normal;
-			}
-			h4 {
-				margin-top: 1em;
-			}
-			.inactive {
-				opacity: 0.2 !important;
-				/* display: none !important; */
-			}
+		display: none;
+		padding: 1em 1em 0.6em;
+		margin: 0 1.5em 1em;
+		background: lighten($ppAccent, 37%);
+		border: 2px solid lighten($ppAccent, 20%);
+		border-top: 0;
+		border-radius: 0 0 1em 1em;
+		label {
+			font-family: $bodyFont;
+			padding: 0 1em 0 0;
+			font-weight: normal;
+		}
+		h4 {
+			margin-top: 1em;
+		}
+		.inactive {
+			display: none !important;
 		}
 	}
 	.facet-tools {

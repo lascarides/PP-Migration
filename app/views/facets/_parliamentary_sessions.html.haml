@@ -4,14 +4,13 @@
 
 .search-cats-col
 
-	= render :partial => 'facets/select_all'
-
 	- (184..195).to_a.each do |section|
-		.facet-group
+		.region-group
 			%h5= "#{section}0-#{section}9"
 			- 10.times do |n|
-				%label.facet-title
+				%label
 					= check_box_tag 'x', 'x', true
 					= "AJHR_#{(section * 10)+n}_I_A-G"
 
+	= link_to 'More...', "/#{@type.to_s.dasherize}/section", :class => 'btn'
 
