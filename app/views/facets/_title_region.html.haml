@@ -19,7 +19,7 @@
 						%label
 							= check_box_tag "region_#{region.parameterize}", region, true , :class => 'region-select collatable-trigger'
 							= "#{region} newspapers"
-				- Publication.info.each do |symbol, title|
+				- NewspaperTitle.info.each do |symbol, title|
 					- if title[:region] == region
 						%label.facet-title.newspaper-title{'data-region' => title[:region], 'data-yearstart' => title[:start_year], 'data-yearend' => title[:end_year]}
 							- box_checked = (params[:titles].blank? or params[:titles].split(',').include?(symbol) )

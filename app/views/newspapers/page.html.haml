@@ -37,8 +37,8 @@
 
 		#page-image.tab-pane.fade.in.active
 			.page-image-detail.page-image-detail-compressed
-				= image_tag("http://paperspast.natlib.govt.nz/cgi-bin/imageserver/imageserver.pl?oid=#{Publication.code(@item[:title].parameterize)}#{@today.strftime('%Y%m%d')}.1.#{@page}&scale=30&color=32&ext=gif&key=")
-				- Newspaper.areas(Publication.code(@item[:title].parameterize) + @today.strftime('%Y%m%d') + ".1.#{@page}").each do |area|
+				= image_tag("http://paperspast.natlib.govt.nz/cgi-bin/imageserver/imageserver.pl?oid=#{NewspaperTitle.code(@item[:title].parameterize)}#{@today.strftime('%Y%m%d')}.1.#{@page}&scale=30&color=32&ext=gif&key=")
+				- Newspaper.areas(NewspaperTitle.code(@item[:title].parameterize) + @today.strftime('%Y%m%d') + ".1.#{@page}").each do |area|
 					= link_to ' ', area[:href], :style => area[:style]
 				.page-expander
 					%a.actual{href: '#'}
@@ -53,7 +53,7 @@
 
 			%h2 Contents of this page
 
-			- Newspaper.outline(Publication.code(@item[:title].parameterize) + @today.strftime('%Y%m%d'), @page).each do |page, items|
+			- Newspaper.outline(NewspaperTitle.code(@item[:title].parameterize) + @today.strftime('%Y%m%d'), @page).each do |page, items|
 				%h4= page
 				%ul
 					- items.each do |item|

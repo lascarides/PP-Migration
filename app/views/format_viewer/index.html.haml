@@ -28,12 +28,10 @@
 			= render :partial => "shared/search_box"				
 			= render :partial => "shared/search_controls"
 
-
 			- if not @search_results.nil?
-	
-				- if @search_results[:search_results].size > 0
 
-					%p= "There are #{number_with_delimiter(@search_results[:num_results])} matches for your query"
+				- if @search_results['search']['results'].size > 0
+
 					= render :partial => "#{@type}/search_results"
 
 				- else
@@ -46,7 +44,7 @@
 
 						%p= link_to "Try a broader search for '#{params[:query]}' with fewer filters.", :query => params[:query]
 
-				- if @search_results[:num_results] > @search_results[:last_match_num]
+				- if @search_results['search']['results'].size > 10
 
 					%ul.pagination
 						%li
@@ -60,7 +58,6 @@
 						%li
 							%a{href: "#"}
 								%span.glyphicon.glyphicon-forward
-
 
 			- elsif not @title_results.nil?
 

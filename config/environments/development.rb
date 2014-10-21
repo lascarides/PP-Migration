@@ -1,8 +1,5 @@
 PPMigration::Application.configure do
 
-  API_DOMAIN_NEWSPAPERS   = 'http://paperspast-devel.natlib.govt.nz'
-  API_PATH_NEWSPAPERS     = '/veridian6/paperspast/cgi-bin/paperspast'
-
   # Settings specified here will take precedence over those in config/application.rb.
 
   # In the development environment your application's code is reloaded on

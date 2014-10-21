@@ -134,17 +134,13 @@ $(document).ready(function(){
 
 		// Appropriately check grouped items
 		scope.find('.facet-group').each(function(){
-			var allActive = $(this).find('.facet-item input').length;
-			var checkedActive = $(this).find('.facet-item input:checked').length;
+			var allActive = $(this).find('.facet-item input').length
+			var checkedActive = $(this).find('.facet-item input:checked').length
 			$(this).find('.facet-group-title input').prop('checked', (allActive == checkedActive) );
 		});
 
+		// TODO
 		// Appropriately check the "Select All" checkbox
-		var allActive = scope.find('.facet-item input').length;
-		var checkedActive = scope.find('.facet-item input:checked').length;
-		scope.find('.facet-group-all input').prop('checked', (allActive == checkedActive) );
-		// Update select all label
-		scope.find('.facet-group-all label span').toggle( scope.find('.facet-group-all input').prop('checked') );
 
 	}
 
@@ -372,18 +368,6 @@ $(document).ready(function(){
 	// UI MISCELLANY
 	/////////////////////////////////////////
 
-	// Thumbnail/list switcher
-	$('#view-style-list').click(function(){
-		$('.thumbnail-pages').addClass('thumbnail-pages-list-view');
-		$('#view-style-thumbs').removeClass('active');
-		$(this).addClass('active');
-	});
-	$('#view-style-thumbs').click(function(){
-		$('.thumbnail-pages').removeClass('thumbnail-pages-list-view');
-		$('#view-style-list').removeClass('active');
-		$(this).addClass('active');
-	});
-
 	// Set up sortable tables
 	$('.datatable').dataTable({
 		"sPaginationType": "bootstrap",
@@ -406,11 +390,9 @@ $(document).ready(function(){
 
 	// Set up closeable panels
 	$('.closeable .close-widget').click(function(){
-		$('.facet').removeClass('active');
-		$(this).parent('.closeable').slideUp();
-	});
-	$('.closeable .done-widget').click(function(){
 		$('#search-form').submit();
+		// $('.facet').removeClass('active');
+		// $(this).parent('.closeable').slideUp();
 	});
 
 	// Kick off presentation.

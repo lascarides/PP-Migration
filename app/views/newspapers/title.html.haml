@@ -12,7 +12,7 @@
 					%th First year
 					%th Last year
 			%tbody
-				- Publication.info.each do |code, title| 
+				- NewspaperTitle.info.each do |code, title| 
 					%tr
 						%td= link_to image_tag(title[:logo], :class => 'newspaper-logo'), "/newspapers/title/#{title[:title].parameterize}"
 						%td= link_to title[:title], "/newspapers/title/#{title[:title].parameterize}"
@@ -72,14 +72,12 @@
 				%h3 Available dates
 
 				%h2
-					%a{ :href => {:year => @year - 1}}
-						%span.glyphicon.glyphicon-backward
+					%span.glyphicon.glyphicon-backward
 					= @year
-					%a{ :href => {:year => @year + 1}}
-						%span.glyphicon.glyphicon-forward
+					%span.glyphicon.glyphicon-forward
 
 				- ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'].each_with_index do |month, m|
-					= render :partial => 'shared/calendar', :locals => { :month => month, :m => m, :dates_list => @dates, :current_year => @year }
+					= render :partial => 'shared/calendar', :locals => { :month => month, :m => m }
 
 
 

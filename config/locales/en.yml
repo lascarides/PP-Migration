@@ -20,26 +20,4 @@
 # available at http://guides.rubyonrails.org/i18n.html.
 
 en:
-  # Global Nav
-  chooser-help: 		"Choose the type of materials to explore"
-  nav-switcher-all: 	"Explore the collections"
-  nav-switcher-others: 	"Explore other collections"
-  nav-quick-help: 		"Quick Help"
-  nav-tutorial: 		"Tutorial"
-  nav-about: 			"About"
-  nav-thanks: 			"Acknowledgements and thanks"
-  nav-collab: 			"Collaborative digitisation"
-  nav-legal: 			"Legal notices"
-
-  # Formats
-  format-newspapers:	"Newspapers"
-  format-periodicals:	"Magazines and Journals"
-  format-parliamentary_papers:	"Parliamentary Papers"
-  format-manuscripts:	"Letters and Diaries"
-  format-books:			"Books"
-
-  # Home
-  home-tagline: 		"Explore the full text of New Zealand's history"
-
-  # Search
-  search-button:		"Search"
+  hello: "Hello world"

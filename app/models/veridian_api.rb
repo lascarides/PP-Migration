@@ -2,17 +2,10 @@ class VeridianAPI
 
 	require 'open-uri'
 
-	attr_accessor :api_domain, :api_path
-
 	# TODO : Sanitize ALL inputs
 
-	def initialize
-		self.api_domain ||= API_DOMAIN_NEWSPAPERS
-		self.api_path 	||= API_PATH_NEWSPAPERS
-	end
-
-	def api_address
-		self.api_domain + self.api_path
+	def initialize(address = nil)
+		@api_address = address || 'http://paperspast-devel.natlib.govt.nz/veridian6/paperspast/cgi-bin/paperspast'
 	end
 
 	def get_publications
@@ -116,30 +109,19 @@ class VeridianAPI
 		response
 	end
 
-	def get_logical_section_content( logical_section_id, highlightable_terms = nil )
+	def get_logical_section_content( document_id, logical_section_id, highlightable_terms = nil )
 		xml = do_query({
 			a: 		'd',
-			d: 		logical_section_id,
+			d: 		"#{document_id}.2.#{logical_section_id}",
 			hl: 	highlightable_terms
 		})
 		response = {
-			:title 				=> xml.css('LogicalSectionTitle').first.content,
-			:date 				=> Date.parse(xml.css('DocumentDate').first.content),
-			:type 				=> xml.css('LogicalSectionType').first.content,
 			:image_html 		=> xml.css('LogicalSectionImagesHTML').first.content,
-			:next_id 			=> xml.css('LogicalSectionNextLogicalSectionID').first.content,
-			:prev_id 			=> xml.css('LogicalSectionPrevLogicalSectionID').first.content,
-			:fulltext 			=> xml.css('LogicalSectionTextHTML').first.content,
-			:word_count 		=> xml.css('LogicalSectionTextWordCount').first.content.to_i,
-			:page_number 		=> xml.css('LogicalSectionFirstPageID').first.content.gsub(/^.*(\d+)$/, '\1', ).to_i,
-			:doc_feature_code 	=> xml.css('DocumentFeatureCode').first.content,
-			:document_id 		=> xml.css('DocumentID').first.content,
-			:document_volume 	=> xml.css('DocumentVolume').first.content,
-			:publication_id 	=> xml.css('PublicationID').first.content,
-			:publication_title 	=> xml.css('PublicationTitle').first.content
+			:next_section_id 	=> xml.css('LogicalSectionNextLogicalSectionID').first.content,
+			:prev_section_id 	=> xml.css('LogicalSectionPrevLogicalSectionID').first.content,
+			:text_html 			=> xml.css('LogicalSectionTextHTML').first.content,
+			:word_count 		=> xml.css('LogicalSectionTextWordCount').first.content.to_i
 		}
-		# Extract images
-		response[:images] = Nokogiri::HTML(response[:image_html]).css('img').collect{|img| api_domain + img.attribute('src') }
 		response
 	end
 
@@ -149,12 +131,10 @@ class VeridianAPI
 			leq: 	'Document'
 		}, search_params)
 		response = {
-			:num_results 		=> xml.css('TotalNumberOfSearchResults').first.content.to_i
+			:num_results 		=> xml.css('TotalNumberOfSearchResults').first.content.to_i,
+			:first_match_num 	=> xml.css('FirstSearchResultNumberReturned').first.content.to_i,
+			:last_match_num 	=> xml.css('LastSearchResultNumberReturned').first.content.to_i
 		}
-		if response[:num_results] > 0
-			response[:first_match_num] = xml.css('FirstSearchResultNumberReturned').first.content.to_i,
-			response[:last_match_num] = xml.css('LastSearchResultNumberReturned').first.content.to_i
-		end
 		response[:search_results] = xml.css('Document').collect do |ls|
 			{
 				id: 				ls.css('DocumentID').first.content,
@@ -179,15 +159,13 @@ class VeridianAPI
 		xml = do_query({
 			a: 		'q',
 			leq: 	'Logical',
-			txq: 	CGI.escape(text_query)
+			txq: 	text_query
 		}, search_params)
 		response = {
-			:num_results 		=> xml.css('TotalNumberOfSearchResults').first.content.to_i
+			:num_results 		=> xml.css('TotalNumberOfSearchResults').first.content.to_i,
+			:first_match_num 	=> xml.css('FirstSearchResultNumberReturned').first.content.to_i,
+			:last_match_num 	=> xml.css('LastSearchResultNumberReturned').first.content.to_i
 		}
-		if response[:num_results] > 0
-			response[:first_match_num] = xml.css('FirstSearchResultNumberReturned').first.content.to_i,
-			response[:last_match_num] = xml.css('LastSearchResultNumberReturned').first.content.to_i
-		end
 		response[:search_results] = xml.css('LogicalSection').collect do |ls|
 			{
 				id: 				ls.css('LogicalSectionID').first.content,
@@ -217,12 +195,10 @@ class VeridianAPI
 			txq: 	text_query
 		}, search_params)
 		response = {
-			:num_results 		=> xml.css('TotalNumberOfSearchResults').first.content.to_i
+			:num_results 		=> xml.css('TotalNumberOfSearchResults').first.content.to_i,
+			:first_match_num 	=> xml.css('FirstSearchResultNumberReturned').first.content.to_i,
+			:last_match_num 	=> xml.css('LastSearchResultNumberReturned').first.content.to_i
 		}
-		if response[:num_results] > 0
-			response[:first_match_num] = xml.css('FirstSearchResultNumberReturned').first.content.to_i,
-			response[:last_match_num] = xml.css('LastSearchResultNumberReturned').first.content.to_i
-		end
 		response[:search_results] = xml.css('LogicalSection').collect do |ls|
 			{
 				id: 				ls.css('LogicalSectionID').first.content,
@@ -254,7 +230,7 @@ private
 	def do_query( params, extra_search_params = {} )
 		params[:f] = 'XML'
 		params.merge!( process_search_params( extra_search_params ) )
-		query = [ api_address, process_query_params(params) ].join('?')
+		query = [ @api_address, process_query_params(params) ].join('?')
 		Nokogiri::XML(open(query, :http_basic_authentication=> ['observer', '7626bleh'] ))
 	end
 

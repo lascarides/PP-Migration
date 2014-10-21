@@ -47,7 +47,7 @@
 							.well
 								%small 
 									This article has been automatically clipped from the 
-									= "#{@item[:publication_title]}," 
+									= "#{@item[:collection]}," 
 									organised into a single column, then optimised for display on your computer screen. As a result, it may not look exactly as it did on the original page. The article can be seen in its original form in the 
 									= link_to 'full page view.', '#'
 
@@ -63,27 +63,6 @@
 							%h3 Permanent link to this item:
 
 							= link_to "http://paperspast.natlib.govt.nz/item/#{params[:id]}", "http://paperspast.natlib.govt.nz/item/#{params[:id]}"
-
-
-							%h3 
-								Cite this item
-								%small with these common citation formats for academic papers
-
-							%ul.nav.nav-tabs
-								%li.active
-									%a{href: "#citation-apa", 'data-toggle' => "tab"} APA
-								%li 
-									%a{href: "#citation-apa", 'data-toggle' => "tab"} CSE
-								%li 
-									%a{href: "#citation-apa", 'data-toggle' => "tab"} Chicago
-								%li 
-									%a{href: "#citation-apa", 'data-toggle' => "tab"} MLA
-								%li 
-									%a{href: "#citation-apa", 'data-toggle' => "tab"} Turabian
-
-							#citation-apa.tab-pane.fade.in.active
-								= "#{@item[:title]} (#{@item[:date]}). #{@item[:publication_title]}. Retrieved from http://paperspast.natlib.govt.nz on #{Time.now.strftime('%B %-d, %Y')}."
-
 
 							%h3 Identifiers
 
@@ -108,6 +87,22 @@
 								%li= link_to 'METS/ALTO', '#'
 
 
+							%h3 Cite this item
+
+							%ul.nav.nav-tabs
+								%li.active
+									%a{href: "#citation-apa", 'data-toggle' => "tab"} APA
+								%li 
+									%a{href: "#citation-apa", 'data-toggle' => "tab"} CSE
+								%li 
+									%a{href: "#citation-apa", 'data-toggle' => "tab"} Chicago
+								%li 
+									%a{href: "#citation-apa", 'data-toggle' => "tab"} MLA
+								%li 
+									%a{href: "#citation-apa", 'data-toggle' => "tab"} Turabian
+
+							#citation-apa.tab-pane.fade.in.active
+								= "#{@item[:title]} (#{@item[:date]}). #{@item[:collection]}. Retrieved from http://paperspast.natlib.govt.nz on #{Time.now.strftime('%B %-d, %Y')}."
 
 
 
@@ -123,6 +118,8 @@
 
 			%p Newspaper was estab. Newspaper was estab. Newspaper was estab. Newspaper was estab. Newspaper was estab. Newspaper was estab. Newspaper was estab. Newspaper was estab. Newspaper was estab. 
 
-			%p= link_to "Read more", "/#{@type}/title/#{@item[:publication_title].parameterize}"
+			%p= link_to "Read more", "/#{@type}/title/#{@item[:collection].parameterize}"
 
+
+			%p= link_to '…', @item[:original]
 
